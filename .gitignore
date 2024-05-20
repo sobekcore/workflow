@@ -1,0 +1,10 @@
+# Compiled output
+target
+dist
+
+# Dependencies
+node_modules
+
+# Configs
+.idea
+workflow.iml
