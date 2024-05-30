@@ -1,9 +1,16 @@
 # Compiled output
-target
-dist
+/target
+/src/client/dist
 
 # Dependencies
-node_modules
+/src/client/node_modules
+
+# Data
+/postgres/data
+
+# Environment
+/.env.local
+/src/main/resources/application-dev.properties
 
 # Configs
 .idea
