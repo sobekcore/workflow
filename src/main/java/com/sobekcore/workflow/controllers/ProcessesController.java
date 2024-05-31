@@ -32,7 +32,7 @@ class ProcessesController {
     }
 
     @GetMapping
-    public List<Process> get() {
+    public List<Process> read() {
         return processService.read();
     }
 
@@ -46,7 +46,7 @@ class ProcessesController {
     }
 
     @GetMapping("/steps")
-    public List<ProcessStep> getSteps() {
+    public List<ProcessStep> readSteps() {
         return processStepService.read();
     }
 }

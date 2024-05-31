@@ -11,6 +11,7 @@
 # Environment
 /.env.local
 /src/main/resources/application-dev.properties
+/src/client/.env.local
 
 # Configs
 .idea
