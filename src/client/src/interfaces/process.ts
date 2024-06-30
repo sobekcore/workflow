@@ -6,6 +6,6 @@ export interface Process {
   steps: ProcessStep[];
 }
 
-export interface ProcessToAdd {
+export interface ProcessToCreate {
   name: string;
 }

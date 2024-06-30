@@ -1,18 +1,22 @@
+import { HTMLProps } from 'react';
 import { MdTaskAlt } from 'react-icons/md';
+import clsx from 'clsx';
 import { ProcessStep } from '@/interfaces/process-step.ts';
 
-interface ProcessStepItemProps {
+interface ProcessStepItemProps extends HTMLProps<HTMLButtonElement> {
   processStep: ProcessStep;
+  active?: boolean;
 }
 
-export function ProcessStepItem({ processStep }: ProcessStepItemProps) {
+export function ProcessStepItem({ processStep, active, onClick }: ProcessStepItemProps) {
   return (
-    <div className="flex items-center gap-1 rounded bg-indigo-100 p-1">
-      <MdTaskAlt className="text-xl" />
-      <h2>
-        {processStep.name}
-        <span className="text-xs text-slate-500">#{processStep.id}</span>
-      </h2>
-    </div>
+    <button
+      className={clsx('flex items-center gap-1 rounded p-1', active ? 'bg-indigo-500 text-white' : 'bg-indigo-100')}
+      disabled={!active}
+      onClick={onClick}
+    >
+      <MdTaskAlt />
+      <h2 className="text-sm">{processStep.name}</h2>
+    </button>
   );
 }

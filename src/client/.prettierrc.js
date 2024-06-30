@@ -18,6 +18,7 @@ export default {
     '^@/interfaces/(.*)$',
     '^@/hooks/(.*)$',
     '^@/components/(.*)$',
+    '^@/routes/(.*)$',
     '^@/utils/(.*)$',
     '^@/styles/(.*)$',
     '^@/(.*)$',

@@ -18,7 +18,7 @@ public class ProcessStepService {
         this.processStepRepository = processStepRepository;
     }
 
-    public List<ProcessStep> create(List<ProcessStepDto> processStepDtoList) throws ProcessNotFoundException {
+    public List<ProcessStep> create(List<ProcessStepDto> processStepDtoList) {
         try {
             return processStepRepository.saveAll(
                 processStepDtoList

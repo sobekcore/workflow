@@ -8,6 +8,7 @@ import com.sobekcore.workflow.process.step.ProcessStep;
 import com.sobekcore.workflow.process.step.ProcessStepDto;
 import com.sobekcore.workflow.process.step.ProcessStepService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,6 +28,7 @@ class ProcessesController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public List<Process> create(@Valid @RequestBody List<ProcessDto> processDtoList) {
         return processService.create(processDtoList);
     }
@@ -37,6 +39,7 @@ class ProcessesController {
     }
 
     @PostMapping("/steps")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public List<ProcessStep> createSteps(@Valid @RequestBody List<ProcessStepDto> processStepDtoList) {
         try {
             return processStepService.create(processStepDtoList);

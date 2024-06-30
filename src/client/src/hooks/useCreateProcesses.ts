@@ -1,13 +1,13 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProcesses } from '@/api/processes/create-processes.ts';
 import { QueryKey } from '@/enums/query.ts';
-import { Process, ProcessToAdd } from '@/interfaces/process.ts';
+import { Process, ProcessToCreate } from '@/interfaces/process.ts';
 
 export function useCreateProcesses() {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
-    mutationFn(processes: ProcessToAdd[]): Promise<Process[]> {
+    mutationFn(processes: ProcessToCreate[]): Promise<Process[]> {
       return createProcesses(processes);
     },
     onSuccess(processesToAdd: Process[]): void {

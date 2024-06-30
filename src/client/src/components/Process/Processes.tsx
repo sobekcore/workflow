@@ -10,6 +10,7 @@ export function Processes() {
   const { mutate: createProcesses } = useCreateProcesses();
 
   const handleCreateProcesses = (): void => {
+    // TODO: Allow to customize process name
     createProcesses([{ name: 'Process' }]);
   };
 

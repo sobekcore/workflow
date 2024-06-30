@@ -1,6 +1,6 @@
 package com.sobekcore.workflow.process;
 
-public class ProcessNotFoundException extends Exception {
+public class ProcessNotFoundException extends RuntimeException {
     public ProcessNotFoundException() {
     }
 
