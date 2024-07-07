@@ -3,6 +3,7 @@ import { Process } from '@/interfaces/process.ts';
 
 export interface Execution {
   id: string;
+  createdAt: string;
   process: Process;
   processStep?: ProcessStep;
 }

@@ -1,7 +1,7 @@
 import { MdOutlineNewLabel } from 'react-icons/md';
 import { Process } from '@/interfaces/process.ts';
-import { useCreateProcesses } from '@/hooks/useCreateProcesses.ts';
-import { useReadProcesses } from '@/hooks/useReadProcesses.ts';
+import { useCreateProcesses } from '@/hooks/processes/useCreateProcesses.ts';
+import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import { Button } from '@/components/Common/Button.tsx';
 import { ProcessItem } from '@/components/Process/ProcessItem.tsx';
 
@@ -22,9 +22,11 @@ export function Processes() {
           Create Process
         </Button>
       </div>
-      <div className="flex flex-col-reverse gap-y-2 p-2">
-        {processes?.map((process: Process) => <ProcessItem key={process.id} process={process} />)}
-      </div>
+      <ul className="flex flex-col-reverse gap-y-2 p-2">
+        {processes
+          ?.sort((a: Process, b: Process) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          .map((process: Process) => <ProcessItem key={process.id} process={process} />)}
+      </ul>
     </>
   );
 }

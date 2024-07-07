@@ -7,6 +7,7 @@ import com.sobekcore.workflow.process.step.ProcessStepNotPartOfProcessException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +15,10 @@ import java.util.UUID;
 public class Execution {
     @Id
     private UUID id;
+
+    @NotNull
+    @Column(nullable = false)
+    private Date createdAt;
 
     @NotNull
     @ManyToOne
@@ -33,12 +38,17 @@ public class Execution {
         }
 
         this.id = UUID.randomUUID();
+        this.createdAt = new Date();
         this.process = process;
         this.processStep = processStep;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public Process getProcess() {

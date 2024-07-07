@@ -1,8 +1,8 @@
 import { MdOutlineNotificationAdd } from 'react-icons/md';
 import { Execution } from '@/interfaces/execution.ts';
-import { useCreateExecutions } from '@/hooks/useCreateExecutions.ts';
-import { useReadExecutions } from '@/hooks/useReadExecutions.ts';
-import { useReadProcesses } from '@/hooks/useReadProcesses.ts';
+import { useCreateExecutions } from '@/hooks/executions/useCreateExecutions.ts';
+import { useReadExecutions } from '@/hooks/executions/useReadExecutions.ts';
+import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import { Button } from '@/components/Common/Button.tsx';
 import ExecutionItem from '@/components/Execution/ExecutionItem.tsx';
 
@@ -29,9 +29,11 @@ export function Executions() {
           Create Execution
         </Button>
       </div>
-      <div className="flex flex-col-reverse gap-y-2 p-2">
-        {executions?.map((execution: Execution) => <ExecutionItem key={execution.id} execution={execution} />)}
-      </div>
+      <ul className="flex flex-col-reverse gap-y-2 p-2">
+        {executions
+          ?.sort((a: Execution, b: Execution) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          .map((execution: Execution) => <ExecutionItem key={execution.id} execution={execution} />)}
+      </ul>
     </>
   );
 }

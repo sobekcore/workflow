@@ -15,5 +15,6 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'sort-imports': ['error', { ignoreDeclarationSort: true }],
   },
 };
