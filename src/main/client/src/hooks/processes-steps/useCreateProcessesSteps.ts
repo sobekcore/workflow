@@ -1,7 +1,7 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProcessesSteps } from '@/api/processes-steps/create-processes-steps.ts';
 import { QueryKey } from '@/enums/query.ts';
-import { ProcessStep, ProcessStepToAdd } from '@/interfaces/process-step.ts';
+import { ProcessStep, ProcessStepToAdd } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 
 export function useCreateProcessesSteps(processId: string) {

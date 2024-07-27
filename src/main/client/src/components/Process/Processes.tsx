@@ -22,9 +22,9 @@ export function Processes() {
           Create Process
         </Button>
       </div>
-      <ul className="flex flex-col-reverse gap-y-2 p-2">
+      <ul className="flex flex-col gap-y-2 p-2">
         {processes
-          ?.sort((a: Process, b: Process) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          ?.sort((a: Process, b: Process) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .map((process: Process) => <ProcessItem key={process.id} process={process} />)}
       </ul>
     </>

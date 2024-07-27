@@ -1,6 +1,6 @@
 import { MdHorizontalRule, MdOutlineNotifications } from 'react-icons/md';
 import { Execution } from '@/interfaces/execution.ts';
-import { ProcessStep } from '@/interfaces/process-step.ts';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import WorkflowItem from '@/components/Common/WorkflowItem.tsx';
 import ExecutionStepItem from '@/components/Execution/ExecutionStepItem.tsx';
 
@@ -20,9 +20,11 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
         </>
       }
     >
-      {execution.process.steps.map((processStep: ProcessStep) => (
-        <ExecutionStepItem key={processStep.id} execution={execution} processStep={processStep} />
-      ))}
+      {execution.process.steps
+        .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+        .map((processStep: ProcessStep) => (
+          <ExecutionStepItem key={processStep.id} execution={execution} processStep={processStep} />
+        ))}
     </WorkflowItem>
   );
 }

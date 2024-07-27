@@ -1,10 +1,19 @@
-import { ProcessStep } from '@/interfaces/process-step.ts';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import WorkflowStepItem from '@/components/Common/WorkflowStepItem.tsx';
+import ProcessStepCondition from '@/components/Process/ProcessStepCondition.tsx';
 
 interface ProcessStepItemProps {
   processStep: ProcessStep;
 }
 
 export function ProcessStepItem({ processStep }: ProcessStepItemProps) {
-  return <WorkflowStepItem processStep={processStep} />;
+  return (
+    <WorkflowStepItem processStep={processStep}>
+      <div className="cursor-not-allowed rounded border-2 border-dashed border-slate-400 p-2">
+        <div className="pointer-events-none">
+          <ProcessStepCondition processStep={processStep} />
+        </div>
+      </div>
+    </WorkflowStepItem>
+  );
 }

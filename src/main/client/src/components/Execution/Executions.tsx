@@ -1,5 +1,7 @@
 import { MdOutlineNotificationAdd } from 'react-icons/md';
 import { Execution } from '@/interfaces/execution.ts';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
+import { Process } from '@/interfaces/process.ts';
 import { useCreateExecutions } from '@/hooks/executions/useCreateExecutions.ts';
 import { useReadExecutions } from '@/hooks/executions/useReadExecutions.ts';
 import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
@@ -12,8 +14,14 @@ export function Executions() {
   const { mutate: createExecutions } = useCreateExecutions();
 
   const handleCreateExecutions = (): void => {
-    const processId: string | undefined = processes?.[0]?.id;
-    const processStepId: string | undefined = processes?.[0]?.steps[0]?.id;
+    const firstProcess: Process | undefined = processes?.sort(
+      (a: Process, b: Process) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    )?.[0];
+
+    const processId: string | undefined = firstProcess?.id;
+    const processStepId: string | undefined = firstProcess?.steps.sort(
+      (a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    )?.[0]?.id;
 
     // TODO: Allow to customize processId and processStepId
     if (processId && processStepId) {
@@ -29,9 +37,9 @@ export function Executions() {
           Create Execution
         </Button>
       </div>
-      <ul className="flex flex-col-reverse gap-y-2 p-2">
+      <ul className="flex flex-col gap-y-2 p-2">
         {executions
-          ?.sort((a: Execution, b: Execution) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          ?.sort((a: Execution, b: Execution) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .map((execution: Execution) => <ExecutionItem key={execution.id} execution={execution} />)}
       </ul>
     </>

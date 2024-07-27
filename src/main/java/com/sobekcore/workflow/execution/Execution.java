@@ -7,7 +7,9 @@ import com.sobekcore.workflow.process.step.ProcessStepNotPartOfProcessException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -61,13 +63,14 @@ public class Execution {
 
     @JsonIgnore
     public ProcessStep getNextProcessStep() {
+        List<ProcessStep> processStepList = getProcess()
+            .getSteps()
+            .stream()
+            .sorted(Comparator.comparing(ProcessStep::getCreatedAt))
+            .toList();
+
         try {
-            return getProcess()
-                .getSteps()
-                .get(getProcess()
-                    .getSteps()
-                    .indexOf(getProcessStep()) + 1
-                );
+            return processStepList.get(processStepList.indexOf(getProcessStep()) + 1);
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }

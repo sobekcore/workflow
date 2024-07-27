@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createRootRoute, createRoute, createRouter, RouterProvider } from '@tanstack/react-router';
+import { RouterProvider, createRootRoute, createRoute, createRouter } from '@tanstack/react-router';
 import { ExecutionsRoute } from '@/routes/Exectuions.tsx';
 import { HomeRoute } from '@/routes/Home.tsx';
 import { ProcessesRoute } from '@/routes/Processes.tsx';

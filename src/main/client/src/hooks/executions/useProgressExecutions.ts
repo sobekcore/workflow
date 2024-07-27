@@ -2,7 +2,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { progressExecutions } from '@/api/executions/progress-executions.ts';
 import { QueryKey } from '@/enums/query.ts';
 import { Execution, ExecutionToProgress } from '@/interfaces/execution.ts';
-import { ProcessStep } from '@/interfaces/process-step.ts';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 
 export function useProgressExecutions(executionId: string) {
   const queryClient: QueryClient = useQueryClient();

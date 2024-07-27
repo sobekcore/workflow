@@ -1,6 +1,7 @@
 import { MdChecklist, MdLabelOutline } from 'react-icons/md';
 import { ButtonSize } from '@/enums/button.ts';
-import { ProcessStep } from '@/interfaces/process-step.ts';
+import { Condition } from '@/enums/process-step/condition.ts';
+import { ProcessStep, ProcessStepToAdd } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import { useCreateProcessesSteps } from '@/hooks/processes-steps/useCreateProcessesSteps.ts';
 import { Button } from '@/components/Common/Button.tsx';
@@ -15,8 +16,49 @@ export function ProcessItem({ process }: ProcessItemProps) {
   const { mutate: createProcessesSteps } = useCreateProcessesSteps(process.id);
 
   const handleCreateProcessesSteps = (): void => {
-    // TODO: Allow to customize process step name
-    createProcessesSteps([{ name: 'Step', processId: process.id }]);
+    const chance: number = Math.random();
+
+    // TODO: Allow to customize process step name and description
+    const processStep: Omit<ProcessStepToAdd, 'conditionType'> = {
+      name: 'Step',
+      description: 'Step description',
+      processId: process.id,
+    };
+
+    if (chance > 0.66) {
+      createProcessesSteps([
+        {
+          ...processStep,
+          conditionType: Condition.RADIO,
+          conditionDataVisit: {
+            link: 'https://google.com',
+          },
+          conditionDataRadio: {
+            options: [{ label: 'First option' }, { label: 'Second option' }],
+          },
+        },
+      ]);
+    } else if (chance > 0.33) {
+      createProcessesSteps([
+        {
+          ...processStep,
+          conditionType: Condition.VISIT,
+          conditionDataVisit: {
+            link: 'https://google.com',
+          },
+          conditionDataRadio: {
+            options: [{ label: 'First option' }, { label: 'Second option' }],
+          },
+        },
+      ]);
+    } else {
+      createProcessesSteps([
+        {
+          ...processStep,
+          conditionType: Condition.NONE,
+        },
+      ]);
+    }
   };
 
   return (
@@ -34,9 +76,11 @@ export function ProcessItem({ process }: ProcessItemProps) {
         </Button>
       }
     >
-      {process.steps.map((processStep: ProcessStep) => (
-        <ProcessStepItem key={processStep.id} processStep={processStep} />
-      ))}
+      {process.steps
+        .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+        .map((processStep: ProcessStep) => (
+          <ProcessStepItem key={processStep.id} processStep={processStep} />
+        ))}
     </WorkflowItem>
   );
 }

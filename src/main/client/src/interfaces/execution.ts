@@ -1,4 +1,4 @@
-import { ProcessStep } from '@/interfaces/process-step.ts';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 
 export interface Execution {
