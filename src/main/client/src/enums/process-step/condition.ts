@@ -1,4 +1,4 @@
-export enum Condition {
+export enum ConditionType {
   NONE = 'NONE',
   VISIT = 'VISIT',
   RADIO = 'RADIO',

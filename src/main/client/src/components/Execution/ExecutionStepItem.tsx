@@ -1,9 +1,10 @@
-import { MdCheck } from 'react-icons/md';
+import { MdCheck, MdOutlineLocationOn } from 'react-icons/md';
 import { ButtonSize } from '@/enums/button.ts';
-import { Execution } from '@/interfaces/execution.ts';
+import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { useProgressExecutions } from '@/hooks/executions/useProgressExecutions.ts';
 import { Button } from '@/components/Common/Button.tsx';
+import Status from '@/components/Common/Status.tsx';
 import WorkflowStepItem from '@/components/Common/WorkflowStepItem.tsx';
 import ExecutionStepCondition from '@/components/Execution/ExecutionStepCondition.tsx';
 
@@ -27,15 +28,18 @@ export default function ExecutionStepItem({ execution, processStep }: ExecutionS
     <WorkflowStepItem
       processStep={processStep}
       actions={
-        isExecutionStepActive && (
+        isExecutionStepActive &&
+        (!execution.conditionCompleted ? (
+          <Status icon={MdOutlineLocationOn} label="Current Step" />
+        ) : (
           <Button size={ButtonSize.SMALL} onClick={handleActiveExecutionStepClick}>
             <MdCheck className="text-lg" />
             Complete Step
           </Button>
-        )
+        ))
       }
     >
-      <ExecutionStepCondition processStep={processStep} />
+      <ExecutionStepCondition execution={execution} processStep={processStep} />
     </WorkflowStepItem>
   );
 }

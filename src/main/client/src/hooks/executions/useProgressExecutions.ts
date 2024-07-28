@@ -1,7 +1,8 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { progressExecutions } from '@/api/executions/progress-executions.ts';
+import { ConditionType } from '@/enums/process-step/condition.ts';
 import { QueryKey } from '@/enums/query.ts';
-import { Execution, ExecutionToProgress } from '@/interfaces/execution.ts';
+import { Execution, ExecutionToProgress } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 
 export function useProgressExecutions(executionId: string) {
@@ -25,10 +26,11 @@ export function useProgressExecutions(executionId: string) {
         const processStepIndex: number = executions[index].process.steps.findIndex(
           (processStep: ProcessStep): boolean => processStep.id === executions[index].processStep?.id,
         );
+        const processStep: ProcessStep | undefined = executions[index].process.steps[processStepIndex + 1];
 
         return [
           ...executions.slice(0, index),
-          { ...executions[index], processStep: executions[index].process.steps[processStepIndex + 1] },
+          { ...executions[index], conditionCompleted: processStep?.conditionType === ConditionType.NONE, processStep },
           ...executions.slice(index + 1),
         ];
       });

@@ -1,6 +1,6 @@
 import { MdChecklist, MdLabelOutline } from 'react-icons/md';
 import { ButtonSize } from '@/enums/button.ts';
-import { Condition } from '@/enums/process-step/condition.ts';
+import { ConditionType } from '@/enums/process-step/condition.ts';
 import { ProcessStep, ProcessStepToAdd } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import { useCreateProcessesSteps } from '@/hooks/processes-steps/useCreateProcessesSteps.ts';
@@ -29,7 +29,7 @@ export function ProcessItem({ process }: ProcessItemProps) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: Condition.RADIO,
+          conditionType: ConditionType.RADIO,
           conditionDataVisit: {
             link: 'https://google.com',
           },
@@ -42,7 +42,7 @@ export function ProcessItem({ process }: ProcessItemProps) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: Condition.VISIT,
+          conditionType: ConditionType.VISIT,
           conditionDataVisit: {
             link: 'https://google.com',
           },
@@ -55,7 +55,7 @@ export function ProcessItem({ process }: ProcessItemProps) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: Condition.NONE,
+          conditionType: ConditionType.NONE,
         },
       ]);
     }

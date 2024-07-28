@@ -24,6 +24,10 @@ public class ConditionDataRadioConverter implements AttributeConverter<Condition
 
     @Override
     public ConditionDataRadio convertToEntityAttribute(String conditionDataRadio) {
+        if (conditionDataRadio == null) {
+            return null;
+        }
+
         try {
             return objectMapper.readValue(conditionDataRadio, ConditionDataRadio.class);
         } catch (JsonProcessingException e) {

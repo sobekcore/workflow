@@ -24,6 +24,10 @@ public class ConditionDataVisitConverter implements AttributeConverter<Condition
 
     @Override
     public ConditionDataVisit convertToEntityAttribute(String conditionDataVisit) {
+        if (conditionDataVisit == null) {
+            return null;
+        }
+
         try {
             return objectMapper.readValue(conditionDataVisit, ConditionDataVisit.class);
         } catch (JsonProcessingException e) {

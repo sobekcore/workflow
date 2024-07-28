@@ -1,4 +1,4 @@
-import { Condition } from '@/enums/process-step/condition.ts';
+import { ConditionType } from '@/enums/process-step/condition.ts';
 import { ConditionOption } from '@/interfaces/process-step/condition.ts';
 
 export interface ProcessStep {
@@ -6,7 +6,7 @@ export interface ProcessStep {
   createdAt: string;
   name: string;
   description?: string;
-  conditionType: Condition;
+  conditionType: ConditionType;
   conditionDataVisit?: {
     link: string;
   };
@@ -18,7 +18,7 @@ export interface ProcessStep {
 export interface ProcessStepToAdd {
   name: string;
   description?: string;
-  conditionType: Condition;
+  conditionType: ConditionType;
   conditionDataVisit?: {
     link: string;
   };

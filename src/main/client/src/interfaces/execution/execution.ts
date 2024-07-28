@@ -4,6 +4,7 @@ import { Process } from '@/interfaces/process.ts';
 export interface Execution {
   id: string;
   createdAt: string;
+  conditionCompleted: boolean;
   process: Process;
   processStep?: ProcessStep;
 }

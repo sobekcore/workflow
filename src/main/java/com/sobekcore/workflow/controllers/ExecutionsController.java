@@ -5,6 +5,8 @@ import com.sobekcore.workflow.execution.ExecutionDto;
 import com.sobekcore.workflow.execution.ExecutionProgressDto;
 import com.sobekcore.workflow.execution.ExecutionService;
 import com.sobekcore.workflow.process.step.ProcessStepNotPartOfProcessException;
+import com.sobekcore.workflow.execution.condition.ConditionCompleteDto;
+import com.sobekcore.workflow.execution.condition.ConditionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,8 +20,11 @@ import java.util.List;
 class ExecutionsController {
     private final ExecutionService executionService;
 
-    public ExecutionsController(ExecutionService executionService) {
+    private final ConditionService conditionService;
+
+    public ExecutionsController(ExecutionService executionService, ConditionService conditionService) {
         this.executionService = executionService;
+        this.conditionService = conditionService;
     }
 
     @PostMapping
@@ -41,5 +46,11 @@ class ExecutionsController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void progress(@Valid @RequestBody List<ExecutionProgressDto> executionProgressDtoList) {
         executionService.progress(executionProgressDtoList);
+    }
+
+    @PatchMapping("/conditions/complete")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void conditionsComplete(@Valid @RequestBody List<ConditionCompleteDto> conditionCompleteDtoList) {
+        conditionService.complete(conditionCompleteDtoList);
     }
 }

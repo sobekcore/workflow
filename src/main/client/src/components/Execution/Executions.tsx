@@ -1,5 +1,5 @@
 import { MdOutlineNotificationAdd } from 'react-icons/md';
-import { Execution } from '@/interfaces/execution.ts';
+import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import { useCreateExecutions } from '@/hooks/executions/useCreateExecutions.ts';

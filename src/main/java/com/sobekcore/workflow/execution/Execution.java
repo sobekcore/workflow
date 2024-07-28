@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.step.ProcessStep;
 import com.sobekcore.workflow.process.step.ProcessStepNotPartOfProcessException;
+import com.sobekcore.workflow.process.step.condition.ConditionType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -21,6 +22,10 @@ public class Execution {
     @NotNull
     @Column(nullable = false)
     private Date createdAt;
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean conditionCompleted;
 
     @NotNull
     @ManyToOne
@@ -41,6 +46,7 @@ public class Execution {
 
         this.id = UUID.randomUUID();
         this.createdAt = new Date();
+        this.conditionCompleted = processStep.getConditionType() == ConditionType.NONE;
         this.process = process;
         this.processStep = processStep;
     }
@@ -51,6 +57,10 @@ public class Execution {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public boolean isConditionCompleted() {
+        return conditionCompleted;
     }
 
     public Process getProcess() {
@@ -76,7 +86,13 @@ public class Execution {
         }
     }
 
+    public Execution setConditionCompleted(boolean conditionCompleted) {
+        this.conditionCompleted = conditionCompleted;
+        return this;
+    }
+
     public Execution setProcessStep(ProcessStep processStep) {
+        this.conditionCompleted = processStep == null || processStep.getConditionType() == ConditionType.NONE;
         this.processStep = processStep;
         return this;
     }

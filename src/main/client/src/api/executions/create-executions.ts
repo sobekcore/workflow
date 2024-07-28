@@ -1,5 +1,5 @@
 import { HttpMethod } from '@/enums/http.ts';
-import { Execution, ExecutionToCreate } from '@/interfaces/execution.ts';
+import { Execution, ExecutionToCreate } from '@/interfaces/execution/execution.ts';
 import { httpClient } from '@/utils/http-client.ts';
 
 export function createExecutions(executions: ExecutionToCreate[]): Promise<Execution[]> {
