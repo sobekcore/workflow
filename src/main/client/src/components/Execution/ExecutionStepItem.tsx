@@ -1,4 +1,4 @@
-import { MdCheck, MdOutlineLocationOn } from 'react-icons/md';
+import { MdCheck } from 'react-icons/md';
 import { ButtonSize } from '@/enums/button.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
@@ -30,7 +30,7 @@ export default function ExecutionStepItem({ execution, processStep }: ExecutionS
       actions={
         isExecutionStepActive &&
         (!execution.conditionCompleted ? (
-          <Status icon={MdOutlineLocationOn} label="Current Step" />
+          <Status icon={MdCheck} label="Current Step" />
         ) : (
           <Button size={ButtonSize.SMALL} onClick={handleActiveExecutionStepClick}>
             <MdCheck className="text-lg" />
@@ -39,7 +39,7 @@ export default function ExecutionStepItem({ execution, processStep }: ExecutionS
         ))
       }
     >
-      <ExecutionStepCondition execution={execution} processStep={processStep} />
+      {isExecutionStepActive && <ExecutionStepCondition execution={execution} processStep={processStep} />}
     </WorkflowStepItem>
   );
 }

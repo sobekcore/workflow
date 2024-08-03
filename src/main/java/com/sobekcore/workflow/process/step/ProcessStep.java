@@ -10,6 +10,7 @@ import com.sobekcore.workflow.process.step.condition.visit.ConditionDataVisitCon
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.Internal;
 
 import java.util.Date;
 import java.util.UUID;
@@ -48,10 +49,6 @@ public class ProcessStep {
     @JoinColumn(nullable = false)
     private Process process;
 
-    @Deprecated
-    public ProcessStep() {
-    }
-
     public ProcessStep(
         String name,
         String description,
@@ -60,8 +57,8 @@ public class ProcessStep {
         ConditionDataRadio conditionDataRadio,
         Process process
     ) {
-        this.id = UUID.randomUUID();
-        this.createdAt = new Date();
+        id = UUID.randomUUID();
+        createdAt = new Date();
         this.name = name;
         this.description = description;
         this.conditionType = conditionType;
@@ -71,6 +68,10 @@ public class ProcessStep {
             this.conditionDataRadio = conditionDataRadio;
         }
         this.process = process;
+    }
+
+    @Internal
+    protected ProcessStep() {
     }
 
     public UUID getId() {

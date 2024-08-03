@@ -17,7 +17,7 @@ public class ConditionDataVisitConverter implements AttributeConverter<Condition
 
         try {
             return objectMapper.writeValueAsString(conditionDataVisit);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException exception) {
             return null;
         }
     }
@@ -30,7 +30,7 @@ public class ConditionDataVisitConverter implements AttributeConverter<Condition
 
         try {
             return objectMapper.readValue(conditionDataVisit, ConditionDataVisit.class);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException exception) {
             return null;
         }
     }

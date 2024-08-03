@@ -1,13 +1,14 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeConditions } from '@/api/executions/complete-conditions.ts';
 import { QueryKey } from '@/enums/query.ts';
-import { Execution, ExecutionToProgress } from '@/interfaces/execution/execution.ts';
+import { ConditionToComplete } from '@/interfaces/execution/condition.ts';
+import { Execution } from '@/interfaces/execution/execution.ts';
 
 export function useCompleteConditions(executionId: string) {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
-    mutationFn(conditions: ExecutionToProgress[]): Promise<void> {
+    mutationFn(conditions: ConditionToComplete[]): Promise<void> {
       return completeConditions(conditions);
     },
     onMutate(): void {

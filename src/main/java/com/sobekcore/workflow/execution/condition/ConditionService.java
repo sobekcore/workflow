@@ -17,7 +17,10 @@ public class ConditionService {
         executionRepository.saveAll(
             conditionCompleteDtoList
                 .stream()
-                .map(conditionCompleteDto -> executionRepository.getReferenceById(conditionCompleteDto.getExecutionId()))
+                .map(conditionCompleteDto -> executionRepository
+                    .getReferenceById(conditionCompleteDto.getExecutionId())
+                    .setConditionState(conditionCompleteDto.getConditionStateRadio())
+                )
                 .map(execution -> execution.setConditionCompleted(true))
                 .toList()
         );

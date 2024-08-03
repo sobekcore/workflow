@@ -54,11 +54,11 @@ public class ExecutionService {
             executionRepository
                 .findAll()
                 .stream()
+                .filter(Execution::isConditionCompleted)
+                .filter(execution -> execution.getProcessStep() != null)
                 .filter(execution -> executionIdList.isEmpty() || executionIdList.contains(execution.getId().toString()))
                 .filter(execution -> processIdList.isEmpty() || processIdList.contains(execution.getProcess().getId().toString()))
                 .filter(execution -> processStepIdList.isEmpty() || processStepIdList.contains(execution.getProcessStep().getId().toString()))
-                .filter(Execution::isConditionCompleted)
-                .filter(execution -> execution.getProcessStep() != null)
                 .map(execution -> execution.setProcessStep(execution.getNextProcessStep()))
                 .toList()
         );

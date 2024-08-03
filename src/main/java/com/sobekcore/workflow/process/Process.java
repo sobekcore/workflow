@@ -4,6 +4,7 @@ import com.sobekcore.workflow.process.step.ProcessStep;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.Internal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,15 +29,15 @@ public class Process {
     @JoinColumn(name = "process_id")
     private List<ProcessStep> steps;
 
-    @Deprecated
-    public Process() {
+    public Process(String name) {
+        id = UUID.randomUUID();
+        createdAt = new Date();
+        this.name = name;
+        steps = new ArrayList<>();
     }
 
-    public Process(String name) {
-        this.id = UUID.randomUUID();
-        this.createdAt = new Date();
-        this.name = name;
-        this.steps = new ArrayList<>();
+    @Internal
+    protected Process() {
     }
 
     public UUID getId() {
