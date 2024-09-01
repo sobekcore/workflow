@@ -19,6 +19,7 @@ export default {
     '^@/hooks/(.*)$',
     '^@/components/(.*)$',
     '^@/routes/(.*)$',
+    '^@/configs/(.*)$',
     '^@/utils/(.*)$',
     '^@/styles/(.*)$',
     '^@/(.*)$',

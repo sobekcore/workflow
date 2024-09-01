@@ -1,8 +1,6 @@
 package com.sobekcore.workflow.process.step;
 
-import com.sobekcore.workflow.process.step.condition.radio.ConditionDataRadio;
-import com.sobekcore.workflow.process.step.condition.visit.ConditionDataVisit;
-import com.sobekcore.workflow.process.step.condition.ConditionType;
+import com.sobekcore.workflow.process.step.condition.Condition;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,11 +13,7 @@ public class ProcessStepDto {
     private String description;
 
     @NotNull
-    private ConditionType conditionType;
-
-    private ConditionDataVisit conditionDataVisit;
-
-    private ConditionDataRadio conditionDataRadio;
+    private Condition condition;
 
     @NotNull
     private UUID processId;
@@ -32,16 +26,8 @@ public class ProcessStepDto {
         return description;
     }
 
-    public ConditionType getConditionType() {
-        return conditionType;
-    }
-
-    public ConditionDataVisit getConditionDataVisit() {
-        return conditionDataVisit;
-    }
-
-    public ConditionDataRadio getConditionDataRadio() {
-        return conditionDataRadio;
+    public Condition getCondition() {
+        return condition;
     }
 
     public UUID getProcessId() {

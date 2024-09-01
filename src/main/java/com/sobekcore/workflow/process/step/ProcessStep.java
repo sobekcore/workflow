@@ -2,11 +2,8 @@ package com.sobekcore.workflow.process.step;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sobekcore.workflow.process.Process;
-import com.sobekcore.workflow.process.step.condition.*;
-import com.sobekcore.workflow.process.step.condition.radio.ConditionDataRadio;
-import com.sobekcore.workflow.process.step.condition.radio.ConditionDataRadioConverter;
-import com.sobekcore.workflow.process.step.condition.visit.ConditionDataVisit;
-import com.sobekcore.workflow.process.step.condition.visit.ConditionDataVisitConverter;
+import com.sobekcore.workflow.process.step.condition.Condition;
+import com.sobekcore.workflow.process.step.condition.ConditionConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,16 +29,8 @@ public class ProcessStep {
     @Column(columnDefinition = "text")
     private String description;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ConditionType conditionType;
-
-    @Convert(converter = ConditionDataVisitConverter.class)
-    private ConditionDataVisit conditionDataVisit;
-
-    @Convert(converter = ConditionDataRadioConverter.class)
-    private ConditionDataRadio conditionDataRadio;
+    @Convert(converter = ConditionConverter.class)
+    private Condition condition;
 
     @JsonIgnore
     @NotNull
@@ -49,24 +38,12 @@ public class ProcessStep {
     @JoinColumn(nullable = false)
     private Process process;
 
-    public ProcessStep(
-        String name,
-        String description,
-        ConditionType conditionType,
-        ConditionDataVisit conditionDataVisit,
-        ConditionDataRadio conditionDataRadio,
-        Process process
-    ) {
+    public ProcessStep(String name, String description, Condition condition, Process process) {
         id = UUID.randomUUID();
         createdAt = new Date();
         this.name = name;
         this.description = description;
-        this.conditionType = conditionType;
-        if (conditionType == ConditionType.VISIT) {
-            this.conditionDataVisit = conditionDataVisit;
-        } else if (conditionType == ConditionType.RADIO) {
-            this.conditionDataRadio = conditionDataRadio;
-        }
+        this.condition = condition;
         this.process = process;
     }
 
@@ -90,16 +67,8 @@ public class ProcessStep {
         return description;
     }
 
-    public ConditionType getConditionType() {
-        return conditionType;
-    }
-
-    public ConditionDataVisit getConditionDataVisit() {
-        return conditionDataVisit;
-    }
-
-    public ConditionDataRadio getConditionDataRadio() {
-        return conditionDataRadio;
+    public Condition getCondition() {
+        return condition;
     }
 
     public Process getProcess() {

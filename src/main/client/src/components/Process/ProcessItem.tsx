@@ -19,35 +19,45 @@ export function ProcessItem({ process }: ProcessItemProps) {
     const chance: number = Math.random();
 
     // TODO: Allow to customize process step name and description
-    const processStep: Omit<ProcessStepToAdd, 'conditionType'> = {
+    const processStep: Omit<ProcessStepToAdd, 'condition'> = {
       name: 'Step',
       description: 'Step description',
       processId: process.id,
     };
 
-    if (chance > 0.66) {
+    if (chance > 0.75) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: ConditionType.RADIO,
-          conditionDataVisit: {
-            link: 'https://google.com',
-          },
-          conditionDataRadio: {
-            options: [{ label: 'First option' }, { label: 'Second option' }],
+          condition: {
+            type: ConditionType.CHECKBOX,
+            data: {
+              options: [{ label: 'First option' }, { label: 'Second option' }],
+            },
           },
         },
       ]);
-    } else if (chance > 0.33) {
+    } else if (chance > 0.5) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: ConditionType.VISIT,
-          conditionDataVisit: {
-            link: 'https://google.com',
+          condition: {
+            type: ConditionType.RADIO,
+            data: {
+              options: [{ label: 'First option' }, { label: 'Second option' }],
+            },
           },
-          conditionDataRadio: {
-            options: [{ label: 'First option' }, { label: 'Second option' }],
+        },
+      ]);
+    } else if (chance > 0.25) {
+      createProcessesSteps([
+        {
+          ...processStep,
+          condition: {
+            type: ConditionType.VISIT,
+            data: {
+              link: 'https://google.com',
+            },
           },
         },
       ]);
@@ -55,7 +65,9 @@ export function ProcessItem({ process }: ProcessItemProps) {
       createProcessesSteps([
         {
           ...processStep,
-          conditionType: ConditionType.NONE,
+          condition: {
+            type: ConditionType.NONE,
+          },
         },
       ]);
     }

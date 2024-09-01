@@ -19,7 +19,7 @@ public class ConditionService {
                 .stream()
                 .map(conditionCompleteDto -> executionRepository
                     .getReferenceById(conditionCompleteDto.getExecutionId())
-                    .setConditionState(conditionCompleteDto.getConditionStateRadio())
+                    .setConditionState(conditionCompleteDto.getState())
                 )
                 .map(execution -> execution.setConditionCompleted(true))
                 .toList()

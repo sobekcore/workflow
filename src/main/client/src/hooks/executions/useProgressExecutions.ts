@@ -1,9 +1,9 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { progressExecutions } from '@/api/executions/progress-executions.ts';
-import { ConditionType } from '@/enums/process-step/condition.ts';
 import { QueryKey } from '@/enums/query.ts';
 import { Execution, ExecutionToProgress } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
+import { getConditionConfig } from '@/configs/condition.tsx';
 
 export function useProgressExecutions(executionId: string) {
   const queryClient: QueryClient = useQueryClient();
@@ -30,7 +30,12 @@ export function useProgressExecutions(executionId: string) {
 
         return [
           ...executions.slice(0, index),
-          { ...executions[index], conditionCompleted: processStep?.conditionType === ConditionType.NONE, processStep },
+          {
+            ...executions[index],
+            conditionCompleted: getConditionConfig(processStep?.condition.type)?.isConditionReady() ?? false,
+            conditionState: {},
+            processStep,
+          },
           ...executions.slice(index + 1),
         ];
       });

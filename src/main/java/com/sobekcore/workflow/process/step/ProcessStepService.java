@@ -26,9 +26,7 @@ public class ProcessStepService {
                     .map(processStepDto -> new ProcessStep(
                         processStepDto.getName(),
                         processStepDto.getDescription(),
-                        processStepDto.getConditionType(),
-                        processStepDto.getConditionDataVisit(),
-                        processStepDto.getConditionDataRadio(),
+                        processStepDto.getCondition(),
                         processRepository.getReferenceById(processStepDto.getProcessId())
                     ))
                     .toList()

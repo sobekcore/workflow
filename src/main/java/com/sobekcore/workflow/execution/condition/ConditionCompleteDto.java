@@ -1,6 +1,6 @@
 package com.sobekcore.workflow.execution.condition;
 
-import com.sobekcore.workflow.execution.condition.radio.ConditionStateRadio;
+import com.sobekcore.workflow.process.step.condition.state.ConditionState;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
@@ -9,13 +9,13 @@ public class ConditionCompleteDto {
     @NotNull
     private UUID executionId;
 
-    private ConditionStateRadio conditionStateRadio;
+    private ConditionState state;
 
     public UUID getExecutionId() {
         return executionId;
     }
 
-    public ConditionStateRadio getConditionStateRadio() {
-        return conditionStateRadio;
+    public ConditionState getState() {
+        return state;
     }
 }

@@ -1,11 +1,11 @@
 package com.sobekcore.workflow.execution;
 
-import com.sobekcore.workflow.execution.condition.radio.ConditionStateRadio;
-import com.sobekcore.workflow.execution.condition.radio.ConditionStateRadioConverter;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.step.ProcessStep;
 import com.sobekcore.workflow.process.step.ProcessStepNotPartOfProcessException;
-import com.sobekcore.workflow.process.step.condition.ConditionType;
+import com.sobekcore.workflow.process.step.condition.Condition;
+import com.sobekcore.workflow.process.step.condition.state.ConditionState;
+import com.sobekcore.workflow.process.step.condition.state.ConditionStateConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Internal;
@@ -29,8 +29,8 @@ public class Execution {
     @Column(nullable = false)
     private boolean conditionCompleted;
 
-    @Convert(converter = ConditionStateRadioConverter.class)
-    private ConditionStateRadio conditionStateRadio;
+    @Convert(converter = ConditionStateConverter.class)
+    private ConditionState conditionState;
 
     @NotNull
     @ManyToOne
@@ -47,7 +47,9 @@ public class Execution {
 
         id = UUID.randomUUID();
         createdAt = new Date();
-        conditionCompleted = processStep.getConditionType() == ConditionType.NONE;
+        conditionCompleted = Condition
+            .getMetadata(processStep.getCondition().getType())
+            .isConditionReady(conditionState);
         this.process = process;
         this.processStep = processStep;
     }
@@ -68,8 +70,8 @@ public class Execution {
         return conditionCompleted;
     }
 
-    public ConditionStateRadio getConditionStateRadio() {
-        return conditionStateRadio;
+    public ConditionState getConditionState() {
+        return conditionState;
     }
 
     public Process getProcess() {
@@ -94,31 +96,25 @@ public class Execution {
         }
     }
 
-    public boolean isConditionReady() {
-        if (getProcessStep() != null && getProcessStep().getConditionType() == ConditionType.RADIO) {
-            return getConditionStateRadio().getOption() != null;
-        }
-
-        return true;
-    }
-
     public Execution setConditionCompleted(boolean conditionCompleted) {
-        this.conditionCompleted = isConditionReady() && conditionCompleted;
+        this.conditionCompleted = conditionCompleted && Condition
+            .getMetadata(getProcessStep().getCondition().getType())
+            .isConditionReady(conditionState);
 
         return this;
     }
 
-    public Execution setConditionState(ConditionStateRadio conditionStateRadio) {
-        if (getProcessStep() != null && getProcessStep().getConditionType() == ConditionType.RADIO) {
-            this.conditionStateRadio = conditionStateRadio;
-        }
+    public Execution setConditionState(ConditionState conditionState) {
+        this.conditionState = conditionState;
 
         return this;
     }
 
     public Execution setProcessStep(ProcessStep processStep) {
-        conditionCompleted = processStep == null || processStep.getConditionType() == ConditionType.NONE;
-        conditionStateRadio = null;
+        conditionCompleted = processStep == null || Condition
+            .getMetadata(processStep.getCondition().getType())
+            .isConditionReady(conditionState);
+        conditionState = null;
         this.processStep = processStep;
 
         return this;

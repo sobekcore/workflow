@@ -4,4 +4,5 @@ public enum ConditionType {
     NONE,
     VISIT,
     RADIO,
+    CHECKBOX,
 }
