@@ -1,4 +1,5 @@
 import { MdCheck, MdHorizontalRule, MdOutlineNotifications } from 'react-icons/md';
+import { StatusType } from '@/enums/status.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import Status from '@/components/Common/Status.tsx';
@@ -10,6 +11,8 @@ interface ExecutionItemProps {
 }
 
 export default function ExecutionItem({ execution }: ExecutionItemProps) {
+  const isExecutionCompleted: boolean = !execution.processStep;
+
   return (
     <WorkflowItem
       title={
@@ -20,16 +23,25 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
           </h1>
         </>
       }
+      actions={
+        isExecutionCompleted && (
+          <div className="flex">
+            <Status icon={MdCheck} label="Completed" type={StatusType.SUCCESS} />
+          </div>
+        )
+      }
+      completed={isExecutionCompleted}
+      open={!isExecutionCompleted}
     >
-      {!execution.processStep && (
-        <div className="flex">
-          <Status icon={MdCheck} label="Completed" />
-        </div>
-      )}
       {execution.process.steps
         .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
         .map((processStep: ProcessStep) => (
-          <ExecutionStepItem key={processStep.id} execution={execution} processStep={processStep} />
+          <ExecutionStepItem
+            key={processStep.id}
+            execution={execution}
+            processStep={processStep}
+            completed={isExecutionCompleted}
+          />
         ))}
     </WorkflowItem>
   );

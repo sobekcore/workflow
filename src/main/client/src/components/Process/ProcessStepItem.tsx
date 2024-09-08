@@ -9,7 +9,7 @@ interface ProcessStepItemProps {
 export function ProcessStepItem({ processStep }: ProcessStepItemProps) {
   return (
     <WorkflowStepItem processStep={processStep}>
-      <div className="cursor-not-allowed rounded border-2 border-dashed border-slate-400 p-2">
+      <div className="cursor-not-allowed rounded border-2 border-dashed border-slate-400 p-2 brightness-75 contrast-50">
         <div className="pointer-events-none">
           <ProcessStepCondition processStep={processStep} />
         </div>

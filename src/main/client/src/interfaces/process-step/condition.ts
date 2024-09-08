@@ -12,4 +12,5 @@ export interface ConditionData {
 
 export interface ConditionOption {
   label: string;
+  value: string;
 }

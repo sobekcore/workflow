@@ -1,6 +1,11 @@
 import { HTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { ButtonSize } from '@/enums/button.ts';
+import { ButtonSize, ButtonType } from '@/enums/button.ts';
+
+const types: Record<ButtonType, string> = {
+  [ButtonType.DEFAULT]: 'bg-indigo-500 text-white',
+  [ButtonType.TEXT]: 'text-indigo-500 hover:bg-indigo-100',
+};
 
 const sizes: Record<ButtonSize, string> = {
   [ButtonSize.SMALL]: 'px-2 py-1 text-sm',
@@ -8,15 +13,19 @@ const sizes: Record<ButtonSize, string> = {
 };
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  type?: ButtonType;
   size?: ButtonSize;
 }
 
-export function Button({ size = ButtonSize.MEDIUM, children, className, ...props }: ButtonProps) {
+export function Button({
+  type = ButtonType.DEFAULT,
+  size = ButtonSize.MEDIUM,
+  children,
+  className,
+  ...props
+}: ButtonProps) {
   return (
-    <button
-      className={clsx('flex items-center gap-2 rounded-md bg-indigo-500 text-white', sizes[size], className)}
-      {...props}
-    >
+    <button className={clsx('flex items-center gap-2 rounded-md', types[type], sizes[size], className)} {...props}>
       {children}
     </button>
   );

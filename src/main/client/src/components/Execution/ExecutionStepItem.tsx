@@ -1,4 +1,5 @@
 import { MdCheck } from 'react-icons/md';
+import clsx from 'clsx';
 import { ButtonSize } from '@/enums/button.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
@@ -11,9 +12,10 @@ import ExecutionStepCondition from '@/components/Execution/ExecutionStepConditio
 interface ExecutionStepItemProps {
   execution: Execution;
   processStep: ProcessStep;
+  completed?: boolean;
 }
 
-export default function ExecutionStepItem({ execution, processStep }: ExecutionStepItemProps) {
+export default function ExecutionStepItem({ execution, processStep, completed }: ExecutionStepItemProps) {
   const { mutate: progressExecutions } = useProgressExecutions(execution.id);
 
   const handleActiveExecutionStepClick = (): void => {
@@ -30,14 +32,16 @@ export default function ExecutionStepItem({ execution, processStep }: ExecutionS
       actions={
         isExecutionStepActive &&
         (!execution.conditionCompleted ? (
-          <Status icon={MdCheck} label="Current Step" />
+          <Status icon={MdCheck} label="Current Execution Step" />
         ) : (
           <Button size={ButtonSize.SMALL} onClick={handleActiveExecutionStepClick}>
             <MdCheck className="text-lg" />
-            Complete Step
+            Complete Execution Step
           </Button>
         ))
       }
+      completed={completed}
+      className={clsx(isExecutionStepActive && 'border border-indigo-500')}
     >
       {isExecutionStepActive && <ExecutionStepCondition execution={execution} processStep={processStep} />}
     </WorkflowStepItem>

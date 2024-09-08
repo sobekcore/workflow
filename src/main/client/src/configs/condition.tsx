@@ -16,7 +16,7 @@ interface ConditionConfigRenderProps {
   onComplete?(state?: ConditionState): void;
 }
 
-const conditionConfig: Readonly<Record<ConditionType, ConditionConfig>> = {
+const conditionConfig: Record<ConditionType, ConditionConfig> = {
   [ConditionType.NONE]: {
     isConditionReady(): boolean {
       return true;
@@ -48,16 +48,18 @@ const conditionConfig: Readonly<Record<ConditionType, ConditionConfig>> = {
       return (
         <form className="contents">
           To complete this step, fill this radio list:
-          {condition?.data?.options?.map((option: ConditionOption, index: number) => (
-            <label key={index} className="flex items-center gap-1">
-              <input
-                type="radio"
-                name={id}
-                defaultChecked={option.label === execution?.conditionState?.option?.label}
-                onChange={() => onComplete?.({ option })}
-              />
-              {option.label}
-            </label>
+          {condition?.data?.options?.map((option: ConditionOption) => (
+            <div key={option.value} className="flex">
+              <label className="flex items-center gap-1">
+                <input
+                  type="radio"
+                  name={id}
+                  defaultChecked={option.value === execution?.conditionState?.option?.value}
+                  onChange={() => onComplete?.({ option })}
+                />
+                {option.label}
+              </label>
+            </div>
           ))}
         </form>
       );
@@ -71,26 +73,28 @@ const conditionConfig: Readonly<Record<ConditionType, ConditionConfig>> = {
       return (
         <form className="contents">
           To complete this step, fill this checkbox list:
-          {condition?.data?.options?.map((option: ConditionOption, index: number) => (
-            <label key={index} className="flex items-center gap-1">
-              <input
-                type="checkbox"
-                name={id}
-                defaultChecked={execution?.conditionState?.options
-                  ?.map((option: ConditionOption): string => option.label)
-                  .includes(option.label)}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  onComplete?.({
-                    options: event.target.checked
-                      ? [...(execution?.conditionState?.options ?? []), option]
-                      : execution?.conditionState?.options?.filter(
-                          (stateOption: ConditionOption): boolean => stateOption.label !== option.label,
-                        ) ?? [],
-                  })
-                }
-              />
-              {option.label}
-            </label>
+          {condition?.data?.options?.map((option: ConditionOption) => (
+            <div key={option.value} className="flex">
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  name={id}
+                  defaultChecked={execution?.conditionState?.options
+                    ?.map((option: ConditionOption): string => option.value)
+                    .includes(option.value)}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    onComplete?.({
+                      options: event.target.checked
+                        ? [...(execution?.conditionState?.options ?? []), option]
+                        : execution?.conditionState?.options?.filter(
+                            (stateOption: ConditionOption): boolean => stateOption.value !== option.value,
+                          ) ?? [],
+                    })
+                  }
+                />
+                {option.label}
+              </label>
+            </div>
           ))}
         </form>
       );

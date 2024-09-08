@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MdChecklist, MdLabelOutline } from 'react-icons/md';
 import { ButtonSize } from '@/enums/button.ts';
 import { ConditionType } from '@/enums/process-step/condition.ts';
@@ -13,9 +14,12 @@ interface ProcessItemProps {
 }
 
 export function ProcessItem({ process }: ProcessItemProps) {
+  const [isWorkflowItemOpen, setIsWorkflowItemOpen] = useState<boolean>(false);
   const { mutate: createProcessesSteps } = useCreateProcessesSteps(process.id);
 
   const handleCreateProcessesSteps = (): void => {
+    setIsWorkflowItemOpen(true);
+
     const chance: number = Math.random();
 
     // TODO: Allow to customize process step name and description
@@ -32,7 +36,10 @@ export function ProcessItem({ process }: ProcessItemProps) {
           condition: {
             type: ConditionType.CHECKBOX,
             data: {
-              options: [{ label: 'First option' }, { label: 'Second option' }],
+              options: [
+                { label: 'First option', value: 'first-option' },
+                { label: 'Second option', value: 'second-option' },
+              ],
             },
           },
         },
@@ -44,7 +51,10 @@ export function ProcessItem({ process }: ProcessItemProps) {
           condition: {
             type: ConditionType.RADIO,
             data: {
-              options: [{ label: 'First option' }, { label: 'Second option' }],
+              options: [
+                { label: 'First option', value: 'first-option' },
+                { label: 'Second option', value: 'second-option' },
+              ],
             },
           },
         },
@@ -87,6 +97,7 @@ export function ProcessItem({ process }: ProcessItemProps) {
           Create Process Step
         </Button>
       }
+      open={isWorkflowItemOpen}
     >
       {process.steps
         .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
