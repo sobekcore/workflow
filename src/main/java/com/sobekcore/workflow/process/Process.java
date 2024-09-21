@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Internal;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ public class Process {
 
     @NotNull
     @Column(nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 
     @NotBlank
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class Process {
 
     public Process(String name) {
         id = UUID.randomUUID();
-        createdAt = new Date();
+        createdAt = Instant.now();
         this.name = name;
         steps = new ArrayList<>();
     }
@@ -44,7 +44,7 @@ public class Process {
         return id;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 

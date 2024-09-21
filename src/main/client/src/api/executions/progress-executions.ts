@@ -3,7 +3,7 @@ import { ExecutionToProgress } from '@/interfaces/execution/execution.ts';
 import { httpClient } from '@/utils/http-client.ts';
 
 export function progressExecutions(executions: ExecutionToProgress[]): Promise<void> {
-  return httpClient<void>(HttpMethod.PATCH, '/executions/progress', {
+  return httpClient(HttpMethod.PATCH, '/executions/progress', {
     body: executions,
   });
 }

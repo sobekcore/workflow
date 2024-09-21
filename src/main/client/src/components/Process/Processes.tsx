@@ -1,30 +1,19 @@
-import { MdOutlineNewLabel } from 'react-icons/md';
 import { Process } from '@/interfaces/process.ts';
-import { useCreateProcesses } from '@/hooks/processes/useCreateProcesses.ts';
 import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
-import { Button } from '@/components/Common/Button.tsx';
-import { ProcessItem } from '@/components/Process/ProcessItem.tsx';
+import CreateProcess from '@/components/Process/CreateProcess.tsx';
+import ProcessItem from '@/components/Process/ProcessItem.tsx';
 
-export function Processes() {
+export default function Processes() {
   const { data: processes } = useReadProcesses();
-  const { mutate: createProcesses } = useCreateProcesses();
-
-  const handleCreateProcesses = (): void => {
-    // TODO: Allow to customize process name
-    createProcesses([{ name: 'Process' }]);
-  };
 
   return (
     <>
       <div className="px-2 pt-2">
-        <Button onClick={handleCreateProcesses}>
-          <MdOutlineNewLabel className="text-xl" />
-          Create Process
-        </Button>
+        <CreateProcess />
       </div>
       <ul className="flex flex-col gap-y-2 p-2">
         {processes
-          ?.sort((a: Process, b: Process) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          ?.sort((a: Process, b: Process) => b.createdAt.getTime() - a.createdAt.getTime())
           .map((process: Process) => <ProcessItem key={process.id} process={process} />)}
       </ul>
     </>

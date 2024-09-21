@@ -1,5 +1,5 @@
 import { MdCheck, MdHorizontalRule, MdOutlineNotifications } from 'react-icons/md';
-import { StatusType } from '@/enums/status.ts';
+import { StatusVariant } from '@/enums/status.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import Status from '@/components/Common/Status.tsx';
@@ -26,7 +26,7 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
       actions={
         isExecutionCompleted && (
           <div className="flex">
-            <Status icon={MdCheck} label="Completed" type={StatusType.SUCCESS} />
+            <Status icon={MdCheck} label="Completed" variant={StatusVariant.SUCCESS} />
           </div>
         )
       }
@@ -34,7 +34,7 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
       open={!isExecutionCompleted}
     >
       {execution.process.steps
-        .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+        .sort((a: ProcessStep, b: ProcessStep) => a.createdAt.getTime() - b.createdAt.getTime())
         .map((processStep: ProcessStep) => (
           <ExecutionStepItem
             key={processStep.id}

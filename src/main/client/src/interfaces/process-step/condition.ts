@@ -1,8 +1,8 @@
 import { ConditionType } from '@/enums/process-step/condition.ts';
 
-export interface Condition {
-  type: ConditionType;
-  data?: ConditionData;
+export interface ConditionOption {
+  label: string;
+  value: string;
 }
 
 export interface ConditionData {
@@ -10,7 +10,7 @@ export interface ConditionData {
   options?: ConditionOption[];
 }
 
-export interface ConditionOption {
-  label: string;
-  value: string;
+export interface Condition {
+  type: ConditionType;
+  data?: ConditionData;
 }

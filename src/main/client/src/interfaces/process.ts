@@ -2,7 +2,7 @@ import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 
 export interface Process {
   id: string;
-  createdAt: string;
+  createdAt: Date;
   name: string;
   steps: ProcessStep[];
 }

@@ -10,8 +10,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Internal;
 
+import java.time.Instant;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +23,7 @@ public class Execution {
 
     @NotNull
     @Column(nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 
     @NotNull
     @Column(nullable = false)
@@ -46,7 +46,7 @@ public class Execution {
         }
 
         id = UUID.randomUUID();
-        createdAt = new Date();
+        createdAt = Instant.now();
         conditionCompleted = Condition
             .getMetadata(processStep.getCondition().getType())
             .isConditionReady(conditionState);
@@ -62,7 +62,7 @@ public class Execution {
         return id;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 

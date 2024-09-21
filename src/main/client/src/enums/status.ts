@@ -1,4 +1,4 @@
-export enum StatusType {
+export enum StatusVariant {
   DEFAULT = 'default',
   SUCCESS = 'success',
 }

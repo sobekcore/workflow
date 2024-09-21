@@ -16,6 +16,7 @@ export default {
     '^@/enums/(.*)$',
     '^@/exceptions/(.*)$',
     '^@/interfaces/(.*)$',
+    '^@/schemas/(.*)$',
     '^@/hooks/(.*)$',
     '^@/components/(.*)$',
     '^@/layouts/(.*)$',

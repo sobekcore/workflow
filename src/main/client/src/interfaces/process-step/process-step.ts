@@ -2,7 +2,7 @@ import { Condition } from '@/interfaces/process-step/condition.ts';
 
 export interface ProcessStep {
   id: string;
-  createdAt: string;
+  createdAt: Date;
   name: string;
   description?: string;
   condition: Condition;

@@ -1,10 +1,10 @@
-import { HTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { ButtonSize, ButtonType } from '@/enums/button.ts';
+import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 
-const types: Record<ButtonType, string> = {
-  [ButtonType.DEFAULT]: 'bg-indigo-500 text-white',
-  [ButtonType.TEXT]: 'text-indigo-500 hover:bg-indigo-100',
+const variants: Record<ButtonVariant, string> = {
+  [ButtonVariant.DEFAULT]: 'bg-indigo-500 text-white hover:bg-indigo-600',
+  [ButtonVariant.TEXT]: 'text-indigo-500 hover:bg-indigo-100',
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -12,20 +12,25 @@ const sizes: Record<ButtonSize, string> = {
   [ButtonSize.MEDIUM]: 'px-4 py-2',
 };
 
-interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  type?: ButtonType;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
   size?: ButtonSize;
 }
 
-export function Button({
-  type = ButtonType.DEFAULT,
+export default function Button({
+  variant = ButtonVariant.DEFAULT,
   size = ButtonSize.MEDIUM,
+  type = 'button',
   children,
   className,
   ...props
 }: ButtonProps) {
   return (
-    <button className={clsx('flex items-center gap-2 rounded-md', types[type], sizes[size], className)} {...props}>
+    <button
+      type={type}
+      className={clsx('flex items-center gap-2 rounded-md', variants[variant], sizes[size], className)}
+      {...props}
+    >
       {children}
     </button>
   );

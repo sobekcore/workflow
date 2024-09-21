@@ -2,8 +2,8 @@ import { PropsWithChildren } from 'react';
 import { IconType } from 'react-icons';
 import { useLocation, useRouter } from '@tanstack/react-router';
 import clsx from 'clsx';
-import { ButtonSize, ButtonType } from '@/enums/button.ts';
-import { Button } from '@/components/Common/Button.tsx';
+import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
+import Button from '@/components/Common/Button.tsx';
 
 interface NavbarItemProps extends PropsWithChildren {
   pathname: string;
@@ -19,7 +19,7 @@ export default function NavbarItem({ pathname, icon, activeIcon, children }: Nav
 
   return (
     <Button
-      type={ButtonType.TEXT}
+      variant={ButtonVariant.TEXT}
       size={ButtonSize.SMALL}
       className={clsx(location.pathname === pathname && 'bg-indigo-100')}
       onClick={() => router.navigate({ to: pathname })}

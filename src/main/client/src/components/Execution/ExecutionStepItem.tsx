@@ -4,7 +4,7 @@ import { ButtonSize } from '@/enums/button.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { useProgressExecutions } from '@/hooks/executions/useProgressExecutions.ts';
-import { Button } from '@/components/Common/Button.tsx';
+import Button from '@/components/Common/Button.tsx';
 import Status from '@/components/Common/Status.tsx';
 import WorkflowStepItem from '@/components/Common/WorkflowStepItem.tsx';
 import ExecutionStepCondition from '@/components/Execution/ExecutionStepCondition.tsx';

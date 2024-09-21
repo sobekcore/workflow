@@ -5,17 +5,17 @@ import { ConditionType } from '@/enums/process-step/condition.ts';
 import { ProcessStep, ProcessStepToAdd } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import { useCreateProcessesSteps } from '@/hooks/processes-steps/useCreateProcessesSteps.ts';
-import { Button } from '@/components/Common/Button.tsx';
+import Button from '@/components/Common/Button.tsx';
 import WorkflowItem from '@/components/Common/WorkflowItem.tsx';
-import { ProcessStepItem } from '@/components/Process/ProcessStepItem.tsx';
+import ProcessStepItem from '@/components/Process/ProcessStepItem.tsx';
 
 interface ProcessItemProps {
   process: Process;
 }
 
-export function ProcessItem({ process }: ProcessItemProps) {
-  const [isWorkflowItemOpen, setIsWorkflowItemOpen] = useState<boolean>(false);
+export default function ProcessItem({ process }: ProcessItemProps) {
   const { mutate: createProcessesSteps } = useCreateProcessesSteps(process.id);
+  const [isWorkflowItemOpen, setIsWorkflowItemOpen] = useState<boolean>(false);
 
   const handleCreateProcessesSteps = (): void => {
     setIsWorkflowItemOpen(true);
@@ -100,7 +100,7 @@ export function ProcessItem({ process }: ProcessItemProps) {
       open={isWorkflowItemOpen}
     >
       {process.steps
-        .sort((a: ProcessStep, b: ProcessStep) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+        .sort((a: ProcessStep, b: ProcessStep) => a.createdAt.getTime() - b.createdAt.getTime())
         .map((processStep: ProcessStep) => (
           <ProcessStepItem key={processStep.id} processStep={processStep} />
         ))}

@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Internal;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +20,7 @@ public class ProcessStep {
 
     @NotNull
     @Column(nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 
     @NotBlank
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class ProcessStep {
 
     public ProcessStep(String name, String description, Condition condition, Process process) {
         id = UUID.randomUUID();
-        createdAt = new Date();
+        createdAt = Instant.now();
         this.name = name;
         this.description = description;
         this.condition = condition;
@@ -55,7 +55,7 @@ public class ProcessStep {
         return id;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 

@@ -6,7 +6,7 @@ interface ProcessStepItemProps {
   processStep: ProcessStep;
 }
 
-export function ProcessStepItem({ processStep }: ProcessStepItemProps) {
+export default function ProcessStepItem({ processStep }: ProcessStepItemProps) {
   return (
     <WorkflowStepItem processStep={processStep}>
       <div className="cursor-not-allowed rounded border-2 border-dashed border-slate-400 p-2 brightness-75 contrast-50">
