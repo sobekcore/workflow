@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { FieldErrors } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 interface FieldWrapperProps extends PropsWithChildren {
   name: string;
@@ -16,7 +17,11 @@ export default function FieldWrapper({ name, label, errors, children }: FieldWra
         </label>
       </div>
       {children}
-      {errors[name]?.message && <span className="text-sm text-red-600">{errors[name]?.message?.toString()}</span>}
+      <ErrorMessage
+        name={name}
+        errors={errors}
+        render={({ message }) => <span className="text-sm text-red-600">{message}</span>}
+      />
     </div>
   );
 }

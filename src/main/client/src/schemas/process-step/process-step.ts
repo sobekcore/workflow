@@ -1,5 +1,5 @@
 import { ZodType, z } from 'zod';
-import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
+import { ProcessStep, ProcessStepToCreate } from '@/interfaces/process-step/process-step.ts';
 import { conditionSchema } from '@/schemas/process-step/condition.ts';
 
 export const processStepSchema = z.object({
@@ -9,3 +9,10 @@ export const processStepSchema = z.object({
   description: z.string().optional(),
   condition: conditionSchema,
 }) satisfies ZodType<ProcessStep>;
+
+export const processStepToCreateSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().optional(),
+  condition: conditionSchema,
+  processId: z.string(),
+}) satisfies ZodType<ProcessStepToCreate>;

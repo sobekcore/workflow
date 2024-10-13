@@ -5,6 +5,7 @@ import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 const variants: Record<ButtonVariant, string> = {
   [ButtonVariant.DEFAULT]: 'bg-indigo-500 text-white hover:bg-indigo-600',
   [ButtonVariant.TEXT]: 'text-indigo-500 hover:bg-indigo-100',
+  [ButtonVariant.DISABLED]: 'bg-slate-200 text-slate-400 cursor-not-allowed',
 };
 
 const sizes: Record<ButtonSize, string> = {
@@ -21,6 +22,7 @@ export default function Button({
   variant = ButtonVariant.DEFAULT,
   size = ButtonSize.MEDIUM,
   type = 'button',
+  disabled,
   children,
   className,
   ...props
@@ -28,7 +30,13 @@ export default function Button({
   return (
     <button
       type={type}
-      className={clsx('flex items-center gap-2 rounded-md', variants[variant], sizes[size], className)}
+      disabled={disabled}
+      className={clsx(
+        'flex items-center gap-2 rounded-md',
+        disabled ? variants[ButtonVariant.DISABLED] : variants[variant],
+        sizes[size],
+        className,
+      )}
       {...props}
     >
       {children}

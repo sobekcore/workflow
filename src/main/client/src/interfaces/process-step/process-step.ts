@@ -8,7 +8,7 @@ export interface ProcessStep {
   condition: Condition;
 }
 
-export interface ProcessStepToAdd {
+export interface ProcessStepToCreate {
   name: string;
   description?: string;
   condition: Condition;
