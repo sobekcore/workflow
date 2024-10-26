@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { IconType } from 'react-icons';
-import { useLocation, useRouter } from '@tanstack/react-router';
+import { useMatchRoute, useRouter } from '@tanstack/react-router';
 import clsx from 'clsx';
 import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 import Button from '@/components/Common/Button.tsx';
@@ -9,20 +9,28 @@ interface NavbarItemProps extends PropsWithChildren {
   pathname: string;
   icon: IconType;
   activeIcon: IconType;
+  success?: boolean;
+  onClick?(): void;
 }
 
-export default function NavbarItem({ pathname, icon, activeIcon, children }: NavbarItemProps) {
+export default function NavbarItem({ pathname, icon, activeIcon, success, onClick, children }: NavbarItemProps) {
   const router = useRouter();
-  const location = useLocation();
+  const matchRoute = useMatchRoute();
 
-  const Icon: IconType = location.pathname === pathname ? activeIcon : icon;
+  const active: boolean = matchRoute({ to: pathname, fuzzy: true });
+  const Icon: IconType = active ? activeIcon : icon;
+
+  const handleButtonClick = (): void => {
+    router.navigate({ to: pathname });
+    onClick?.();
+  };
 
   return (
     <Button
-      variant={ButtonVariant.TEXT}
+      variant={success ? ButtonVariant.SUCCESS : ButtonVariant.TEXT}
       size={ButtonSize.SMALL}
-      className={clsx(location.pathname === pathname && 'bg-indigo-100')}
-      onClick={() => router.navigate({ to: pathname })}
+      className={clsx(active && (success ? 'bg-emerald-100' : 'bg-indigo-100'))}
+      onClick={handleButtonClick}
     >
       <Icon className="text-xl" />
       {children}

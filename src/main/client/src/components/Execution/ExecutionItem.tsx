@@ -1,10 +1,11 @@
-import { MdCheck, MdHorizontalRule, MdOutlineNotifications } from 'react-icons/md';
+import { MdCheck } from 'react-icons/md';
 import { StatusVariant } from '@/enums/status.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import Status from '@/components/Common/Status.tsx';
 import WorkflowItem from '@/components/Common/WorkflowItem.tsx';
 import ExecutionStepItem from '@/components/Execution/ExecutionStepItem.tsx';
+import ExecutionTitle from '@/components/Execution/ExecutionTitle.tsx';
 
 interface ExecutionItemProps {
   execution: Execution;
@@ -15,14 +16,7 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
 
   return (
     <WorkflowItem
-      title={
-        <>
-          <MdOutlineNotifications className="text-xl" />
-          <h1 className="flex items-center gap-1">
-            {execution.process.name} <MdHorizontalRule /> Execution
-          </h1>
-        </>
-      }
+      title={<ExecutionTitle execution={execution} />}
       actions={
         isExecutionCompleted && (
           <div className="flex">
@@ -31,7 +25,6 @@ export default function ExecutionItem({ execution }: ExecutionItemProps) {
         )
       }
       completed={isExecutionCompleted}
-      open={!isExecutionCompleted}
     >
       {execution.process.steps
         .sort((a: ProcessStep, b: ProcessStep) => a.createdAt.getTime() - b.createdAt.getTime())

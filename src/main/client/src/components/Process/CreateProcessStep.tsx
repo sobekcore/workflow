@@ -9,17 +9,15 @@ import ProcessStepForm from '@/components/Process/ProcessStepForm.tsx';
 
 interface CreateProcessStepProps {
   processId: string;
-  onSuccess(): void;
 }
 
-export default function CreateProcessStep({ processId, onSuccess }: CreateProcessStepProps) {
+export default function CreateProcessStep({ processId }: CreateProcessStepProps) {
   const { mutate: createProcessesSteps } = useCreateProcessesSteps(processId);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleCreateProcessesSteps = (data: ProcessStepToCreate): void => {
     createProcessesSteps([data]);
     setIsDialogOpen(false);
-    onSuccess();
   };
 
   const handleDialogOpen = (): void => {

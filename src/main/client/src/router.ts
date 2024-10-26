@@ -18,12 +18,24 @@ const routeTree = rootRoute.addChildren([
     getParentRoute: () => rootRoute,
     path: '/processes',
     component: ProcessesRoute,
-  }),
+  }).addChildren([
+    createRoute({
+      getParentRoute: () => rootRoute,
+      path: '/processes/$processId',
+      component: ProcessesRoute,
+    }),
+  ]),
   createRoute({
     getParentRoute: () => rootRoute,
     path: '/executions',
     component: ExecutionsRoute,
-  }),
+  }).addChildren([
+    createRoute({
+      getParentRoute: () => rootRoute,
+      path: '/executions/$executionId',
+      component: ExecutionsRoute,
+    }),
+  ]),
 ]);
 
 export const router = createRouter({ routeTree });

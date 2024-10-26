@@ -19,7 +19,7 @@ export default function Status({ icon, label, variant = StatusVariant.DEFAULT }:
   return (
     <div
       className={clsx(
-        'flex items-center gap-2 rounded-md border-2 border-dashed px-1.5 py-0.5 text-sm',
+        'flex items-center gap-2 rounded-full border-2 border-dashed px-1.5 py-0.5 text-sm',
         variants[variant],
       )}
     >

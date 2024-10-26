@@ -1,3 +1,7 @@
+body {
+  background: theme('colors.slate.50');
+}
+
 a {
   color: theme('colors.indigo.500');
 }
