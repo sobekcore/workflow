@@ -8,8 +8,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.Internal;
+import org.hibernate.annotations.ColumnTransformer;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,7 +32,17 @@ public class ProcessStep {
     private String description;
 
     @Convert(converter = ConditionConverter.class)
+    @ColumnTransformer(write = "?::jsonb")
+    @Column(columnDefinition = "jsonb")
     private Condition condition;
+
+    @ManyToOne
+    @JoinColumn
+    private ProcessStep prevProcessStep;
+
+    @OneToMany
+    @JoinColumn
+    private List<ProcessStep> stepAvailableFrom;
 
     @JsonIgnore
     @NotNull
@@ -38,12 +50,21 @@ public class ProcessStep {
     @JoinColumn(nullable = false)
     private Process process;
 
-    public ProcessStep(String name, String description, Condition condition, Process process) {
+    public ProcessStep(
+        String name,
+        String description,
+        Condition condition,
+        ProcessStep prevProcessStep,
+        List<ProcessStep> stepAvailableFrom,
+        Process process
+    ) {
         id = UUID.randomUUID();
         createdAt = Instant.now();
         this.name = name;
         this.description = description;
         this.condition = condition;
+        this.prevProcessStep = prevProcessStep;
+        this.stepAvailableFrom = stepAvailableFrom;
         this.process = process;
     }
 
@@ -69,6 +90,14 @@ public class ProcessStep {
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public ProcessStep getPrevProcessStep() {
+        return prevProcessStep;
+    }
+
+    public List<ProcessStep> getStepAvailableFrom() {
+        return stepAvailableFrom;
     }
 
     public Process getProcess() {

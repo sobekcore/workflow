@@ -17,9 +17,7 @@ export default function WorkflowItem({ title, actions, completed, children }: Wo
     >
       <div className="flex items-center gap-2">{title}</div>
       {actions}
-      {Children.count(children) > 0 && (
-        <ol className="flex w-full list-inside list-decimal flex-col gap-2">{children}</ol>
-      )}
+      {Children.count(children) > 0 && <div className="flex w-full gap-2">{children}</div>}
     </div>
   );
 }

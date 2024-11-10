@@ -27,6 +27,12 @@ public class ProcessStepService {
                         processStepDto.getName(),
                         processStepDto.getDescription(),
                         processStepDto.getCondition(),
+                        processStepDto.getPrevProcessStepId() != null
+                            ? processStepRepository.findById(processStepDto.getPrevProcessStepId()).orElse(null)
+                            : null,
+                        processStepDto.getFromProcessStepsIds() != null
+                            ? processStepRepository.findAllById(processStepDto.getFromProcessStepsIds())
+                            : null,
                         processRepository.getReferenceById(processStepDto.getProcessId())
                     ))
                     .toList()

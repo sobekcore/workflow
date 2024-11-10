@@ -33,7 +33,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       className={clsx(
-        'flex items-center gap-2 rounded-full',
+        'flex items-center gap-2 whitespace-nowrap rounded-full',
         disabled ? variants[ButtonVariant.DISABLED] : variants[variant],
         sizes[size],
         className,

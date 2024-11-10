@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MdAdd, MdRemove } from 'react-icons/md';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,11 +12,12 @@ import Select from '@/components/Field/Select.tsx';
 
 interface ProcessStepFormProps {
   processId: string;
+  prevProcessStepId?: string;
   onSubmit: SubmitHandler<ProcessStepToCreate>;
   onCancel(): void;
 }
 
-export default function ProcessStepForm({ processId, onSubmit, onCancel }: ProcessStepFormProps) {
+export default function ProcessStepForm({ processId, prevProcessStepId, onSubmit, onCancel }: ProcessStepFormProps) {
   const {
     register,
     handleSubmit,
@@ -29,6 +30,13 @@ export default function ProcessStepForm({ processId, onSubmit, onCancel }: Proce
     resolver: zodResolver(processStepToCreateSchema),
   });
   const [options, setOptions] = useState<number>(1);
+
+  useEffect((): void => {
+    if (prevProcessStepId) {
+      setValue('prevProcessStepId', prevProcessStepId);
+      setValue('fromProcessStepsIds', [prevProcessStepId]);
+    }
+  }, [setValue, prevProcessStepId]);
 
   setValue('processId', processId);
   const conditionType: ConditionType = watch('condition.type');
