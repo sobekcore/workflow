@@ -21,7 +21,6 @@ public class ConditionService {
                     .getReferenceById(conditionCompleteDto.getExecutionId())
                     .setConditionState(conditionCompleteDto.getState())
                 )
-                .map(execution -> execution.setConditionCompleted(true))
                 .toList()
         );
     }

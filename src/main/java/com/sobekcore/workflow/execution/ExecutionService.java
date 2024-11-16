@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.execution;
 
+import com.sobekcore.workflow.execution.condition.ConditionStatus;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.ProcessRepository;
 import com.sobekcore.workflow.process.step.ProcessStepRepository;
@@ -46,21 +47,31 @@ public class ExecutionService {
     }
 
     public void progress(List<ExecutionProgressDto> executionProgressDtoList) {
-        List<String> executionIdList = executionProgressDtoList.stream().map(executionProgressDto -> executionProgressDto.getExecutionId().toString()).toList();
-        List<String> processIdList = executionProgressDtoList.stream().map(executionProgressDto -> executionProgressDto.getProcessId().toString()).toList();
-        List<String> processStepIdList = executionProgressDtoList.stream().map(executionProgressDto -> executionProgressDto.getProcessStepId().toString()).toList();
+        executionProgressDtoList.forEach(executionProgressDto ->
+            executionRepository.saveAll(
+                findExecutionsToProgress(executionProgressDto)
+                    .stream()
+                    .map(execution -> {
+                        try {
+                            return execution.setProcessStep(execution.findNextProcessStep(
+                                executionProgressDto.getChooseProcessStepId() != null
+                                    ? processStepRepository.getReferenceById(executionProgressDto.getChooseProcessStepId())
+                                    : null
+                            ));
+                        } catch (ExecutionCantDetermineNextProcessStepException exception) {
+                            return execution.setConditionStatus(ConditionStatus.CHOOSE);
+                        }
+                    })
+                    .toList()
+            ));
+    }
 
-        executionRepository.saveAll(
-            executionRepository
-                .findAll()
-                .stream()
-                .filter(Execution::isConditionCompleted)
-                .filter(execution -> execution.getProcessStep() != null)
-                .filter(execution -> executionIdList.isEmpty() || executionIdList.contains(execution.getId().toString()))
-                .filter(execution -> processIdList.isEmpty() || processIdList.contains(execution.getProcess().getId().toString()))
-                .filter(execution -> processStepIdList.isEmpty() || processStepIdList.contains(execution.getProcessStep().getId().toString()))
-                .map(execution -> execution.setProcessStep(execution.getNextProcessStep()))
-                .toList()
+    private List<Execution> findExecutionsToProgress(ExecutionProgressDto executionProgressDto) {
+        return executionRepository.findAllByIdAndProcessAndProcessStepAndConditionStatusInAndProcessStepNotNull(
+            executionProgressDto.getExecutionId(),
+            processRepository.getReferenceById(executionProgressDto.getProcessId()),
+            processStepRepository.getReferenceById(executionProgressDto.getProcessStepId()),
+            List.of(ConditionStatus.COMPLETED, ConditionStatus.CHOOSE)
         );
     }
 }

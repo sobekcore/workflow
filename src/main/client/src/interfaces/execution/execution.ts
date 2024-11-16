@@ -1,3 +1,4 @@
+import { ConditionStatus } from '@/enums/execution/condition.ts';
 import { ConditionState } from '@/interfaces/execution/condition.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
@@ -5,7 +6,7 @@ import { Process } from '@/interfaces/process.ts';
 export interface Execution {
   id: string;
   createdAt: Date;
-  conditionCompleted: boolean;
+  conditionStatus: ConditionStatus;
   conditionState?: ConditionState;
   process: Process;
   processStep?: ProcessStep;
@@ -20,4 +21,5 @@ export interface ExecutionToProgress {
   executionId: string;
   processId?: string;
   processStepId?: string;
+  chooseProcessStepId?: string;
 }

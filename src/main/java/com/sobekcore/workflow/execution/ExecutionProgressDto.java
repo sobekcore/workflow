@@ -9,6 +9,8 @@ public class ExecutionProgressDto {
 
     private UUID processStepId;
 
+    private UUID chooseProcessStepId;
+
     public UUID getExecutionId() {
         return executionId;
     }
@@ -19,5 +21,9 @@ public class ExecutionProgressDto {
 
     public UUID getProcessStepId() {
         return processStepId;
+    }
+
+    public UUID getChooseProcessStepId() {
+        return chooseProcessStepId;
     }
 }
