@@ -19,7 +19,5 @@ export interface ExecutionToCreate {
 
 export interface ExecutionToProgress {
   executionId: string;
-  processId?: string;
-  processStepId?: string;
   chooseProcessStepId?: string;
 }

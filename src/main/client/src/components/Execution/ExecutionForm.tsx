@@ -26,7 +26,7 @@ export default function ExecutionForm({ onSubmit, onCancel }: ExecutionFormProps
     resolver: zodResolver(executionToCreateSchema),
   });
 
-  const defaultProcessId: string | undefined = processes?.[0]?.id;
+  const defaultProcessId: string | undefined = processes?.[0].id;
   const processId: string | undefined = watch('processId') || defaultProcessId;
 
   return (

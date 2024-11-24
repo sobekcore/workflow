@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.process.step;
 
+import com.sobekcore.workflow.process.ProcessAssignDto;
 import com.sobekcore.workflow.process.ProcessNotFoundException;
 import com.sobekcore.workflow.process.ProcessRepository;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -44,5 +45,13 @@ public class ProcessStepService {
 
     public List<ProcessStep> read() {
         return processStepRepository.findAll();
+    }
+
+    public void assign(List<ProcessAssignDto> processAssignDtoList) {
+        processAssignDtoList.forEach(processAssignDto -> {
+            ProcessStep processStep = processStepRepository.findById(processAssignDto.getProcessStepId()).orElseThrow();
+            processStep.getAvailableFrom().add(processStepRepository.getReferenceById(processAssignDto.getAssignProcessStepId()));
+            processStepRepository.save(processStep);
+        });
     }
 }

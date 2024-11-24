@@ -50,7 +50,7 @@ class ExecutionsController {
 
     @PatchMapping("/conditions/complete")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void conditionsComplete(@Valid @RequestBody List<ConditionCompleteDto> conditionCompleteDtoList) {
+    public void completeConditions(@Valid @RequestBody List<ConditionCompleteDto> conditionCompleteDtoList) {
         conditionService.complete(conditionCompleteDtoList);
     }
 }

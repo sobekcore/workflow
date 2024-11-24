@@ -11,6 +11,7 @@ import org.hibernate.Internal;
 import org.hibernate.annotations.ColumnTransformer;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,13 +37,18 @@ public class ProcessStep {
     @Column(columnDefinition = "jsonb")
     private Condition condition;
 
+    @NestedProcessStep
     @ManyToOne
     @JoinColumn
     private ProcessStep prevProcessStep;
 
-    @OneToMany
-    @JoinColumn
-    private List<ProcessStep> stepAvailableFrom;
+    @NestedProcessStep
+    @ManyToMany
+    private List<ProcessStep> availableFrom;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "availableFrom")
+    private List<ProcessStep> availableTo;
 
     @JsonIgnore
     @NotNull
@@ -55,7 +61,7 @@ public class ProcessStep {
         String description,
         Condition condition,
         ProcessStep prevProcessStep,
-        List<ProcessStep> stepAvailableFrom,
+        List<ProcessStep> availableFrom,
         Process process
     ) {
         id = UUID.randomUUID();
@@ -64,7 +70,8 @@ public class ProcessStep {
         this.description = description;
         this.condition = condition;
         this.prevProcessStep = prevProcessStep;
-        this.stepAvailableFrom = stepAvailableFrom;
+        this.availableFrom = availableFrom;
+        this.availableTo = new ArrayList<>();
         this.process = process;
     }
 
@@ -96,8 +103,12 @@ public class ProcessStep {
         return prevProcessStep;
     }
 
-    public List<ProcessStep> getStepAvailableFrom() {
-        return stepAvailableFrom;
+    public List<ProcessStep> getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public List<ProcessStep> getAvailableTo() {
+        return availableTo;
     }
 
     public Process getProcess() {

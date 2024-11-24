@@ -7,7 +7,7 @@ import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { useProgressExecutions } from '@/hooks/executions/useProgressExecutions.ts';
 import Button from '@/components/Common/Button.tsx';
 import Status from '@/components/Common/Status.tsx';
-import WorkflowStepItem from '@/components/Common/WorkflowStepItem.tsx';
+import WorkflowStepItem from '@/components/Common/Workflow/WorkflowStepItem.tsx';
 import ExecutionStepCondition from '@/components/Execution/ExecutionStepCondition.tsx';
 import { isExecutionStepPossibleToChoose as isExecutionStepPossibleToChooseFn } from '@/utils/executions.ts';
 
@@ -21,14 +21,7 @@ export default function ExecutionStepItem({ execution, processStep, completed }:
   const { mutate: progressExecutions } = useProgressExecutions(execution.id);
 
   const handleExecutionStepClick = (chooseProcessStepId?: string): void => {
-    progressExecutions([
-      {
-        executionId: execution.id,
-        processId: execution.process.id,
-        processStepId: execution.processStep?.id,
-        chooseProcessStepId,
-      },
-    ]);
+    progressExecutions([{ executionId: execution.id, chooseProcessStepId }]);
   };
 
   const isExecutionStepActive: boolean = processStep.id === execution.processStep?.id;

@@ -1,7 +1,7 @@
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { useReadExecutions } from '@/hooks/executions/useReadExecutions.ts';
 import { useChildRoute } from '@/hooks/useChildRoute.ts';
-import WorkflowList from '@/components/Common/WorkflowList.tsx';
+import WorkflowList from '@/components/Common/Workflow/WorkflowList.tsx';
 import CreateExecution from '@/components/Execution/CreateExecution.tsx';
 import ExecutionItem from '@/components/Execution/ExecutionItem.tsx';
 import Executions from '@/components/Execution/Executions.tsx';

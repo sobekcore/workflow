@@ -19,7 +19,7 @@ export function useCreateProcessesSteps(processId: string) {
 
         const index: number = processes.findIndex((process: Process): boolean => process.id === processId);
         if (index === -1) {
-          return [];
+          return processes;
         }
 
         return [

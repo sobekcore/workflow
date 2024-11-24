@@ -2,7 +2,7 @@ import { ConditionState } from '@/interfaces/execution/condition.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { useCompleteConditions } from '@/hooks/executions/useCompleteConditions.ts';
-import WorkflowStepCondition from '@/components/Common/WorkflowStepCondition.tsx';
+import WorkflowStepCondition from '@/components/Common/Workflow/WorkflowStepCondition.tsx';
 
 interface ExecutionStepConditionProps {
   execution: Execution;

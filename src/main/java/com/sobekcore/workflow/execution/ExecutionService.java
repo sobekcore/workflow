@@ -67,10 +67,8 @@ public class ExecutionService {
     }
 
     private List<Execution> findExecutionsToProgress(ExecutionProgressDto executionProgressDto) {
-        return executionRepository.findAllByIdAndProcessAndProcessStepAndConditionStatusInAndProcessStepNotNull(
+        return executionRepository.findAllByIdAndConditionStatusInAndProcessStepNotNull(
             executionProgressDto.getExecutionId(),
-            processRepository.getReferenceById(executionProgressDto.getProcessId()),
-            processStepRepository.getReferenceById(executionProgressDto.getProcessStepId()),
             List.of(ConditionStatus.COMPLETED, ConditionStatus.CHOOSE)
         );
     }

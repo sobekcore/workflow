@@ -7,6 +7,7 @@ export interface ProcessStep {
   description?: string;
   condition: Condition;
   prevProcessStep?: ProcessStep;
+  availableFrom?: ProcessStep[];
 }
 
 export interface ProcessStepToCreate {
@@ -16,4 +17,10 @@ export interface ProcessStepToCreate {
   prevProcessStepId?: string;
   fromProcessStepsIds?: string[];
   processId: string;
+}
+
+export interface ProcessStepToAssign {
+  processId: string;
+  processStepId: string;
+  assignProcessStepId: string;
 }

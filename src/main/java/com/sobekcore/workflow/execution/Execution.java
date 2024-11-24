@@ -106,7 +106,11 @@ public class Execution {
         List<ProcessStep> processStepList = process
             .getSteps()
             .stream()
-            .filter(processStep -> getProcessStep().equals(processStep.getPrevProcessStep()))
+            .filter(processStep -> processStep
+                .getAvailableFrom()
+                .stream()
+                .anyMatch(nestedProcessStep -> nestedProcessStep.equals(getProcessStep()))
+            )
             .toList();
 
         if (processStepList.isEmpty()) {

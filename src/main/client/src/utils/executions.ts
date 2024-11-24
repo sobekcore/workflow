@@ -5,7 +5,11 @@ import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 
 function findNextProcessSteps(execution: Execution): ProcessStep[] {
   return execution.process.steps.filter(
-    (processStep: ProcessStep): boolean => processStep.prevProcessStep?.id === execution.processStep?.id,
+    (processStep: ProcessStep): boolean | undefined =>
+      !!execution.processStep?.id &&
+      processStep.availableFrom
+        ?.map((processStep: ProcessStep): string => processStep.id)
+        .includes(execution.processStep.id),
   );
 }
 

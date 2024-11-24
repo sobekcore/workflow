@@ -30,7 +30,7 @@ function buildProcessStepTreeMutate(steps: NestedProcessStep[]): void {
       continue;
     }
 
-    const parent: NestedProcessStep | undefined = findParent(steps, processStep.prevProcessStep?.id);
+    const parent: NestedProcessStep | undefined = findParent(steps, processStep.prevProcessStep.id);
     if (!parent) {
       continue;
     }

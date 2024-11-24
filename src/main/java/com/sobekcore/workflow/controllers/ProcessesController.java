@@ -1,9 +1,7 @@
 package com.sobekcore.workflow.controllers;
 
+import com.sobekcore.workflow.process.*;
 import com.sobekcore.workflow.process.Process;
-import com.sobekcore.workflow.process.ProcessDto;
-import com.sobekcore.workflow.process.ProcessNotFoundException;
-import com.sobekcore.workflow.process.ProcessService;
 import com.sobekcore.workflow.process.step.ProcessStep;
 import com.sobekcore.workflow.process.step.ProcessStepDto;
 import com.sobekcore.workflow.process.step.ProcessStepService;
@@ -51,5 +49,11 @@ class ProcessesController {
     @GetMapping("/steps")
     public List<ProcessStep> readSteps() {
         return processStepService.read();
+    }
+
+    @PatchMapping("/steps/assign")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void assignSteps(@Valid @RequestBody List<ProcessAssignDto> processAssignDtoList) {
+        processStepService.assign(processAssignDtoList);
     }
 }

@@ -1,6 +1,6 @@
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
-import WorkflowItem from '@/components/Common/WorkflowItem.tsx';
+import WorkflowItem from '@/components/Common/Workflow/WorkflowItem.tsx';
 import CreateProcessStep from '@/components/Process/CreateProcessStep.tsx';
 import NestedProcessStepItem from '@/components/Process/NestedProcessStepItem.tsx';
 import ProcessTitle from '@/components/Process/ProcessTitle.tsx';

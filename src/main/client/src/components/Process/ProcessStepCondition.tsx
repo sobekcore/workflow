@@ -1,5 +1,5 @@
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
-import WorkflowStepCondition from '@/components/Common/WorkflowStepCondition.tsx';
+import WorkflowStepCondition from '@/components/Common/Workflow/WorkflowStepCondition.tsx';
 
 interface ProcessStepConditionProps {
   processStep: ProcessStep;

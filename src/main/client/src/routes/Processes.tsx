@@ -1,7 +1,7 @@
 import { Process } from '@/interfaces/process.ts';
 import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import { useChildRoute } from '@/hooks/useChildRoute.ts';
-import WorkflowList from '@/components/Common/WorkflowList.tsx';
+import WorkflowList from '@/components/Common/Workflow/WorkflowList.tsx';
 import CreateProcess from '@/components/Process/CreateProcess.tsx';
 import ProcessItem from '@/components/Process/ProcessItem.tsx';
 import Processes from '@/components/Process/Processes.tsx';

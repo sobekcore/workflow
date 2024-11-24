@@ -3,7 +3,7 @@ import { StatusVariant } from '@/enums/status.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import Status from '@/components/Common/Status.tsx';
-import WorkflowItem from '@/components/Common/WorkflowItem.tsx';
+import WorkflowItem from '@/components/Common/Workflow/WorkflowItem.tsx';
 import ExecutionTitle from '@/components/Execution/ExecutionTitle.tsx';
 import NestedExecutionStepItem from '@/components/Execution/NestedExecutionStepItem.tsx';
 import { buildProcessStepTree } from '@/utils/processes.ts';
