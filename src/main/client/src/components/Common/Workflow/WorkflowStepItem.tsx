@@ -17,13 +17,20 @@ export default function WorkflowStepItem({
   ...props
 }: WorkflowStepItemProps) {
   return (
-    <div className={clsx('rounded-xl p-2', completed ? 'bg-emerald-100' : 'bg-indigo-50', className)} {...props}>
-      <h2 className="inline-block">{processStep.name}</h2>
-      <div className="mt-1 flex flex-col items-start gap-1">
+    <div
+      className={clsx(
+        'flex min-w-[360px] flex-col gap-1 rounded-xl p-2',
+        completed ? 'bg-emerald-100' : 'bg-indigo-50',
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex min-h-7 items-center justify-between gap-2">
+        <h2>{processStep.name}</h2>
         {actions}
-        {processStep.description && <span className="text-sm">{processStep.description}</span>}
-        {children}
       </div>
+      {processStep.description && <span className="text-sm">{processStep.description}</span>}
+      {children}
     </div>
   );
 }

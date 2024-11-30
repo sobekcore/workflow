@@ -23,7 +23,7 @@ export default function Status({ icon, label, variant = StatusVariant.DEFAULT }:
         variants[variant],
       )}
     >
-      <Icon className="text-lg" />
+      <Icon className="text-xl" />
       {label}
     </div>
   );

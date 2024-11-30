@@ -15,24 +15,15 @@ export default function CreateProcess() {
     setIsDialogOpen(false);
   };
 
-  const handleDialogOpen = (): void => {
-    setIsDialogOpen(true);
-  };
-
-  const handleDialogClose = (): void => {
-    setIsDialogOpen(false);
-  };
-
   return (
-    <Dialog
-      title="Create Process"
-      open={isDialogOpen}
-      content={<ProcessForm onSubmit={handleCreateProcesses} onCancel={handleDialogClose} />}
-    >
-      <Button onClick={handleDialogOpen}>
+    <>
+      <Button onClick={() => setIsDialogOpen(true)}>
         <MdOutlineNewLabel className="text-xl" />
         Create Process
       </Button>
-    </Dialog>
+      <Dialog title="Create Process" open={isDialogOpen}>
+        <ProcessForm onSubmit={handleCreateProcesses} onCancel={() => setIsDialogOpen(false)} />
+      </Dialog>
+    </>
   );
 }

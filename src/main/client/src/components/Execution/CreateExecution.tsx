@@ -15,24 +15,15 @@ export default function CreateExecution() {
     setIsDialogOpen(false);
   };
 
-  const handleDialogOpen = (): void => {
-    setIsDialogOpen(true);
-  };
-
-  const handleDialogClose = (): void => {
-    setIsDialogOpen(false);
-  };
-
   return (
-    <Dialog
-      title="Create Execution"
-      open={isDialogOpen}
-      content={<ExecutionForm onSubmit={handleCreateExecutions} onCancel={handleDialogClose} />}
-    >
-      <Button onClick={handleDialogOpen}>
+    <>
+      <Button onClick={() => setIsDialogOpen(true)}>
         <MdOutlineNotificationAdd className="text-xl" />
         Create Execution
       </Button>
-    </Dialog>
+      <Dialog title="Create Execution" open={isDialogOpen}>
+        <ExecutionForm onSubmit={handleCreateExecutions} onCancel={() => setIsDialogOpen(false)} />
+      </Dialog>
+    </>
   );
 }

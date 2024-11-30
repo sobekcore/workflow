@@ -7,7 +7,7 @@ interface DropdownItemProps extends PropsWithChildren {
   onClick?(): void;
 }
 
-export function DropdownItem({ onClick, children }: DropdownItemProps) {
+export default function DropdownItem({ onClick, children }: DropdownItemProps) {
   return (
     <Primitive.Item asChild>
       <Button variant={ButtonVariant.TEXT} size={ButtonSize.SMALL} onClick={onClick}>

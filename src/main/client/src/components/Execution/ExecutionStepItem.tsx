@@ -39,7 +39,7 @@ export default function ExecutionStepItem({ execution, processStep, completed }:
               <Status icon={MdCheck} label="Current Execution Step" />
             ) : (
               <Button size={ButtonSize.SMALL} onClick={() => handleExecutionStepClick()}>
-                <MdCheck className="text-lg" />
+                <MdCheck className="text-xl" />
                 Complete Execution Step
               </Button>
             ))}

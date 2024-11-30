@@ -1,6 +1,5 @@
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import WorkflowStepItem from '@/components/Common/Workflow/WorkflowStepItem.tsx';
-import CreateProcessStep from '@/components/Process/CreateProcessStep.tsx';
 import ProcessStepCondition from '@/components/Process/ProcessStepCondition.tsx';
 import ProcessStepDropdown from '@/components/Process/ProcessStepDropdown.tsx';
 
@@ -14,10 +13,11 @@ export default function ProcessStepItem({ processStep, processId }: ProcessStepI
     <WorkflowStepItem
       processStep={processStep}
       actions={
-        <div className="flex w-full justify-between gap-1">
-          <CreateProcessStep processId={processId} prevProcessStepId={processStep.id} />
-          <ProcessStepDropdown processId={processId} assignProcessStepId={processStep.id} />
-        </div>
+        <ProcessStepDropdown
+          processId={processId}
+          prevProcessStepId={processStep.id}
+          assignProcessStepId={processStep.id}
+        />
       }
     >
       <div className="w-full cursor-not-allowed rounded-xl border-2 border-dashed border-slate-400 bg-slate-200 p-2">
