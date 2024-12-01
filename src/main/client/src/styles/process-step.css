@@ -1,0 +1,4 @@
+[data-process-step-id]:is(:hover, :focus) {
+  border-color: theme('colors.indigo.500') !important;
+  background: theme('colors.indigo.200') !important;
+}

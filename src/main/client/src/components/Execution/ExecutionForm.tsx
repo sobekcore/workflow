@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MdAdd } from 'react-icons/md';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +22,7 @@ export default function ExecutionForm({ onSubmit, onCancel }: ExecutionFormProps
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch,
   } = useForm<ExecutionToCreate>({
     resolver: zodResolver(executionToCreateSchema),
@@ -28,6 +30,15 @@ export default function ExecutionForm({ onSubmit, onCancel }: ExecutionFormProps
 
   const defaultProcessId: string | undefined = processes?.[0].id;
   const processId: string | undefined = watch('processId') || defaultProcessId;
+
+  const process: Process | undefined = processes?.find((process: Process): boolean => process.id === processId);
+  const defaultProcessStepId: string | undefined = process?.steps[0]?.id;
+
+  useEffect((): void => {
+    if (defaultProcessStepId) {
+      setValue('processStepId', defaultProcessStepId);
+    }
+  }, [setValue, defaultProcessStepId]);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -39,10 +50,15 @@ export default function ExecutionForm({ onSubmit, onCancel }: ExecutionFormProps
         ))}
       </Select>
       {processId && (
-        <Select name="processStepId" label="Process Step" register={register} errors={errors}>
-          {processes
-            ?.find((process: Process) => process.id === processId)
-            ?.steps.sort((a: ProcessStep, b: ProcessStep) => a.createdAt.getTime() - b.createdAt.getTime())
+        <Select
+          name="processStepId"
+          label="Process Step"
+          register={register}
+          errors={errors}
+          defaultValue={defaultProcessStepId}
+        >
+          {process?.steps
+            .sort((a: ProcessStep, b: ProcessStep) => a.createdAt.getTime() - b.createdAt.getTime())
             .map((processStep: ProcessStep) => (
               <option key={processStep.id} value={processStep.id}>
                 {processStep.name}

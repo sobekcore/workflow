@@ -51,7 +51,7 @@ export default function ExecutionStepItem({ execution, processStep, completed }:
         </>
       }
       completed={completed}
-      className={clsx(isExecutionStepActive && 'border border-indigo-500')}
+      className={clsx(isExecutionStepActive && '!border-indigo-500')}
     >
       {isExecutionStepActive && <ExecutionStepCondition execution={execution} processStep={processStep} />}
     </WorkflowStepItem>

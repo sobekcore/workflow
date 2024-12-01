@@ -55,6 +55,12 @@ export default function AssignProcessStepForm({
       >
         {process?.steps
           .filter((processStep: ProcessStep) => processStep.id !== assignProcessStepId)
+          .filter(
+            (processStep: ProcessStep) =>
+              !processStep.availableFrom
+                ?.map((processStep: ProcessStep) => processStep.id)
+                .includes(assignProcessStepId),
+          )
           .map((processStep: ProcessStep) => (
             <option key={processStep.id} value={processStep.id}>
               {processStep.name}
