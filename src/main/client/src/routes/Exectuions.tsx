@@ -6,7 +6,7 @@ import CreateExecution from '@/components/Execution/CreateExecution.tsx';
 import ExecutionItem from '@/components/Execution/ExecutionItem.tsx';
 import Executions from '@/components/Execution/Executions.tsx';
 
-export function ExecutionsRoute() {
+export default function ExecutionsRoute() {
   const { data: executions } = useReadExecutions();
   const execution: Execution | null = useChildRoute(executions, `/executions/$executionId`, 'executionId');
 

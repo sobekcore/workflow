@@ -6,7 +6,7 @@ import CreateProcess from '@/components/Process/CreateProcess.tsx';
 import ProcessItem from '@/components/Process/ProcessItem.tsx';
 import Processes from '@/components/Process/Processes.tsx';
 
-export function ProcessesRoute() {
+export default function ProcessesRoute() {
   const { data: processes } = useReadProcesses();
   const process: Process | null = useChildRoute(processes, `/processes/$processId`, 'processId');
 

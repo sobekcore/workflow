@@ -20,6 +20,7 @@ export async function httpClient<T extends ZodSchema>(
       'Content-Type': 'application/json',
       ...config?.config?.headers,
     },
+    credentials: 'include',
     method,
   });
 
@@ -31,6 +32,10 @@ export async function httpClient<T extends ZodSchema>(
     }
 
     return data;
+  }
+
+  if (response.status === 401) {
+    return null;
   }
 
   throw new HttpException('Something went wrong during request');

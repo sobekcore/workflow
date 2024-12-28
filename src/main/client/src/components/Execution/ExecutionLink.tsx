@@ -16,9 +16,9 @@ export default function ExecutionLink({ execution }: ExecutionLinkProps) {
 
   return (
     <NavbarItem
-      pathname={`/executions/${execution.id}`}
       icon={MdOutlineNotifications}
       activeIcon={MdNotifications}
+      pathname={`/executions/${execution.id}`}
       success={isExecutionCompleted}
       onClick={handleNavbarItemClick}
     >

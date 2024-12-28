@@ -8,6 +8,7 @@ import com.sobekcore.workflow.process.step.ProcessStepService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/processes")
+@PreAuthorize("isAuthenticated()")
 class ProcessesController {
     private final ProcessService processService;
 
