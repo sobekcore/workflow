@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.process;
 
+import com.sobekcore.workflow.auth.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,16 +13,16 @@ public class ProcessService {
         this.processRepository = processRepository;
     }
 
-    public List<Process> create(List<ProcessDto> processDtoList) {
+    public List<Process> create(User user, List<ProcessDto> processDtoList) {
         return processRepository.saveAll(
             processDtoList
                 .stream()
-                .map(processDto -> new Process(processDto.getName()))
+                .map(processDto -> new Process(user, processDto.getName()))
                 .toList()
         );
     }
 
-    public List<Process> read() {
-        return processRepository.findAll();
+    public List<Process> read(User user) {
+        return processRepository.findAllByUser(user);
     }
 }

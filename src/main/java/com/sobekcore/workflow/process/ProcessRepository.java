@@ -1,10 +1,10 @@
 package com.sobekcore.workflow.process;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.sobekcore.workflow.auth.AuthRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface ProcessRepository extends JpaRepository<Process, UUID> {
+public interface ProcessRepository extends AuthRepository<Process, UUID> {
 }

@@ -1,5 +1,7 @@
 package com.sobekcore.workflow.process;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.process.step.ProcessStep;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,6 +23,12 @@ public class Process {
     @Column(nullable = false)
     private Instant createdAt;
 
+    @JsonIgnore
+    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
     @NotBlank
     @Column(nullable = false)
     private String name;
@@ -29,9 +37,10 @@ public class Process {
     @JoinColumn(name = "process_id")
     private List<ProcessStep> steps;
 
-    public Process(String name) {
+    public Process(User user, String name) {
         id = UUID.randomUUID();
         createdAt = Instant.now();
+        this.user = user;
         this.name = name;
         steps = new ArrayList<>();
     }

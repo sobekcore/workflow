@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.execution.condition;
 
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.execution.ExecutionRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,13 @@ public class ConditionService {
         this.executionRepository = executionRepository;
     }
 
-    public void complete(List<ConditionCompleteDto> conditionCompleteDtoList) {
+    public void complete(User user, List<ConditionCompleteDto> conditionCompleteDtoList) {
         executionRepository.saveAll(
             conditionCompleteDtoList
                 .stream()
                 .map(conditionCompleteDto -> executionRepository
-                    .getReferenceById(conditionCompleteDto.getExecutionId())
+                    .findByUserAndId(user, conditionCompleteDto.getExecutionId())
+                    .orElseThrow()
                     .setConditionState(conditionCompleteDto.getState())
                 )
                 .toList()

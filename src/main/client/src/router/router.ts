@@ -1,7 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter } from '@tanstack/react-router';
 import { authQuery } from '@/hooks/useAuth.ts';
-import ApplicationLoader from '@/components/ApplicationLoader.tsx';
 import DefaultLayout from '@/layouts/DefaultLayout.tsx';
 import ExecutionsRoute from '@/routes/Exectuions.tsx';
 import HomeRoute from '@/routes/Home.tsx';
@@ -14,8 +13,6 @@ export interface RouterContext {
 
 const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: DefaultLayout,
-  pendingComponent: ApplicationLoader,
-  wrapInSuspense: true,
   async beforeLoad({ context }) {
     await context.queryClient?.ensureQueryData(authQuery());
   },

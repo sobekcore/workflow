@@ -1,3 +1,6 @@
 export interface User {
-  login: string;
+  id: string;
+  createdAt: Date;
+  email: string;
+  name: string;
 }

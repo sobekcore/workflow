@@ -1,6 +1,7 @@
 package com.sobekcore.workflow.process.step;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.step.condition.Condition;
 import com.sobekcore.workflow.process.step.condition.ConditionConverter;
@@ -24,6 +25,12 @@ public class ProcessStep {
     @NotNull
     @Column(nullable = false)
     private Instant createdAt;
+
+    @JsonIgnore
+    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
 
     @NotBlank
     @Column(nullable = false)
@@ -57,6 +64,7 @@ public class ProcessStep {
     private Process process;
 
     public ProcessStep(
+        User user,
         String name,
         String description,
         Condition condition,
@@ -66,6 +74,7 @@ public class ProcessStep {
     ) {
         id = UUID.randomUUID();
         createdAt = Instant.now();
+        this.user = user;
         this.name = name;
         this.description = description;
         this.condition = condition;
@@ -85,6 +94,10 @@ public class ProcessStep {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getName() {

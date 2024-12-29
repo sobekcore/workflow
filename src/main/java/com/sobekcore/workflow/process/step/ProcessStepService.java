@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.process.step;
 
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.process.ProcessAssignDto;
 import com.sobekcore.workflow.process.ProcessNotFoundException;
 import com.sobekcore.workflow.process.ProcessRepository;
@@ -19,22 +20,23 @@ public class ProcessStepService {
         this.processStepRepository = processStepRepository;
     }
 
-    public List<ProcessStep> create(List<ProcessStepDto> processStepDtoList) {
+    public List<ProcessStep> create(User user, List<ProcessStepDto> processStepDtoList) {
         try {
             return processStepRepository.saveAll(
                 processStepDtoList
                     .stream()
                     .map(processStepDto -> new ProcessStep(
+                        user,
                         processStepDto.getName(),
                         processStepDto.getDescription(),
                         processStepDto.getCondition(),
                         processStepDto.getPrevProcessStepId() != null
-                            ? processStepRepository.findById(processStepDto.getPrevProcessStepId()).orElse(null)
+                            ? processStepRepository.findByUserAndId(user, processStepDto.getPrevProcessStepId()).orElse(null)
                             : null,
                         processStepDto.getFromProcessStepsIds() != null
-                            ? processStepRepository.findAllById(processStepDto.getFromProcessStepsIds())
+                            ? processStepRepository.findAllByUserAndIdIn(user, processStepDto.getFromProcessStepsIds())
                             : null,
-                        processRepository.getReferenceById(processStepDto.getProcessId())
+                        processRepository.findByUserAndId(user, processStepDto.getProcessId()).orElseThrow()
                     ))
                     .toList()
             );
@@ -43,14 +45,21 @@ public class ProcessStepService {
         }
     }
 
-    public List<ProcessStep> read() {
-        return processStepRepository.findAll();
+    public List<ProcessStep> read(User user) {
+        return processStepRepository.findAllByUser(user);
     }
 
-    public void assign(List<ProcessAssignDto> processAssignDtoList) {
+    public void assign(User user, List<ProcessAssignDto> processAssignDtoList) {
         processAssignDtoList.forEach(processAssignDto -> {
-            ProcessStep processStep = processStepRepository.findById(processAssignDto.getProcessStepId()).orElseThrow();
-            processStep.getAvailableFrom().add(processStepRepository.getReferenceById(processAssignDto.getAssignProcessStepId()));
+            ProcessStep processStep = processStepRepository
+                .findByUserAndId(user, processAssignDto.getProcessStepId())
+                .orElseThrow();
+
+            processStep.getAvailableFrom().add(processStepRepository
+                .findByUserAndId(user, processAssignDto.getAssignProcessStepId())
+                .orElseThrow()
+            );
+
             processStepRepository.save(processStep);
         });
     }

@@ -1,5 +1,6 @@
 package com.sobekcore.workflow.execution;
 
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.execution.condition.ConditionStatus;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.ProcessRepository;
@@ -26,8 +27,9 @@ public class ExecutionService {
         this.processStepRepository = processStepRepository;
     }
 
-    public List<Execution> create(List<ExecutionDto> executionDtoList) {
-        List<Process> processList = processRepository.findAllById(
+    public List<Execution> create(User user, List<ExecutionDto> executionDtoList) {
+        List<Process> processList = processRepository.findAllByUserAndIdIn(
+            user,
             executionDtoList.stream().map(ExecutionDto::getProcessId).toList()
         );
 
@@ -35,21 +37,28 @@ public class ExecutionService {
             executionDtoList
                 .stream()
                 .map(executionDto -> new Execution(
-                    processList.stream().filter(process -> process.getId().equals(executionDto.getProcessId())).findFirst().orElseThrow(),
-                    processStepRepository.findById(executionDto.getProcessStepId()).orElseThrow()
+                    user,
+                    processList
+                        .stream()
+                        .filter(process -> process.getId().equals(executionDto.getProcessId()))
+                        .findFirst()
+                        .orElseThrow(),
+                    processStepRepository
+                        .findByUserAndId(user, executionDto.getProcessStepId())
+                        .orElseThrow()
                 ))
                 .toList()
         );
     }
 
-    public List<Execution> read() {
-        return executionRepository.findAll();
+    public List<Execution> read(User user) {
+        return executionRepository.findAllByUser(user);
     }
 
-    public void progress(List<ExecutionProgressDto> executionProgressDtoList) {
+    public void progress(User user, List<ExecutionProgressDto> executionProgressDtoList) {
         executionProgressDtoList.forEach(executionProgressDto ->
             executionRepository.saveAll(
-                findExecutionsToProgress(executionProgressDto)
+                findExecutionsToProgress(user, executionProgressDto)
                     .stream()
                     .map(execution -> {
                         try {
@@ -66,8 +75,9 @@ public class ExecutionService {
             ));
     }
 
-    private List<Execution> findExecutionsToProgress(ExecutionProgressDto executionProgressDto) {
-        return executionRepository.findAllByIdAndConditionStatusInAndProcessStepNotNull(
+    private List<Execution> findExecutionsToProgress(User user, ExecutionProgressDto executionProgressDto) {
+        return executionRepository.findAllByUserAndIdAndConditionStatusInAndProcessStepNotNull(
+            user,
             executionProgressDto.getExecutionId(),
             List.of(ConditionStatus.COMPLETED, ConditionStatus.CHOOSE)
         );

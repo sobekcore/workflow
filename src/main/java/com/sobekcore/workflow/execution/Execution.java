@@ -1,5 +1,7 @@
 package com.sobekcore.workflow.execution;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.execution.condition.ConditionStatus;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.step.ProcessStep;
@@ -25,6 +27,12 @@ public class Execution {
     @Column(nullable = false)
     private Instant createdAt;
 
+    @JsonIgnore
+    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -41,13 +49,14 @@ public class Execution {
     @ManyToOne
     private ProcessStep processStep;
 
-    public Execution(Process process, ProcessStep processStep) {
+    public Execution(User user, Process process, ProcessStep processStep) {
         if (!process.getId().equals(processStep.getProcess().getId())) {
             throw new ProcessStepNotPartOfProcessException();
         }
 
         id = UUID.randomUUID();
         createdAt = Instant.now();
+        this.user = user;
         this.process = process;
         this.processStep = processStep;
         conditionStatus = determineConditionStatus();
@@ -63,6 +72,10 @@ public class Execution {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public ConditionStatus getConditionStatus() {
