@@ -23,7 +23,10 @@ export function useAssignProcessesSteps(processId: string) {
         }
 
         const processToAssign: ProcessStepToAssign | undefined = processesToAssign.find(
-          (process: ProcessStepToAssign): boolean => process.processId === processId,
+          (process: ProcessStepToAssign): boolean =>
+            processes[index].steps.some(
+              (processStep: ProcessStep): boolean => processStep.id === process.processStepId,
+            ),
         );
         if (!processToAssign) {
           return processes;

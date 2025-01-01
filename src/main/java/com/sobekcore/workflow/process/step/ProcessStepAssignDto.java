@@ -1,21 +1,19 @@
-package com.sobekcore.workflow.process;
+package com.sobekcore.workflow.process.step;
 
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public class ProcessAssignDto {
-    @NotNull
-    private UUID processId;
-
+public class ProcessStepAssignDto {
     @NotNull
     private UUID processStepId;
 
     @NotNull
     private UUID assignProcessStepId;
 
-    public UUID getProcessId() {
-        return processId;
+    public ProcessStepAssignDto(UUID processStepId, UUID assignProcessStepId) {
+        this.processStepId = processStepId;
+        this.assignProcessStepId = assignProcessStepId;
     }
 
     public UUID getProcessStepId() {

@@ -20,7 +20,6 @@ export interface ProcessStepToCreate {
 }
 
 export interface ProcessStepToAssign {
-  processId: string;
   processStepId: string;
   assignProcessStepId: string;
 }

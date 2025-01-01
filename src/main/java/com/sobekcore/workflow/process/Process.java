@@ -57,6 +57,10 @@ public class Process {
         return createdAt;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getName() {
         return name;
     }

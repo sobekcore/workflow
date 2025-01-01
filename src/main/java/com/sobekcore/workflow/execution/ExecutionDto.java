@@ -11,6 +11,11 @@ public class ExecutionDto {
     @NotNull
     private UUID processStepId;
 
+    public ExecutionDto(UUID processId, UUID processStepId) {
+        this.processId = processId;
+        this.processStepId = processStepId;
+    }
+
     public UUID getProcessId() {
         return processId;
     }

@@ -9,6 +9,11 @@ public class ConditionOption {
     @NotBlank
     private String value;
 
+    public ConditionOption(String label, String value) {
+        this.label = label;
+        this.value = value;
+    }
+
     public String getLabel() {
         return label;
     }

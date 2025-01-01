@@ -4,6 +4,7 @@ import com.sobekcore.workflow.auth.AuthContext;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.*;
 import com.sobekcore.workflow.process.step.ProcessStep;
+import com.sobekcore.workflow.process.step.ProcessStepAssignDto;
 import com.sobekcore.workflow.process.step.ProcessStepDto;
 import com.sobekcore.workflow.process.step.ProcessStepService;
 import jakarta.validation.Valid;
@@ -58,7 +59,7 @@ class ProcessesController {
 
     @PatchMapping("/steps/assign")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void assignSteps(@Valid @RequestBody List<ProcessAssignDto> processAssignDtoList) {
-        processStepService.assign(authContext.getUser(), processAssignDtoList);
+    public void assignSteps(@Valid @RequestBody List<ProcessStepAssignDto> processStepAssignDtoList) {
+        processStepService.assign(authContext.getUser(), processStepAssignDtoList);
     }
 }

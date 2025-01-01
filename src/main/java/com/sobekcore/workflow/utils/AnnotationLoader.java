@@ -8,10 +8,11 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class AnnotationLoader {
-    private static final HashMap<String, Object> instances = new HashMap<>();
+    private static final Map<String, Object> instances = new HashMap<>();
 
     public static <T, R> R load(String basePackage, Class<? extends Annotation> annotationType, T value) {
         ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(true);

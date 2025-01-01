@@ -39,8 +39,6 @@ export default function AssignProcessStepForm({
     }
   }, [setValue, assignProcessStepId]);
 
-  setValue('processId', processId);
-
   const process: Process | undefined = processes?.find((process: Process): boolean => process.id === processId);
   const defaultProcessStepId: string | undefined = process?.steps[0].id;
 

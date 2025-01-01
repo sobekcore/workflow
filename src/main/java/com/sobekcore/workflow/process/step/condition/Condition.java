@@ -9,6 +9,11 @@ public class Condition {
 
     private ConditionData data;
 
+    public Condition(ConditionType type, ConditionData data) {
+        this.type = type;
+        this.data = data;
+    }
+
     public ConditionType getType() {
         return type;
     }

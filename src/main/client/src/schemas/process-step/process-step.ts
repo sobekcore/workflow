@@ -25,7 +25,6 @@ export const processStepToCreateSchema = z.object({
 }) satisfies ZodType<ProcessStepToCreate>;
 
 export const processStepToAssignSchema = z.object({
-  processId: z.string(),
   processStepId: z.string(),
   assignProcessStepId: z.string(),
 }) satisfies ZodType<ProcessStepToAssign>;

@@ -11,6 +11,11 @@ public class ConditionCompleteDto {
 
     private ConditionState state;
 
+    public ConditionCompleteDto(UUID executionId, ConditionState state) {
+        this.executionId = executionId;
+        this.state = state;
+    }
+
     public UUID getExecutionId() {
         return executionId;
     }

@@ -10,6 +10,11 @@ public class ExecutionProgressDto {
 
     private UUID chooseProcessStepId;
 
+    public ExecutionProgressDto(UUID executionId, UUID chooseProcessStepId) {
+        this.executionId = executionId;
+        this.chooseProcessStepId = chooseProcessStepId;
+    }
+
     public UUID getExecutionId() {
         return executionId;
     }

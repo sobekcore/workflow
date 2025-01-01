@@ -23,6 +23,22 @@ public class ProcessStepDto {
     @NotNull
     private UUID processId;
 
+    public ProcessStepDto(
+        String name,
+        String description,
+        Condition condition,
+        UUID prevProcessStepId,
+        List<UUID> fromProcessStepsIds,
+        UUID processId
+    ) {
+        this.name = name;
+        this.description = description;
+        this.condition = condition;
+        this.prevProcessStepId = prevProcessStepId;
+        this.fromProcessStepsIds = fromProcessStepsIds;
+        this.processId = processId;
+    }
+
     public String getName() {
         return name;
     }

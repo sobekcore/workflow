@@ -11,6 +11,12 @@ public class ConditionState {
 
     private List<ConditionOption> options;
 
+    public ConditionState(Boolean visited, ConditionOption option, List<ConditionOption> options) {
+        this.visited = visited;
+        this.option = option;
+        this.options = options;
+    }
+
     public Boolean isVisited() {
         return visited;
     }

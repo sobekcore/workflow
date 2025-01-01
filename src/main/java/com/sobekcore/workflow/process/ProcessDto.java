@@ -6,6 +6,10 @@ public class ProcessDto {
     @NotBlank
     private String name;
 
+    public ProcessDto(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
