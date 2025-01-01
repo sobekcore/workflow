@@ -26,16 +26,16 @@ public class ProcessStepService {
                     .stream()
                     .map(processStepDto -> new ProcessStep(
                         user,
-                        processStepDto.getName(),
-                        processStepDto.getDescription(),
-                        processStepDto.getCondition(),
-                        processStepDto.getPrevProcessStepId() != null
-                            ? processStepRepository.findByUserAndId(user, processStepDto.getPrevProcessStepId()).orElse(null)
+                        processStepDto.name(),
+                        processStepDto.description(),
+                        processStepDto.condition(),
+                        processStepDto.prevProcessStepId() != null
+                            ? processStepRepository.findByUserAndId(user, processStepDto.prevProcessStepId()).orElse(null)
                             : null,
-                        processStepDto.getFromProcessStepsIds() != null
-                            ? processStepRepository.findAllByUserAndIdIn(user, processStepDto.getFromProcessStepsIds())
+                        processStepDto.fromProcessStepsIds() != null
+                            ? processStepRepository.findAllByUserAndIdIn(user, processStepDto.fromProcessStepsIds())
                             : null,
-                        processRepository.findByUserAndId(user, processStepDto.getProcessId()).orElseThrow()
+                        processRepository.findByUserAndId(user, processStepDto.processId()).orElseThrow()
                     ))
                     .toList()
             );
@@ -51,11 +51,11 @@ public class ProcessStepService {
     public void assign(User user, List<ProcessStepAssignDto> processStepAssignDtoList) {
         processStepAssignDtoList.forEach(processStepAssignDto -> {
             ProcessStep processStep = processStepRepository
-                .findByUserAndId(user, processStepAssignDto.getProcessStepId())
+                .findByUserAndId(user, processStepAssignDto.processStepId())
                 .orElseThrow();
 
             processStep.getAvailableFrom().add(processStepRepository
-                .findByUserAndId(user, processStepAssignDto.getAssignProcessStepId())
+                .findByUserAndId(user, processStepAssignDto.assignProcessStepId())
                 .orElseThrow()
             );
 

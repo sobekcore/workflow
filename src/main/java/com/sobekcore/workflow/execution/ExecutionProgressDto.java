@@ -4,22 +4,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public class ExecutionProgressDto {
+public record ExecutionProgressDto(
     @NotNull
-    private UUID executionId;
+    UUID executionId,
 
-    private UUID chooseProcessStepId;
-
-    public ExecutionProgressDto(UUID executionId, UUID chooseProcessStepId) {
-        this.executionId = executionId;
-        this.chooseProcessStepId = chooseProcessStepId;
-    }
-
-    public UUID getExecutionId() {
-        return executionId;
-    }
-
-    public UUID getChooseProcessStepId() {
-        return chooseProcessStepId;
-    }
+    UUID chooseProcessStepId
+) {
 }

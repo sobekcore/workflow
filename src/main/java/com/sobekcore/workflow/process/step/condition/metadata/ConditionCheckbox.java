@@ -7,6 +7,6 @@ import com.sobekcore.workflow.process.step.condition.ConditionType;
 public class ConditionCheckbox implements ConditionMetadata {
     @Override
     public boolean isConditionReady(ConditionState state) {
-        return state != null && state.getOptions() != null && !state.getOptions().isEmpty();
+        return state != null && state.options() != null && !state.options().isEmpty();
     }
 }

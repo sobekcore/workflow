@@ -7,59 +7,20 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public class ProcessStepDto {
+public record ProcessStepDto(
     @NotBlank
-    private String name;
+    String name,
 
-    private String description;
-
-    @NotNull
-    private Condition condition;
-
-    private UUID prevProcessStepId;
-
-    private List<UUID> fromProcessStepsIds;
+    String description,
 
     @NotNull
-    private UUID processId;
+    Condition condition,
 
-    public ProcessStepDto(
-        String name,
-        String description,
-        Condition condition,
-        UUID prevProcessStepId,
-        List<UUID> fromProcessStepsIds,
-        UUID processId
-    ) {
-        this.name = name;
-        this.description = description;
-        this.condition = condition;
-        this.prevProcessStepId = prevProcessStepId;
-        this.fromProcessStepsIds = fromProcessStepsIds;
-        this.processId = processId;
-    }
+    UUID prevProcessStepId,
 
-    public String getName() {
-        return name;
-    }
+    List<UUID> fromProcessStepsIds,
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Condition getCondition() {
-        return condition;
-    }
-
-    public UUID getPrevProcessStepId() {
-        return prevProcessStepId;
-    }
-
-    public List<UUID> getFromProcessStepsIds() {
-        return fromProcessStepsIds;
-    }
-
-    public UUID getProcessId() {
-        return processId;
-    }
+    @NotNull
+    UUID processId
+) {
 }

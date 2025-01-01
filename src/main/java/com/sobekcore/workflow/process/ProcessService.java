@@ -17,7 +17,7 @@ public class ProcessService {
         return processRepository.saveAll(
             processDtoList
                 .stream()
-                .map(processDto -> new Process(user, processDto.getName()))
+                .map(processDto -> new Process(user, processDto.name()))
                 .toList()
         );
     }

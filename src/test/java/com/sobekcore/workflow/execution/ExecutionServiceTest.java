@@ -86,8 +86,8 @@ class ExecutionServiceTest {
 
         Execution execution = executionService.create(user, List.of(executionDto)).get(0);
 
-        assertEquals(executionDto.getProcessId(), execution.getProcess().getId());
-        assertEquals(executionDto.getProcessStepId(), execution.getProcessStep().getId());
+        assertEquals(executionDto.processId(), execution.getProcess().getId());
+        assertEquals(executionDto.processStepId(), execution.getProcessStep().getId());
     }
 
     @Test

@@ -30,7 +30,7 @@ public class ExecutionService {
     public List<Execution> create(User user, List<ExecutionDto> executionDtoList) {
         List<Process> processList = processRepository.findAllByUserAndIdIn(
             user,
-            executionDtoList.stream().map(ExecutionDto::getProcessId).toList()
+            executionDtoList.stream().map(ExecutionDto::processId).toList()
         );
 
         return executionRepository.saveAll(
@@ -40,11 +40,11 @@ public class ExecutionService {
                     user,
                     processList
                         .stream()
-                        .filter(process -> process.getId().equals(executionDto.getProcessId()))
+                        .filter(process -> process.getId().equals(executionDto.processId()))
                         .findFirst()
                         .orElseThrow(),
                     processStepRepository
-                        .findByUserAndId(user, executionDto.getProcessStepId())
+                        .findByUserAndId(user, executionDto.processStepId())
                         .orElseThrow()
                 ))
                 .toList()
@@ -63,8 +63,8 @@ public class ExecutionService {
                     .map(execution -> {
                         try {
                             return execution.setProcessStep(execution.findNextProcessStep(
-                                executionProgressDto.getChooseProcessStepId() != null
-                                    ? processStepRepository.getReferenceById(executionProgressDto.getChooseProcessStepId())
+                                executionProgressDto.chooseProcessStepId() != null
+                                    ? processStepRepository.getReferenceById(executionProgressDto.chooseProcessStepId())
                                     : null
                             ));
                         } catch (ExecutionCantDetermineNextProcessStepException exception) {
@@ -78,7 +78,7 @@ public class ExecutionService {
     private List<Execution> findExecutionsToProgress(User user, ExecutionProgressDto executionProgressDto) {
         return executionRepository.findAllByUserAndIdAndConditionStatusInAndProcessStepNotNull(
             user,
-            executionProgressDto.getExecutionId(),
+            executionProgressDto.executionId(),
             List.of(ConditionStatus.COMPLETED, ConditionStatus.CHOOSE)
         );
     }

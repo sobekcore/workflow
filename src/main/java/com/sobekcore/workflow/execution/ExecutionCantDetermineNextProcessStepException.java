@@ -1,6 +1,6 @@
 package com.sobekcore.workflow.execution;
 
-public class ExecutionCantDetermineNextProcessStepException extends RuntimeException {
+class ExecutionCantDetermineNextProcessStepException extends RuntimeException {
     public ExecutionCantDetermineNextProcessStepException() {
     }
 

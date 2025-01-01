@@ -7,6 +7,6 @@ import com.sobekcore.workflow.process.step.condition.ConditionType;
 public class ConditionRadio implements ConditionMetadata {
     @Override
     public boolean isConditionReady(ConditionState state) {
-        return state != null && state.getOption() != null;
+        return state != null && state.option() != null;
     }
 }

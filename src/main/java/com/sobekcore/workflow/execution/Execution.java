@@ -147,7 +147,7 @@ public class Execution {
 
     private ConditionStatus determineConditionStatus() {
         return processStep == null || Condition
-            .getMetadata(processStep.getCondition().getType())
+            .getMetadata(processStep.getCondition().type())
             .isConditionReady(conditionState)
                 ? ConditionStatus.COMPLETED
                 : ConditionStatus.IN_PROGRESS;

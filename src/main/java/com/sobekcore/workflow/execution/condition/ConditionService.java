@@ -19,9 +19,9 @@ public class ConditionService {
             conditionCompleteDtoList
                 .stream()
                 .map(conditionCompleteDto -> executionRepository
-                    .findByUserAndId(user, conditionCompleteDto.getExecutionId())
+                    .findByUserAndId(user, conditionCompleteDto.executionId())
                     .orElseThrow()
-                    .setConditionState(conditionCompleteDto.getState())
+                    .setConditionState(conditionCompleteDto.state())
                 )
                 .toList()
         );

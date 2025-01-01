@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,17 +79,17 @@ class ProcessStepServiceTest {
 
         ProcessStep processStep = processStepService.create(user, List.of(processStepDto)).get(0);
 
-        assertEquals(processStepDto.getName(), processStep.getName());
-        assertEquals(processStepDto.getDescription(), processStep.getDescription());
-        assertEquals(processStepDto.getCondition(), processStep.getCondition());
-        assertEquals(processStepDto.getPrevProcessStepId(), processStep.getPrevProcessStep().getId());
-        assertEquals(processStepDto.getFromProcessStepsIds(), processStep
+        assertEquals(processStepDto.name(), processStep.getName());
+        assertEquals(processStepDto.description(), processStep.getDescription());
+        assertEquals(processStepDto.condition(), processStep.getCondition());
+        assertEquals(processStepDto.prevProcessStepId(), processStep.getPrevProcessStep().getId());
+        assertEquals(processStepDto.fromProcessStepsIds(), processStep
             .getAvailableFrom()
             .stream()
             .map(ProcessStep::getId)
             .toList()
         );
-        assertEquals(processStepDto.getProcessId(), processStep.getProcess().getId());
+        assertEquals(processStepDto.processId(), processStep.getProcess().getId());
     }
 
     @Test

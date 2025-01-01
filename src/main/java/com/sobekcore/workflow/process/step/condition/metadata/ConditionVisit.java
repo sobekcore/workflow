@@ -7,6 +7,6 @@ import com.sobekcore.workflow.process.step.condition.ConditionType;
 public class ConditionVisit implements ConditionMetadata {
     @Override
     public boolean isConditionReady(ConditionState state) {
-        return state != null && state.isVisited() != null && state.isVisited();
+        return state != null && state.visited() != null && state.visited();
     }
 }

@@ -42,7 +42,7 @@ class ProcessServiceTest {
         Process process = processService.create(user, List.of(processDto)).get(0);
 
         assertEquals(user, process.getUser());
-        assertEquals(processDto.getName(), process.getName());
+        assertEquals(processDto.name(), process.getName());
     }
 
     @Test

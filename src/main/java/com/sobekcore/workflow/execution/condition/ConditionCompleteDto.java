@@ -5,22 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public class ConditionCompleteDto {
+public record ConditionCompleteDto(
     @NotNull
-    private UUID executionId;
+    UUID executionId,
 
-    private ConditionState state;
-
-    public ConditionCompleteDto(UUID executionId, ConditionState state) {
-        this.executionId = executionId;
-        this.state = state;
-    }
-
-    public UUID getExecutionId() {
-        return executionId;
-    }
-
-    public ConditionState getState() {
-        return state;
-    }
+    ConditionState state
+) {
 }
