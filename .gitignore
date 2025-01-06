@@ -13,6 +13,9 @@
 /src/main/resources/application-local.properties
 /src/main/client/.env.local
 
+# Coverage
+/src/main/client/coverage
+
 # Configs
 .idea
 workflow.iml

@@ -10,6 +10,7 @@ interface WorkflowItemProps extends PropsWithChildren {
 export default function WorkflowItem({ title, actions, completed, children }: WorkflowItemProps) {
   return (
     <div
+      data-testid="workflow-item"
       className={clsx(
         'flex flex-col gap-2 overflow-x-auto rounded-2xl border p-2',
         completed ? 'border-emerald-200 bg-green-50' : 'border-indigo-100 bg-white',
@@ -19,7 +20,11 @@ export default function WorkflowItem({ title, actions, completed, children }: Wo
         <div className="flex items-center gap-2">{title}</div>
         {actions}
       </div>
-      {Children.count(children) > 0 && <div className="flex w-full gap-2">{children}</div>}
+      {Children.count(children) > 0 && (
+        <div data-testid="workflow-item-children" className="flex w-full gap-2">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

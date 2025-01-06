@@ -11,7 +11,7 @@ interface WorkflowStepConditionProps {
 
 export default function WorkflowStepCondition({ processStep, execution, onComplete }: WorkflowStepConditionProps) {
   return (
-    <div className="flex flex-col gap-1 text-sm">
+    <div data-testid="workflow-step-condition" className="flex flex-col gap-1 text-sm">
       {getConditionConfig(processStep.condition.type)?.render({
         id: processStep.id,
         condition: processStep.condition,

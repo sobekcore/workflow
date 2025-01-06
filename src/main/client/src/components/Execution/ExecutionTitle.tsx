@@ -9,7 +9,7 @@ interface ExecutionTitleProps {
 export default function ExecutionTitle({ execution, icon = true }: ExecutionTitleProps) {
   return (
     <>
-      {icon && <MdOutlineNotifications className="text-xl" />}
+      {icon && <MdOutlineNotifications data-testid="execution-title-icon" className="text-xl" />}
       <h1 className="flex items-center gap-1">
         {execution.process.name} <MdHorizontalRule /> Execution
       </h1>

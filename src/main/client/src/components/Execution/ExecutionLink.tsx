@@ -23,7 +23,7 @@ export default function ExecutionLink({ execution }: ExecutionLinkProps) {
       onClick={handleNavbarItemClick}
     >
       <ExecutionTitle execution={execution} icon={false} />
-      {isExecutionCompleted && <MdCheck />}
+      {isExecutionCompleted && <MdCheck data-testid="execution-link-check" />}
     </NavbarItem>
   );
 }

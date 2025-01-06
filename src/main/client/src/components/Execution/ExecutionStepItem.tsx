@@ -30,6 +30,7 @@ export default function ExecutionStepItem({ execution, processStep, completed }:
 
   return (
     <WorkflowStepItem
+      data-testid="execution-step-item"
       processStep={processStep}
       actions={
         <>

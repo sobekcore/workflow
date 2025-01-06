@@ -13,7 +13,7 @@ export default function NestedExecutionStepItem({ execution, processStep, comple
     <div className="flex w-full flex-col gap-2">
       <ExecutionStepItem execution={execution} processStep={processStep} completed={completed} />
       {!!processStep.children?.length && (
-        <div className="flex w-full gap-2">
+        <div data-testid="nested-execution-step-item-children" className="flex w-full gap-2">
           {processStep.children.map((step: NestedProcessStep) => (
             <NestedExecutionStepItem key={step.id} execution={execution} processStep={step} completed={completed} />
           ))}
