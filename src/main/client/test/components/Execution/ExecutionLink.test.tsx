@@ -5,7 +5,11 @@ import { userEvent } from '@testing-library/user-event';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import ExecutionLink from '@/components/Execution/ExecutionLink.tsx';
 
-vi.spyOn(Storage.prototype, 'setItem');
+Object.defineProperty(window, 'localStorage', {
+  value: {
+    setItem: vi.fn(),
+  },
+});
 
 const execution: Execution = mockExecution();
 let component: RenderResult;

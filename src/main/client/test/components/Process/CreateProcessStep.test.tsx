@@ -5,21 +5,24 @@ import { RenderResult, fireEvent, render } from '@testing-library/react';
 import { Mock } from 'vitest';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
-import CreateExecution from '@/components/Execution/CreateExecution.tsx';
-import { ExecutionFormProps } from '@/components/Execution/ExecutionForm.tsx';
+import CreateProcessStep from '@/components/Process/CreateProcessStep.tsx';
+import { ProcessStepFormProps } from '@/components/Process/ProcessStepForm.tsx';
 
 const mutate: Mock = vi.fn();
-vi.mock('@/hooks/executions/useCreateExecutions.ts', () => ({
-  useCreateExecutions: () => ({
+vi.mock('@/hooks/processes-steps/useCreateProcessesSteps.ts', () => ({
+  useCreateProcessesSteps: () => ({
     mutate,
   }),
 }));
 
 const process: Process = mockProcess();
 const processStep: ProcessStep = mockProcessStep();
-vi.mock('@/components/Execution/ExecutionForm.tsx', () => ({
-  default: ({ onSubmit }: ExecutionFormProps) => (
-    <div data-testid="submit" onClick={() => onSubmit({ processId: process.id, processStepId: processStep.id })} />
+vi.mock('@/components/Process/ProcessStepForm.tsx', () => ({
+  default: ({ onSubmit }: ProcessStepFormProps) => (
+    <div
+      data-testid="submit"
+      onClick={() => onSubmit({ name: processStep.name, condition: processStep.condition, processId: process.id })}
+    />
   ),
 }));
 
@@ -28,7 +31,7 @@ let component: RenderResult;
 beforeEach(() => {
   component = render(
     <MockQueryClientProvider>
-      <CreateExecution />
+      <CreateProcessStep processId={process.id} />
     </MockQueryClientProvider>,
   );
 });
@@ -39,11 +42,13 @@ test('should open dialog when clicked', () => {
   expect(component.getByRole('dialog')).toBeInTheDocument();
 });
 
-test('should call useCreateExecutions and close dialog when submitted', () => {
+test('should call useCreateProcessesSteps and close dialog when submitted', () => {
   fireEvent.click(component.getByRole('button'));
   fireEvent.click(component.getByTestId('submit'));
 
   expect(mutate).toHaveBeenCalledOnce();
-  expect(mutate).toHaveBeenCalledWith([{ processId: process.id, processStepId: processStep.id }]);
+  expect(mutate).toHaveBeenCalledWith([
+    { name: processStep.name, condition: processStep.condition, processId: process.id },
+  ]);
   expect(component.queryByRole('dialog')).not.toBeInTheDocument();
 });

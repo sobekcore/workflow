@@ -11,7 +11,7 @@ export default function NestedProcessStepItem({ processStep, processId }: Nested
     <div className="flex w-full flex-col gap-2">
       <ProcessStepItem processStep={processStep} processId={processId} />
       {!!processStep.children?.length && (
-        <div className="flex w-full gap-2">
+        <div data-testid="nested-process-step-item-children" className="flex w-full gap-2">
           {processStep.children.map((step: NestedProcessStep) => (
             <NestedProcessStepItem key={step.id} processStep={step} processId={processId} />
           ))}

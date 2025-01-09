@@ -7,7 +7,7 @@ import { processToCreateSchema } from '@/schemas/process.ts';
 import Button from '@/components/Common/Button.tsx';
 import Input from '@/components/Field/Input.tsx';
 
-interface ProcessFormProps {
+export interface ProcessFormProps {
   onSubmit: SubmitHandler<ProcessToCreate>;
   onCancel(): void;
 }

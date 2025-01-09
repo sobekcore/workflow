@@ -10,7 +10,7 @@ import Button from '@/components/Common/Button.tsx';
 import Input from '@/components/Field/Input.tsx';
 import Select from '@/components/Field/Select.tsx';
 
-interface ProcessStepFormProps {
+export interface ProcessStepFormProps {
   processId: string;
   prevProcessStepId?: string;
   onSubmit: SubmitHandler<ProcessStepToCreate>;

@@ -21,7 +21,7 @@ test('should render process step name', () => {
 });
 
 test('should render process step description', () => {
-  expect(component.getByText(processStep.description ?? '')).toBeInTheDocument();
+  expect(component.getByText(`${processStep.description}`)).toBeInTheDocument();
 });
 
 test('should render actions', () => {

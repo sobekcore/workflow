@@ -10,7 +10,7 @@ import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import Button from '@/components/Common/Button.tsx';
 import Select from '@/components/Field/Select.tsx';
 
-interface ProcessFormProps {
+export interface AssignProcessStepForm {
   processId: string;
   assignProcessStepId: string;
   onSubmit: SubmitHandler<ProcessStepToAssign>;
@@ -22,7 +22,7 @@ export default function AssignProcessStepForm({
   assignProcessStepId,
   onSubmit,
   onCancel,
-}: ProcessFormProps) {
+}: AssignProcessStepForm) {
   const { data: processes } = useReadProcesses();
   const {
     register,

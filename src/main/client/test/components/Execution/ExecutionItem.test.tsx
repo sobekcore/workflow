@@ -20,7 +20,7 @@ test('should render execution name', () => {
 });
 
 test('should render execution step name', () => {
-  expect(component.getByText(execution.processStep?.name ?? '')).toBeInTheDocument();
+  expect(component.getByText(`${execution.processStep?.name}`)).toBeInTheDocument();
 });
 
 test('should render status when completed', () => {

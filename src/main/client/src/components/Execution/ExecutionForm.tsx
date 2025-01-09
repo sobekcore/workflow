@@ -11,7 +11,7 @@ import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import Button from '@/components/Common/Button.tsx';
 import Select from '@/components/Field/Select.tsx';
 
-interface ExecutionFormProps {
+export interface ExecutionFormProps {
   onSubmit: SubmitHandler<ExecutionToCreate>;
   onCancel(): void;
 }

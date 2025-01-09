@@ -42,7 +42,7 @@ export default function ProcessStepDropdown({
     <>
       <Dropdown
         trigger={
-          <Button variant={ButtonVariant.TEXT} size={ButtonSize.ICON}>
+          <Button data-testid="process-step-dropdown" variant={ButtonVariant.TEXT} size={ButtonSize.ICON}>
             <MdMoreVert />
           </Button>
         }

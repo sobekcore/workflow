@@ -13,8 +13,9 @@ export default mergeConfig(
     },
     test: {
       globals: true,
-      mockReset: true,
+      restoreMocks: true,
       environment: 'jsdom',
+      css: true,
       setupFiles: ['./test/setup.ts'],
     },
   }),

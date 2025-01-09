@@ -69,7 +69,7 @@ test('should render current execution step when in progress', () => {
 });
 
 test('should call useProgressExecutions when completed', () => {
-  fireEvent.click(component.getByText('Complete Execution Step'));
+  fireEvent.click(component.getByRole('button', { name: 'Complete Execution Step' }));
 
   expect(mutate).toHaveBeenCalledOnce();
   expect(mutate).toHaveBeenCalledWith([{ executionId: execution.id }]);
@@ -102,7 +102,7 @@ test('should call useProgressExecutions when choose', () => {
     </MockQueryClientProvider>,
   );
 
-  fireEvent.click(component.getByText('Choose Execution Step'));
+  fireEvent.click(component.getByRole('button', { name: 'Choose Execution Step' }));
 
   expect(mutate).toHaveBeenCalledOnce();
   expect(mutate).toHaveBeenCalledWith([{ executionId: execution.id, chooseProcessStepId: processStep.id }]);

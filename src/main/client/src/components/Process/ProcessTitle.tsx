@@ -9,7 +9,7 @@ interface ProcessTitleProps {
 export default function ProcessTitle({ process, icon = true }: ProcessTitleProps) {
   return (
     <>
-      {icon && <MdLabelOutline className="text-xl" />}
+      {icon && <MdLabelOutline data-testid="process-title-icon" className="text-xl" />}
       <h1>{process.name}</h1>
     </>
   );

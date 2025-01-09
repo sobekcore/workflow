@@ -26,8 +26,8 @@ beforeEach(() => {
 });
 
 test('should call onSubmit', async () => {
-  await userEvent.selectOptions(component.getByRole('combobox', { name: 'Process' }), process.id);
-  await userEvent.selectOptions(component.getByRole('combobox', { name: 'Process Step' }), process.steps[0].id);
+  await userEvent.selectOptions(component.getByLabelText('Process'), process.id);
+  await userEvent.selectOptions(component.getByLabelText('Process Step'), process.steps[0].id);
   await userEvent.click(component.getByRole('button', { name: 'Create' }));
 
   expect(onSubmit).toHaveBeenCalledOnce();
