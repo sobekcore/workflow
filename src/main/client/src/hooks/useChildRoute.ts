@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from '@tanstack/react-router';
 import { Entity } from '@/interfaces/entity.ts';
 
-export function useChildRoute<T extends Entity>(entities: T[] | undefined, url: string, param: string): T | null {
+export function useChildRoute<T extends Entity>(entities: T[] | undefined, pathname: string, param: string): T | null {
   const router = useRouter();
   const params = useParams({ strict: false });
   const [entity, setEntity] = useState<T | null>(null);
@@ -12,24 +12,25 @@ export function useChildRoute<T extends Entity>(entities: T[] | undefined, url: 
       return;
     }
 
-    const entityId: string = params[param] ?? localStorage.getItem(`${url}:${param}`);
-    const entity: T | undefined = entityId
-      ? entities.find((process: T): boolean => process.id === entityId) ?? entities[0]
-      : entities[0];
+    const entityId: string = params[param] || localStorage.getItem(`${pathname}:${param}`);
+    let entity: T | undefined;
+
+    if (entityId) {
+      entity = entities.find((process: T): boolean => process.id === entityId);
+    }
 
     if (!entity) {
-      setEntity(null);
-      return;
+      entity = entities[0];
     }
 
     setEntity(entity);
     router.navigate({
-      to: url,
+      to: pathname,
       params: {
         [param]: entity.id,
       },
     });
-  }, [router, params, entities, url, param]);
+  }, [router, params, entities, pathname, param]);
 
   return entity;
 }

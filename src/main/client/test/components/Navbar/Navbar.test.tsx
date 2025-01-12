@@ -2,16 +2,16 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
 import { mockUser } from '@test/mocks/user.ts';
-import { RenderResult, render, cleanup } from '@testing-library/react';
+import { RenderResult, cleanup, render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { beforeEach } from 'vitest';
 import { User } from '@/interfaces/auth.ts';
 import Navbar from '@/components/Navbar/Navbar.tsx';
 
+const user: User = mockUser();
 const { useAuth } = vi.hoisted(() => ({
   useAuth: vi.fn(
     (): Partial<UseQueryResult> => ({
-      data: undefined,
+      data: user,
     }),
   ),
 }));
@@ -25,7 +25,6 @@ Object.defineProperty(window, 'location', {
   },
 });
 
-const user: User = mockUser();
 let component: RenderResult;
 
 beforeEach(() => {
@@ -38,15 +37,15 @@ beforeEach(() => {
   );
 });
 
-test('should set location to /login', async () => {
-  await userEvent.click(component.getByRole('button', { name: 'Sign In' }));
+test('should set location to /logout', async () => {
+  await userEvent.click(component.getByRole('button', { name: 'Sign Out' }));
 
-  expect(window.location.href).toContain('/login');
+  expect(window.location.href).toContain('/logout');
 });
 
-test('should set location to /logout', async () => {
+test('should set location to /login', async () => {
   useAuth.mockImplementation(() => ({
-    data: user,
+    data: null,
   }));
 
   cleanup();
@@ -58,7 +57,7 @@ test('should set location to /logout', async () => {
     </MockQueryClientProvider>,
   );
 
-  await userEvent.click(component.getByRole('button', { name: 'Sign Out' }));
+  await userEvent.click(component.getByRole('button', { name: 'Sign In' }));
 
-  expect(window.location.href).toContain('/logout');
+  expect(window.location.href).toContain('/login');
 });

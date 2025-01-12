@@ -22,25 +22,22 @@ export function useAssignProcessesSteps(processId: string) {
           return processes;
         }
 
-        const processToAssign: ProcessStepToAssign | undefined = processesToAssign.find(
+        const processStepToAssign: ProcessStepToAssign | undefined = processesToAssign.find(
           (process: ProcessStepToAssign): boolean =>
             processes[index].steps.some(
               (processStep: ProcessStep): boolean => processStep.id === process.processStepId,
             ),
         );
-        if (!processToAssign) {
+        if (!processStepToAssign) {
           return processes;
         }
 
         const processStepIndex: number = processes[index].steps.findIndex(
-          (processStep: ProcessStep): boolean => processStep.id === processToAssign.processStepId,
+          (processStep: ProcessStep): boolean => processStep.id === processStepToAssign.processStepId,
         );
-        if (processStepIndex === -1) {
-          return processes;
-        }
 
         const assignProcessStepIndex: number = processes[index].steps.findIndex(
-          (processStep: ProcessStep): boolean => processStep.id === processToAssign.assignProcessStepId,
+          (processStep: ProcessStep): boolean => processStep.id === processStepToAssign.assignProcessStepId,
         );
         if (assignProcessStepIndex === -1) {
           return processes;

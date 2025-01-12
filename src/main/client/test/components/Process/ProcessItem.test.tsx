@@ -1,10 +1,13 @@
+import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, render, cleanup } from '@testing-library/react';
+import { RenderResult, cleanup, render } from '@testing-library/react';
+import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import ProcessItem from '@/components/Process/ProcessItem.tsx';
 
 const process: Process = mockProcess();
+const processStep: ProcessStep = mockProcessStep();
 let component: RenderResult;
 
 beforeEach(() => {
@@ -20,11 +23,11 @@ test('should render process name', () => {
 });
 
 test('should render process step name', () => {
-  expect(component.getByText(process.steps[0].name)).toBeInTheDocument();
+  expect(component.getByText(processStep.name)).toBeInTheDocument();
 });
 
 test('should render process step description', () => {
-  expect(component.getByText(`${process.steps[0].description}`)).toBeInTheDocument();
+  expect(component.getByText(`${processStep.description}`)).toBeInTheDocument();
 });
 
 test('should render process dropdown', () => {

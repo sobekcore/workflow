@@ -4,7 +4,7 @@ import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 export function mockProcessStep(): ProcessStep {
   const processStep: ProcessStep = {
     id: 'process-step',
-    createdAt: new Date(),
+    createdAt: new Date(0),
     name: 'Process Step',
     description: 'Description',
     condition: {
@@ -16,7 +16,7 @@ export function mockProcessStep(): ProcessStep {
     ...processStep,
     prevProcessStep: {
       id: 'prev-process-step',
-      createdAt: new Date(),
+      createdAt: new Date(0),
       name: 'Prev Process Step',
       description: 'Description',
       condition: {

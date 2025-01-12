@@ -6,8 +6,9 @@ import { Execution } from '@/interfaces/execution/execution.ts';
 export function mockExecution(): Execution {
   return {
     id: 'execution',
-    createdAt: new Date(),
+    createdAt: new Date(0),
     conditionStatus: ConditionStatus.COMPLETED,
+    conditionState: {},
     process: mockProcess(),
     processStep: mockProcessStep(),
   };

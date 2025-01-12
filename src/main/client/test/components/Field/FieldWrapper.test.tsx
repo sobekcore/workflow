@@ -1,7 +1,6 @@
 import { FieldErrors } from 'react-hook-form';
 import { mockErrors } from '@test/mocks/field.ts';
 import { RenderResult, render } from '@testing-library/react';
-import { expect } from 'vitest';
 import FieldWrapper from '@/components/Field/FieldWrapper.tsx';
 
 const name: string = 'name';

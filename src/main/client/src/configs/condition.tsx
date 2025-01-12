@@ -4,7 +4,7 @@ import { ConditionState } from '@/interfaces/execution/condition.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { Condition, ConditionOption } from '@/interfaces/process-step/condition.ts';
 
-interface ConditionConfig {
+export interface ConditionConfig {
   isConditionReady(state?: ConditionState): boolean;
   render(props: ConditionConfigRenderProps): ReactNode;
 }
