@@ -1,8 +1,9 @@
+import { RenderHookResult } from '@testing-library/react';
+import { Mock } from 'vitest';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderHookResult, cleanup, renderHook } from '@testing-library/react';
-import { Mock } from 'vitest';
+import { renderHook } from '@test/render.ts';
 import { Process } from '@/interfaces/process.ts';
 import { useChildRoute } from '@/hooks/useChildRoute';
 
@@ -66,7 +67,6 @@ test('should call navigate and return entity when found in localStorage', () => 
     [param]: '',
   }));
 
-  cleanup();
   hook = renderHook(() => useChildRoute([process, useParamsProcess, localStorageProcess], pathname, param), {
     wrapper: ({ children }) => (
       <MockQueryClientProvider>
@@ -91,7 +91,6 @@ test('should call navigate and return entity when not found in useParams and loc
 
   getItem.mockImplementation(() => '');
 
-  cleanup();
   hook = renderHook(() => useChildRoute([process, useParamsProcess, localStorageProcess], pathname, param), {
     wrapper: ({ children }) => (
       <MockQueryClientProvider>
@@ -110,9 +109,6 @@ test('should call navigate and return entity when not found in useParams and loc
 });
 
 test('should return null when entities are empty', () => {
-  vi.clearAllMocks();
-
-  cleanup();
   hook = renderHook(() => useChildRoute([], pathname, param), {
     wrapper: ({ children }) => (
       <MockQueryClientProvider>

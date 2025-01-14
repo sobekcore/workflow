@@ -1,7 +1,8 @@
+import { RenderResult } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { mockExecution } from '@test/mocks/execution.ts';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, cleanup, render } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { render } from '@test/render.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import ExecutionLink from '@/components/Execution/ExecutionLink.tsx';
 
@@ -32,7 +33,6 @@ test('should render check when completed', async () => {
     processStep: undefined,
   };
 
-  cleanup();
   component = render(
     <MockRouterProvider>
       <ExecutionLink execution={execution} />

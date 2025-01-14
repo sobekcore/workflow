@@ -1,8 +1,9 @@
+import { RenderResult } from '@testing-library/react';
+import { PointerEventsCheckLevel, userEvent } from '@testing-library/user-event';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, render } from '@testing-library/react';
-import { PointerEventsCheckLevel, userEvent } from '@testing-library/user-event';
+import { render } from '@test/render.ts';
 import { ConditionType } from '@/enums/process-step/condition.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';

@@ -1,6 +1,7 @@
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
+import { RenderResult, fireEvent } from '@testing-library/react';
 import { Mock } from 'vitest';
+import { render } from '@test/render.ts';
 import DropdownItem from '@/components/Common/Dropdown/DropdownItem.tsx';
 
 const onClick: Mock = vi.fn();

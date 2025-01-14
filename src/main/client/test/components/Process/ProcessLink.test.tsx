@@ -1,7 +1,8 @@
+import { RenderResult } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, render } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { render } from '@test/render.ts';
 import { Process } from '@/interfaces/process.ts';
 import ProcessLink from '@/components/Process/ProcessLink.tsx';
 

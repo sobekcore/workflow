@@ -1,6 +1,7 @@
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Mock } from 'vitest';
+import { render } from '@test/render.ts';
 import ProcessForm from '@/components/Process/ProcessForm.tsx';
 
 const onSubmit: Mock = vi.fn();

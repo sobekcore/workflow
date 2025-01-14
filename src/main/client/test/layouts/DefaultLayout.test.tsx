@@ -1,6 +1,7 @@
+import { RenderResult } from '@testing-library/react';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import DefaultLayout from '@/layouts/DefaultLayout.tsx';
 
 vi.mock('@tanstack/react-router', async (importOriginal) => ({

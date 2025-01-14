@@ -1,7 +1,8 @@
+import { RenderResult } from '@testing-library/react';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, cleanup, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { Process } from '@/interfaces/process.ts';
 import NestedProcessStepItem from '@/components/Process/NestedProcessStepItem.tsx';
 import { NestedProcessStep } from '@/utils/processes.ts';
@@ -40,7 +41,6 @@ test('should not render children when empty', () => {
     children: [],
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <NestedProcessStepItem processStep={processStep} processId={process.id} />

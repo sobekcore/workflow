@@ -1,4 +1,5 @@
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import HomeRoute from '@/routes/Home.tsx';
 
 let component: RenderResult;

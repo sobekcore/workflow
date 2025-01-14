@@ -1,4 +1,5 @@
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import WorkflowList from '@/components/Common/Workflow/WorkflowList.tsx';
 
 const list: string = 'List';

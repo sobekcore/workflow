@@ -1,5 +1,5 @@
 import { mockProcessStep } from '@test/mocks/process-step.ts';
-import { render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import WorkflowStepCondition from '@/components/Common/Workflow/WorkflowStepCondition.tsx';
 import { getConditionConfig } from '@/configs/condition.tsx';

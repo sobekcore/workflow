@@ -1,8 +1,9 @@
+import { RenderResult, fireEvent } from '@testing-library/react';
+import { Mock } from 'vitest';
 import { mockExecution } from '@test/mocks/execution.ts';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
-import { Mock } from 'vitest';
+import { render } from '@test/render.ts';
 import { ConditionType } from '@/enums/process-step/condition.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';

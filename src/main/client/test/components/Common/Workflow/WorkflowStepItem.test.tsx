@@ -1,5 +1,6 @@
+import { RenderResult } from '@testing-library/react';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
-import { RenderResult, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import WorkflowStepItem from '@/components/Common/Workflow/WorkflowStepItem.tsx';
 

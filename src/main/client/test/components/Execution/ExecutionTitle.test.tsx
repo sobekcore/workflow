@@ -1,5 +1,6 @@
+import { RenderResult } from '@testing-library/react';
 import { mockExecution } from '@test/mocks/execution.ts';
-import { RenderResult, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import ExecutionTitle from '@/components/Execution/ExecutionTitle.tsx';
 

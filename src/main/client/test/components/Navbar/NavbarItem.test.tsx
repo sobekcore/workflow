@@ -1,8 +1,9 @@
 import { IconType } from 'react-icons';
 import { UseMatchRouteOptions } from '@tanstack/react-router';
-import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, cleanup, fireEvent, render } from '@testing-library/react';
+import { RenderResult, fireEvent } from '@testing-library/react';
 import { Mock } from 'vitest';
+import { MockRouterProvider } from '@test/mocks/router.tsx';
+import { render } from '@test/render.ts';
 import NavbarItem from '@/components/Navbar/NavbarItem.tsx';
 
 const navigate: Mock = vi.fn();
@@ -41,7 +42,6 @@ test('should render icon', () => {
 test('should render active icon', () => {
   const pathname: string = '/active';
 
-  cleanup();
   component = render(
     <MockRouterProvider>
       <NavbarItem icon={icon} activeIcon={activeIcon} pathname={pathname} onClick={onClick}>

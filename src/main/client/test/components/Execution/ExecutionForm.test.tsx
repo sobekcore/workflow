@@ -1,8 +1,9 @@
-import { mockProcess } from '@test/mocks/process.ts';
-import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Mock } from 'vitest';
+import { mockProcess } from '@test/mocks/process.ts';
+import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
+import { render } from '@test/render.ts';
 import { Process } from '@/interfaces/process.ts';
 import ExecutionForm from '@/components/Execution/ExecutionForm.tsx';
 

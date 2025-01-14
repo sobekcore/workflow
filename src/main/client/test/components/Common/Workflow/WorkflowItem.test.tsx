@@ -1,4 +1,5 @@
-import { RenderResult, cleanup, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import WorkflowItem from '@/components/Common/Workflow/WorkflowItem.tsx';
 
 const title: string = 'Title';
@@ -27,7 +28,6 @@ test('should render children', () => {
 });
 
 test('should not render empty children', () => {
-  cleanup();
   component = render(<WorkflowItem title={title} />);
 
   expect(component.queryByTestId('workflow-item-children')).not.toBeInTheDocument();

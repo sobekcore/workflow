@@ -1,5 +1,6 @@
-import { RenderResult, fireEvent, render } from '@testing-library/react';
+import { RenderResult, fireEvent } from '@testing-library/react';
 import { Mock } from 'vitest';
+import { render } from '@test/render.ts';
 import { ConditionType } from '@/enums/process-step/condition.ts';
 import { ConditionOption } from '@/interfaces/process-step/condition.ts';
 import { ConditionConfig, getConditionConfig } from '@/configs/condition.tsx';

@@ -12,6 +12,7 @@ export default {
   importOrder: [
     '^react',
     '<THIRD_PARTY_MODULES>',
+    '^@test/(.*)$',
     '^@/api/(.*)$',
     '^@/enums/(.*)$',
     '^@/exceptions/(.*)$',

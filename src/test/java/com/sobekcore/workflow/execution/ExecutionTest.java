@@ -82,6 +82,13 @@ class ExecutionTest {
     }
 
     @Test
+    void shouldReturnNullWhenNextStepsDoesntExist() {
+        process.getSteps().add(processStep);
+
+        assertNull(execution.findNextProcessStep(null));
+    }
+
+    @Test
     void shouldFindNextProcessStep() {
         ProcessStep nextProcessStep = new ProcessStep(
             user,
@@ -96,5 +103,60 @@ class ExecutionTest {
         process.getSteps().addAll(List.of(processStep, nextProcessStep));
 
         assertEquals(nextProcessStep, execution.findNextProcessStep(null));
+    }
+
+    @Test
+    void shouldFindNextProcessStepWhenMultipleStepsAreFound() {
+        ProcessStep nextProcessStep = new ProcessStep(
+            user,
+            "Next Process Step",
+            "Description",
+            new Condition(ConditionType.VISIT, null),
+            processStep,
+            List.of(processStep),
+            process
+        );
+        ProcessStep nextAnotherProcessStep = new ProcessStep(
+            user,
+            "Next Another Process Step",
+            "Description",
+            new Condition(ConditionType.VISIT, null),
+            processStep,
+            List.of(processStep),
+            process
+        );
+
+        process.getSteps().addAll(List.of(processStep, nextProcessStep, nextAnotherProcessStep));
+
+        assertEquals(nextProcessStep, execution.findNextProcessStep(nextProcessStep));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCantDetermineNextProcessStep() {
+        ProcessStep nextProcessStep = new ProcessStep(
+            user,
+            "Next Process Step",
+            "Description",
+            new Condition(ConditionType.VISIT, null),
+            processStep,
+            List.of(processStep),
+            process
+        );
+        ProcessStep nextAnotherProcessStep = new ProcessStep(
+            user,
+            "Next Another Process Step",
+            "Description",
+            new Condition(ConditionType.VISIT, null),
+            processStep,
+            List.of(processStep),
+            process
+        );
+
+        process.getSteps().addAll(List.of(processStep, nextProcessStep, nextAnotherProcessStep));
+
+        assertThrows(
+            ExecutionCantDetermineNextProcessStepException.class,
+            () -> execution.findNextProcessStep(null)
+        );
     }
 }

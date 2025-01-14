@@ -1,7 +1,8 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { mockErrors, mockRegister } from '@test/mocks/field.ts';
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import { Mock } from 'vitest';
+import { mockErrors, mockRegister } from '@test/mocks/field.ts';
+import { render } from '@test/render.ts';
 import Input from '@/components/Field/Input.tsx';
 
 const name: string = 'name';

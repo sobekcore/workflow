@@ -1,9 +1,10 @@
+import { RenderResult, fireEvent } from '@testing-library/react';
+import { Mock } from 'vitest';
 import { mockExecution } from '@test/mocks/execution.ts';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, cleanup, fireEvent, render } from '@testing-library/react';
-import { Mock } from 'vitest';
+import { render } from '@test/render.ts';
 import { ConditionStatus } from '@/enums/execution/condition.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
@@ -42,7 +43,6 @@ test('should not render condition when step is not active', () => {
     processStep: undefined,
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <ExecutionStepItem execution={execution} processStep={processStep} />
@@ -58,7 +58,6 @@ test('should render current execution step when in progress', () => {
     conditionStatus: ConditionStatus.IN_PROGRESS,
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <ExecutionStepItem execution={execution} processStep={processStep} />
@@ -95,7 +94,6 @@ test('should call useProgressExecutions when choose', () => {
     },
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <ExecutionStepItem execution={execution} processStep={processStep} />

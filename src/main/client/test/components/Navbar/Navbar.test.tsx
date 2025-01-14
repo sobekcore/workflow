@@ -1,9 +1,10 @@
 import { UseQueryResult } from '@tanstack/react-query';
+import { RenderResult } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
 import { mockUser } from '@test/mocks/user.ts';
-import { RenderResult, cleanup, render } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { render } from '@test/render.ts';
 import { User } from '@/interfaces/auth.ts';
 import Navbar from '@/components/Navbar/Navbar.tsx';
 
@@ -48,7 +49,6 @@ test('should set location to /login', async () => {
     data: null,
   }));
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <MockRouterProvider>

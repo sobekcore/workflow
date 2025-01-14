@@ -1,6 +1,7 @@
+import { RenderResult } from '@testing-library/react';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { Process } from '@/interfaces/process.ts';
 import Processes from '@/components/Process/Processes.tsx';
 

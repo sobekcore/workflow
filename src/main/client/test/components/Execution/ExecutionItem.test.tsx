@@ -1,6 +1,7 @@
+import { RenderResult } from '@testing-library/react';
 import { mockExecution } from '@test/mocks/execution.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, cleanup, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { Execution } from '@/interfaces/execution/execution.ts';
 import ExecutionItem from '@/components/Execution/ExecutionItem.tsx';
 
@@ -29,7 +30,6 @@ test('should render status when completed', () => {
     processStep: undefined,
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <ExecutionItem execution={execution} />

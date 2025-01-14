@@ -1,8 +1,9 @@
 import { QueryClient } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
+import { act } from '@testing-library/react';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { mockUser } from '@test/mocks/user.ts';
-import { act, cleanup, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { User } from '@/interfaces/auth.ts';
 import { router } from '@/router/router.ts';
 
@@ -35,7 +36,6 @@ test('should not redirect to protected route when unauthorized', async () => {
   readUser.mockImplementation(() => null);
 
   await act(async () => {
-    cleanup();
     render(
       <MockQueryClientProvider>
         <RouterProvider router={router} context={{ queryClient: new QueryClient() }} />

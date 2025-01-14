@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { RenderResult, render } from '@testing-library/react';
+import { RenderResult } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { render } from '@test/render.ts';
 import Dropdown from '@/components/Common/Dropdown/Dropdown.tsx';
 
 const trigger: ReactNode = <div data-testid="trigger" />;

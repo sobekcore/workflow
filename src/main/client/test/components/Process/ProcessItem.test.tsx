@@ -1,7 +1,8 @@
+import { RenderResult } from '@testing-library/react';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
-import { RenderResult, cleanup, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import ProcessItem from '@/components/Process/ProcessItem.tsx';
@@ -40,7 +41,6 @@ test('should render create root process step when steps are empty', () => {
     steps: [],
   };
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <ProcessItem process={process} />

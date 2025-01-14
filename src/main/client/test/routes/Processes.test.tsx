@@ -1,9 +1,10 @@
 import { UseQueryResult } from '@tanstack/react-query';
+import { RenderResult } from '@testing-library/react';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
-import { RenderResult, cleanup, render } from '@testing-library/react';
+import { render } from '@test/render.ts';
 import { ProcessStep } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 import ProcessesRoute from '@/routes/Processes.tsx';
@@ -61,7 +62,6 @@ test('should not render workflow list when empty', () => {
     data: [],
   }));
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <MockRouterProvider>
@@ -78,7 +78,6 @@ test('should select process using localStorage item', async () => {
     data: [process, anotherProcess],
   }));
 
-  cleanup();
   component = render(
     <MockQueryClientProvider>
       <MockRouterProvider>
