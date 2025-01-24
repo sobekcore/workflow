@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import config from './vite.config';
 import { resolve } from 'node:path';
 import { defineConfig, mergeConfig } from 'vite';

@@ -6,5 +6,6 @@ import { httpClient } from '@/utils/http-client.ts';
 export function readUser(): Promise<User | undefined> {
   return httpClient(HttpMethod.GET, '/auth/user', {
     schema: userSchema,
+    allowUnauthorized: true,
   });
 }

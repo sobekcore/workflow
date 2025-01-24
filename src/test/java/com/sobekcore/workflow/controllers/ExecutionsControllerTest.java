@@ -33,7 +33,7 @@ class ExecutionsControllerTest extends ControllerTest {
     void shouldReturnCreatedExecutions() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .post("/executions")
+                .post("/api/executions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                     [
@@ -52,7 +52,7 @@ class ExecutionsControllerTest extends ControllerTest {
     void shouldReturnReadExecutions() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .get("/executions")
+                .get("/api/executions")
                 .with(oauth2Login)
             )
             .andExpect(MockMvcResultMatchers.status().isOk());
@@ -62,7 +62,7 @@ class ExecutionsControllerTest extends ControllerTest {
     void shouldProgressExecutions() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .patch("/executions/progress")
+                .patch("/api/executions/progress")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                     [
@@ -80,7 +80,7 @@ class ExecutionsControllerTest extends ControllerTest {
     void shouldCompleteConditions() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .patch("/executions/conditions/complete")
+                .patch("/api/executions/conditions/complete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                     [

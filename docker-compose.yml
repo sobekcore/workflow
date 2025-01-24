@@ -3,11 +3,36 @@ version: "3.8"
 services:
   postgres:
     build: ./postgres
+    user: ${POSTGRES_USER_ID}:${POSTGRES_GROUP_ID}
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  api:
+    build:
+      context: .
+      target: ${API_ENV}
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - API_PROFILE=${API_PROFILE}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  client:
+    build:
+      context: ./src/main/client
+      target: ${CLIENT_ENV}
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src/main/client:/home/node/workflow
+      - /home/node/workflow/node_modules
+      - /home/node/workflow/dist

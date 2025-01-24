@@ -30,7 +30,7 @@ class AuthControllerTest extends ControllerTest {
 
         mockMvc
             .perform(MockMvcRequestBuilders
-                .get("/auth/user")
+                .get("/api/auth/user")
                 .with(oauth2Login)
             )
             .andExpect(MockMvcResultMatchers.status().isOk());

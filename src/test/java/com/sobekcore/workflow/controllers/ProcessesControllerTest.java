@@ -34,7 +34,7 @@ class ProcessesControllerTest extends ControllerTest {
     void shouldReturnCreatedProcesses() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .post("/processes")
+                .post("/api/processes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     [
@@ -52,7 +52,7 @@ class ProcessesControllerTest extends ControllerTest {
     void shouldReturnReadProcesses() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .get("/processes")
+                .get("/api/processes")
                 .with(oauth2Login)
             )
             .andExpect(MockMvcResultMatchers.status().isOk());
@@ -62,7 +62,7 @@ class ProcessesControllerTest extends ControllerTest {
     void shouldReturnCreatedSteps() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .post("/processes/steps")
+                .post("/api/processes/steps")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                     [
@@ -84,7 +84,7 @@ class ProcessesControllerTest extends ControllerTest {
     void shouldReturnReadSteps() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .get("/processes/steps")
+                .get("/api/processes/steps")
                 .with(oauth2Login)
             )
             .andExpect(MockMvcResultMatchers.status().isOk());
@@ -94,7 +94,7 @@ class ProcessesControllerTest extends ControllerTest {
     void shouldAssignSteps() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders
-                .patch("/processes/steps/assign")
+                .patch("/api/processes/steps/assign")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                     [

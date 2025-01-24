@@ -2,13 +2,16 @@ package com.sobekcore.workflow.auth;
 
 import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.auth.user.UserRepository;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
@@ -24,10 +27,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AuthSuccessHandlerTest {
     @Mock
-    MockHttpServletResponse response;
+    UserRepository userRepository;
 
     @Mock
-    UserRepository userRepository;
+    HttpServletResponse response;
+
+    HttpServletRequest request;
 
     AuthSuccessHandler authSuccessHandler;
 
@@ -35,6 +40,9 @@ class AuthSuccessHandlerTest {
 
     @BeforeEach
     void setup() {
+        ServletContext servletContext = new MockServletContext();
+        servletContext.getSessionCookieConfig().setName("test_session");
+        request = new MockHttpServletRequest(servletContext);
         authSuccessHandler = new AuthSuccessHandler("/success", userRepository);
         user = new User("user@test.com", "User");
     }
@@ -46,7 +54,7 @@ class AuthSuccessHandlerTest {
         attributes.put("name", user.getName());
 
         authSuccessHandler.onAuthenticationSuccess(
-            new MockHttpServletRequest(),
+            request,
             response,
             new TestingAuthenticationToken(
                 new DefaultOAuth2User(Collections.emptyList(), attributes, "name"),
@@ -70,7 +78,7 @@ class AuthSuccessHandlerTest {
         attributes.put("name", user.getName());
 
         authSuccessHandler.onAuthenticationSuccess(
-            new MockHttpServletRequest(),
+            request,
             response,
             new TestingAuthenticationToken(
                 new DefaultOAuth2User(Collections.emptyList(), attributes, "name"),
@@ -90,7 +98,7 @@ class AuthSuccessHandlerTest {
         attributes.put("name", user.getName());
 
         authSuccessHandler.onAuthenticationSuccess(
-            new MockHttpServletRequest(),
+            request,
             response,
             new TestingAuthenticationToken(
                 new DefaultOAuth2User(Collections.emptyList(), attributes, "name"),

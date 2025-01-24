@@ -3,3 +3,7 @@ export enum HttpMethod {
   POST = 'POST',
   PATCH = 'PATCH',
 }
+
+export enum HttpStatus {
+  UNAUTHORIZED = 401,
+}

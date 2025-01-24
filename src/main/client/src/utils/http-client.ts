@@ -1,11 +1,13 @@
 import { Schema, TypeOf, ZodSchema } from 'zod';
-import { HttpMethod } from '@/enums/http.ts';
+import { HttpMethod, HttpStatus } from '@/enums/http.ts';
 import { HttpException } from '@/exceptions/http.ts';
+import { navigateToLogin } from '@/utils/auth.ts';
 
 interface HttpClientConfig<T extends ZodSchema> {
   schema?: T;
   body?: Record<string, unknown> | unknown[];
   config?: RequestInit;
+  allowUnauthorized?: boolean;
 }
 
 export async function httpClient<T extends ZodSchema>(
@@ -13,7 +15,7 @@ export async function httpClient<T extends ZodSchema>(
   url: string,
   config?: HttpClientConfig<T>,
 ): Promise<TypeOf<Schema>> {
-  const response: Response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+  const response: Response = await fetch(`${import.meta.env.VITE_API_URL}${import.meta.env.VITE_API_PREFIX}${url}`, {
     ...config?.config,
     ...(config?.body && { body: JSON.stringify(config.body) }),
     headers: {
@@ -34,7 +36,11 @@ export async function httpClient<T extends ZodSchema>(
     return data;
   }
 
-  if (response.status === 401) {
+  if (response.status === HttpStatus.UNAUTHORIZED) {
+    if (!config?.allowUnauthorized) {
+      navigateToLogin();
+    }
+
     return null;
   }
 

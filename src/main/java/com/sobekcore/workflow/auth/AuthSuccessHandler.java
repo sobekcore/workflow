@@ -4,6 +4,9 @@ import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.auth.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.web.server.Cookie;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -22,7 +25,11 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Authentication authentication
+    ) throws IOException {
         OAuth2User user = (OAuth2User) authentication.getPrincipal();
         String email = user.getAttribute("email");
         String name = user.getAttribute("name");
@@ -38,6 +45,16 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
             userRepository.save(new User(email, name));
         }
 
+        response.setHeader(HttpHeaders.SET_COOKIE, createSessionCookie(request).toString());
         response.sendRedirect(successUrl);
+    }
+
+    private ResponseCookie createSessionCookie(HttpServletRequest request) {
+        return ResponseCookie
+            .from(request.getServletContext().getSessionCookieConfig().getName(), request.getSession().getId())
+            .path("/")
+            .httpOnly(true)
+            .sameSite(Cookie.SameSite.STRICT.attributeValue())
+            .build();
     }
 }

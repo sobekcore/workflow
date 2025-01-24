@@ -1,6 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { RenderResult } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { Mock, expect } from 'vitest';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { MockRouterProvider } from '@test/mocks/router.tsx';
 import { mockUser } from '@test/mocks/user.ts';
@@ -20,9 +21,10 @@ vi.mock('@/hooks/useAuth.ts', () => ({
   useAuth,
 }));
 
+const assign: Mock = vi.fn();
 Object.defineProperty(window, 'location', {
   value: {
-    href: '/',
+    assign,
   },
 });
 
@@ -41,7 +43,8 @@ beforeEach(() => {
 test('should set location to /logout', async () => {
   await userEvent.click(component.getByRole('button', { name: 'Sign Out' }));
 
-  expect(window.location.href).toContain('/logout');
+  expect(assign).toHaveBeenCalledOnce();
+  expect(assign).toHaveBeenCalledWith(expect.stringContaining('/logout'));
 });
 
 test('should set location to /login', async () => {
@@ -59,5 +62,6 @@ test('should set location to /login', async () => {
 
   await userEvent.click(component.getByRole('button', { name: 'Sign In' }));
 
-  expect(window.location.href).toContain('/login');
+  expect(assign).toHaveBeenCalledOnce();
+  expect(assign).toHaveBeenCalledWith(expect.stringContaining('/login'));
 });
