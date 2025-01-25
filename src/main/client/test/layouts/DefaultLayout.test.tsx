@@ -9,7 +9,7 @@ vi.mock('@tanstack/react-router', async (importOriginal) => ({
   Outlet: () => <div data-testid="outlet" />,
 }));
 
-vi.mock('@/hooks/useAuth.ts', () => ({
+vi.mock('@/hooks/auth/useAuth.ts', () => ({
   useAuth: () => ({
     data: undefined,
   }),

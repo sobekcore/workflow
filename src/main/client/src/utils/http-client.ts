@@ -5,7 +5,7 @@ import { navigateToLogin } from '@/utils/auth.ts';
 
 interface HttpClientConfig<T extends ZodSchema> {
   schema?: T;
-  body?: Record<string, unknown> | unknown[];
+  body?: Record<string, any> | unknown[];
   config?: RequestInit;
   allowUnauthorized?: boolean;
 }

@@ -1,10 +1,11 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter } from '@tanstack/react-router';
-import { authQuery } from '@/hooks/useAuth.ts';
+import { authQuery } from '@/hooks/auth/useAuth.ts';
 import DefaultLayout from '@/layouts/DefaultLayout.tsx';
 import ExecutionsRoute from '@/routes/Exectuions.tsx';
 import HomeRoute from '@/routes/Home.tsx';
 import ProcessesRoute from '@/routes/Processes.tsx';
+import ProfileRoute from '@/routes/Profile.tsx';
 import { handleAuth } from '@/router/auth.ts';
 
 export interface RouterContext {
@@ -58,6 +59,14 @@ const routeTree = rootRoute.addChildren([
       },
     }),
   ]),
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/profile',
+    component: ProfileRoute,
+    beforeLoad({ context }): void {
+      handleAuth(context);
+    },
+  }),
 ]);
 
 export const router = createRouter({

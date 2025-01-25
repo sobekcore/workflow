@@ -7,3 +7,8 @@ export const userSchema = z.object({
   email: z.string(),
   name: z.string(),
 }) satisfies ZodType<User>;
+
+export const userToUpdateSchema = z.object({
+  email: z.string().min(1),
+  name: z.string().min(1),
+});

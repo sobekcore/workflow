@@ -20,6 +20,7 @@ export default function NavbarItem({
   success,
   onClick,
   children,
+  className,
   ...props
 }: NavbarItemProps) {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function NavbarItem({
     <Button
       variant={success ? ButtonVariant.SUCCESS : ButtonVariant.TEXT}
       size={ButtonSize.SMALL}
-      className={clsx(active && (success ? 'bg-emerald-100' : 'bg-indigo-100'))}
+      className={clsx(active && (success ? 'bg-emerald-100' : 'bg-indigo-100'), className)}
       onClick={handleButtonClick}
       {...props}
     >

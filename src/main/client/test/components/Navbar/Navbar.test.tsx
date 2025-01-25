@@ -17,7 +17,7 @@ const { useAuth } = vi.hoisted(() => ({
     }),
   ),
 }));
-vi.mock('@/hooks/useAuth.ts', () => ({
+vi.mock('@/hooks/auth/useAuth.ts', () => ({
   useAuth,
 }));
 

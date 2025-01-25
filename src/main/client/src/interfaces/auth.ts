@@ -4,3 +4,8 @@ export interface User {
   email: string;
   name: string;
 }
+
+export interface UserToUpdate {
+  email: string;
+  name: string;
+}
