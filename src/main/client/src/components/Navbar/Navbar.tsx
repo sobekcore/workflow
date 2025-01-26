@@ -1,52 +1,28 @@
-import {
-  MdLabel,
-  MdLabelOutline,
-  MdLogin,
-  MdLogout,
-  MdNotifications,
-  MdOutlineNotifications,
-  MdPerson,
-  MdPersonOutline,
-} from 'react-icons/md';
+import { MdMenu } from 'react-icons/md';
+import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 import { useAuth } from '@/hooks/auth/useAuth.ts';
-import ApplicationIcon from '@/components/ApplicationIcon.tsx';
-import NavbarItem from '@/components/Navbar/NavbarItem.tsx';
-import { navigateToLogin, navigateToLogout } from '@/utils/auth.ts';
+import Button from '@/components/Common/Button.tsx';
+import Dropdown from '@/components/Common/Dropdown/Dropdown.tsx';
+import NavbarContent from '@/components/Navbar/NavbarContent.tsx';
 
 export default function Navbar() {
   const { data: user } = useAuth();
 
   return (
     <div className="sticky top-0 z-10 mb-4 px-4 pt-4 backdrop-blur">
-      <nav className="flex gap-2 rounded-full border border-indigo-100 bg-white p-2">
-        <NavbarItem icon={() => <ApplicationIcon className="w-4" />} pathname="/">
-          Home
-        </NavbarItem>
-        {user && (
-          <>
-            <NavbarItem icon={MdLabelOutline} activeIcon={MdLabel} pathname="/processes">
-              Processes
-            </NavbarItem>
-            <NavbarItem icon={MdOutlineNotifications} activeIcon={MdNotifications} pathname="/executions">
-              Executions
-            </NavbarItem>
-          </>
-        )}
-        <div className="flex-grow" />
-        {user ? (
-          <>
-            <NavbarItem icon={MdPersonOutline} activeIcon={MdPerson} pathname="/profile" className="flex-row-reverse">
-              Profile
-            </NavbarItem>
-            <NavbarItem icon={MdLogout} onClick={navigateToLogout} className="flex-row-reverse">
-              Sign Out
-            </NavbarItem>
-          </>
-        ) : (
-          <NavbarItem icon={MdLogin} onClick={navigateToLogin} className="flex-row-reverse">
-            Sign In
-          </NavbarItem>
-        )}
+      <nav className="rounded-full border border-indigo-100 bg-white p-2">
+        <Dropdown
+          trigger={
+            <Button data-testid="navbar-menu" variant={ButtonVariant.TEXT} size={ButtonSize.ICON} className="sm:hidden">
+              <MdMenu />
+            </Button>
+          }
+        >
+          <NavbarContent user={user} dropdown />
+        </Dropdown>
+        <div className="hidden gap-2 sm:flex">
+          <NavbarContent user={user} />
+        </div>
       </nav>
     </div>
   );

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, MouseEvent, PropsWithChildren, forwardRef } from 'react';
 import { IconType } from 'react-icons';
 import { useMatchRoute, useRouter } from '@tanstack/react-router';
 import clsx from 'clsx';
@@ -10,34 +10,29 @@ interface NavbarItemProps extends PropsWithChildren, ButtonHTMLAttributes<HTMLBu
   activeIcon?: IconType;
   pathname?: string;
   success?: boolean;
-  onClick?(): void;
+  onClick?(event: MouseEvent<HTMLButtonElement>): void;
 }
 
-export default function NavbarItem({
-  icon,
-  activeIcon = icon,
-  pathname,
-  success,
-  onClick,
-  children,
-  className,
-  ...props
-}: NavbarItemProps) {
+export default forwardRef<HTMLButtonElement, NavbarItemProps>(function NavbarItem(
+  { icon, activeIcon = icon, pathname, success, onClick, children, className, ...props },
+  ref,
+) {
   const router = useRouter();
   const matchRoute = useMatchRoute();
 
   const active: boolean = pathname ? matchRoute({ to: pathname, fuzzy: true }) : false;
   const Icon: IconType = active ? activeIcon : icon;
 
-  const handleButtonClick = (): void => {
+  const handleButtonClick = (event: MouseEvent<HTMLButtonElement>): void => {
     if (pathname) {
       router.navigate({ to: pathname });
     }
-    onClick?.();
+    onClick?.(event);
   };
 
   return (
     <Button
+      ref={ref}
       variant={success ? ButtonVariant.SUCCESS : ButtonVariant.TEXT}
       size={ButtonSize.SMALL}
       className={clsx(active && (success ? 'bg-emerald-100' : 'bg-indigo-100'), className)}
@@ -48,4 +43,4 @@ export default function NavbarItem({
       {children}
     </Button>
   );
-}
+});

@@ -21,7 +21,7 @@ export default function WorkflowItem({ title, actions, completed, children }: Wo
         {actions}
       </div>
       {Children.count(children) > 0 && (
-        <div data-testid="workflow-item-children" className="flex w-full gap-2">
+        <div data-testid="workflow-item-children" className="grid grid-flow-col gap-2">
           {children}
         </div>
       )}

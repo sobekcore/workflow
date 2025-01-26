@@ -14,6 +14,12 @@ vi.mock('@/api/auth/read-user.ts', () => ({
   readUser,
 }));
 
+vi.mock('@/hooks/processes/useReadProcesses.ts', () => ({
+  useReadProcesses: () => ({
+    data: undefined,
+  }),
+}));
+
 beforeEach(async () => {
   await act(async () =>
     render(

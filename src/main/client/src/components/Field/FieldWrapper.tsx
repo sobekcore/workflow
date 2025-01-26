@@ -12,7 +12,7 @@ export default function FieldWrapper({ name, label, errors, children }: FieldWra
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <label htmlFor={name} className="inline-flex leading-6">
+        <label htmlFor={name} className="inline-flex">
           {label}
         </label>
       </div>

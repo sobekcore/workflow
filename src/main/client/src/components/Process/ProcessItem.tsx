@@ -18,7 +18,11 @@ export default function ProcessItem({ process }: ProcessItemProps) {
 
   return (
     <WorkflowItem title={<ProcessTitle process={process} />} actions={<ProcessDropdown processId={process.id} />}>
-      {!processStepTree.length && <CreateProcessStep processId={process.id} />}
+      {!processStepTree.length && (
+        <div>
+          <CreateProcessStep processId={process.id} />
+        </div>
+      )}
       {processStepTree.map((step: NestedProcessStep) => (
         <NestedProcessStepItem key={step.id} processStep={step} processId={process.id} />
       ))}

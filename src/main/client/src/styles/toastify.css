@@ -1,0 +1,37 @@
+.Toastify__toast {
+  @apply border border-indigo-100 gap-4 font-[inherit] p-4 shadow-lg;
+
+  .Toastify__toast-icon {
+    @apply rounded-full p-1 text-2xl text-white w-auto m-0;
+  }
+
+  .Toastify__progress-bar {
+    @apply opacity-100;
+  }
+
+  .Toastify__progress-bar--bg {
+    @apply bg-transparent;
+  }
+
+  &.Toastify__toast--success {
+    .Toastify__title {
+      @apply text-emerald-500;
+    }
+
+    .Toastify__toast-icon,
+    .Toastify__progress-bar {
+      @apply bg-emerald-500;
+    }
+  }
+
+  &.Toastify__toast--error {
+    .Toastify__title {
+      @apply text-rose-500;
+    }
+
+    .Toastify__toast-icon,
+    .Toastify__progress-bar {
+      @apply bg-rose-500;
+    }
+  }
+}

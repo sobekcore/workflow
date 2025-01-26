@@ -1,3 +1,4 @@
+import { Mock, expect } from 'vitest';
 import { mockProcessStep } from '@test/mocks/process-step.ts';
 import { mockProcess } from '@test/mocks/process.ts';
 import { HttpMethod } from '@/enums/http.ts';
@@ -27,6 +28,13 @@ Object.defineProperty(window, 'fetch', {
   value: fetch,
 });
 
+const assign: Mock = vi.fn();
+Object.defineProperty(window, 'location', {
+  value: {
+    assign,
+  },
+});
+
 test('should return data when success', async () => {
   expect(await httpClient(HttpMethod.GET, '/url')).toEqual(process);
 });
@@ -39,7 +47,7 @@ test('should parse data according to schema when success', async () => {
   ).toEqual(process);
 });
 
-test('should return null when unauthorized', async () => {
+test('should redirect when unauthorized', async () => {
   fetch.mockImplementation(() =>
     Promise.resolve({
       ok: false,
@@ -47,7 +55,25 @@ test('should return null when unauthorized', async () => {
     }),
   );
 
-  expect(await httpClient(HttpMethod.GET, '/url')).toBeNull();
+  await httpClient(HttpMethod.GET, '/url');
+
+  expect(assign).toHaveBeenCalledOnce();
+  expect(assign).toHaveBeenCalledWith(expect.stringContaining('/login'));
+});
+
+test('should return null when allow unauthorized', async () => {
+  fetch.mockImplementation(() =>
+    Promise.resolve({
+      ok: false,
+      status: 401,
+    }),
+  );
+
+  expect(
+    await httpClient(HttpMethod.GET, '/url', {
+      allowUnauthorized: true,
+    }),
+  ).toBeNull();
 });
 
 test('should throw exception when error', async () => {

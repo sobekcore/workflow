@@ -1,10 +1,15 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createProcessesSteps } from '@/api/processes-steps/create-processes-steps.ts';
 import { QueryKey } from '@/enums/query.ts';
+import { UseMutationParams } from '@/interfaces/mutation.ts';
 import { ProcessStep, ProcessStepToCreate } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 
-export function useCreateProcessesSteps(processId: string) {
+interface UseCreateProcessesStepsParams extends UseMutationParams {
+  processId: string;
+}
+
+export function useCreateProcessesSteps({ processId, onSuccess, onError }: UseCreateProcessesStepsParams) {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
@@ -28,6 +33,8 @@ export function useCreateProcessesSteps(processId: string) {
           ...processes.slice(index + 1),
         ];
       });
+      onSuccess?.();
     },
+    onError,
   });
 }

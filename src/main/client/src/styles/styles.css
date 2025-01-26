@@ -1,3 +1,4 @@
 @import '@/styles/tailwind';
 @import '@/styles/globals';
+@import '@/styles/toastify';
 @import '@/styles/process-step';

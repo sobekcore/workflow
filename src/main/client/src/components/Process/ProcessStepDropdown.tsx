@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { MdAdd, MdMoreVert, MdPolyline } from 'react-icons/md';
 import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
+import { DropdownSide } from '@/enums/dropdown.ts';
+import { ToastType } from '@/enums/toast.ts';
 import { ProcessStepToAssign, ProcessStepToCreate } from '@/interfaces/process-step/process-step.ts';
 import { useAssignProcessesSteps } from '@/hooks/processes-steps/useAssignProcessesSteps.ts';
 import { useCreateProcessesSteps } from '@/hooks/processes-steps/useCreateProcessesSteps.ts';
@@ -10,6 +12,7 @@ import Dropdown from '@/components/Common/Dropdown/Dropdown.tsx';
 import DropdownItem from '@/components/Common/Dropdown/DropdownItem.tsx';
 import AssignProcessStepForm from '@/components/Process/AssignProcessStepForm.tsx';
 import ProcessStepForm from '@/components/Process/ProcessStepForm.tsx';
+import { createToast } from '@/utils/toast.tsx';
 
 interface ProcessStepDropdownProps {
   processId: string;
@@ -22,8 +25,16 @@ export default function ProcessStepDropdown({
   prevProcessStepId,
   assignProcessStepId,
 }: ProcessStepDropdownProps) {
-  const { mutate: createProcessesSteps } = useCreateProcessesSteps(processId);
-  const { mutate: assignProcessesSteps } = useAssignProcessesSteps(processId);
+  const { mutate: createProcessesSteps } = useCreateProcessesSteps({
+    processId,
+    onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been created'),
+    onError: () => createToast(ToastType.SUCCESS, 'Process Step cannot be created'),
+  });
+  const { mutate: assignProcessesSteps } = useAssignProcessesSteps({
+    processId,
+    onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been assigned'),
+    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be assigned'),
+  });
 
   const [isCreateProcessStepDialogOpen, setIsCreateProcessStepDialogOpen] = useState<boolean>(false);
   const [isAssignProcessStepDialogOpen, setIsAssignProcessStepDialogOpen] = useState<boolean>(false);
@@ -46,6 +57,7 @@ export default function ProcessStepDropdown({
             <MdMoreVert />
           </Button>
         }
+        side={DropdownSide.RIGHT}
       >
         <DropdownItem onClick={() => setIsCreateProcessStepDialogOpen(true)}>
           <MdAdd className="text-xl" />

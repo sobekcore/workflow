@@ -1,10 +1,15 @@
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import { assignProcessesSteps } from '@/api/processes-steps/assign-processes-steps.ts';
 import { QueryKey } from '@/enums/query.ts';
+import { UseMutationParams } from '@/interfaces/mutation.ts';
 import { ProcessStep, ProcessStepToAssign } from '@/interfaces/process-step/process-step.ts';
 import { Process } from '@/interfaces/process.ts';
 
-export function useAssignProcessesSteps(processId: string) {
+interface UseAssignProcessesStepsParams extends UseMutationParams {
+  processId: string;
+}
+
+export function useAssignProcessesSteps({ processId, onSuccess, onError }: UseAssignProcessesStepsParams) {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
@@ -63,5 +68,7 @@ export function useAssignProcessesSteps(processId: string) {
         ];
       });
     },
+    onSuccess,
+    onError,
   });
 }

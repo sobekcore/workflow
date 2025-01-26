@@ -2,8 +2,9 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { User, UserToUpdate } from '~/src/interfaces/auth';
 import { updateUser } from '@/api/auth/update-user.ts';
 import { QueryKey } from '@/enums/query.ts';
+import { UseMutationParams } from '@/interfaces/mutation.ts';
 
-export function useUpdateUser() {
+export function useUpdateUser({ onSuccess, onError }: UseMutationParams = {}) {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
@@ -22,5 +23,7 @@ export function useUpdateUser() {
         };
       });
     },
+    onSuccess,
+    onError,
   });
 }

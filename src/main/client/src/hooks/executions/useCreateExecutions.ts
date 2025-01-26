@@ -2,8 +2,9 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createExecutions } from '@/api/executions/create-executions.ts';
 import { QueryKey } from '@/enums/query.ts';
 import { Execution, ExecutionToCreate } from '@/interfaces/execution/execution.ts';
+import { UseMutationParams } from '@/interfaces/mutation.ts';
 
-export function useCreateExecutions() {
+export function useCreateExecutions({ onSuccess, onError }: UseMutationParams = {}) {
   const queryClient: QueryClient = useQueryClient();
 
   return useMutation({
@@ -18,6 +19,8 @@ export function useCreateExecutions() {
 
         return [...executions, ...createdExecutions];
       });
+      onSuccess?.();
     },
+    onError,
   });
 }

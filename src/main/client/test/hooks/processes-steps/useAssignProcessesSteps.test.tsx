@@ -34,7 +34,7 @@ const process: Process = {
 let hook: RenderHookResult<ReturnType<typeof useAssignProcessesSteps>, void>;
 
 beforeEach(() => {
-  hook = renderHook(() => useAssignProcessesSteps(process.id), {
+  hook = renderHook(() => useAssignProcessesSteps({ processId: process.id }), {
     wrapper: ({ children }) => <MockQueryClientProvider>{children}</MockQueryClientProvider>,
   });
 });

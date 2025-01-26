@@ -18,8 +18,24 @@ beforeEach(() => {
   );
 });
 
-test('should render children', () => {
+test('should render children and button', () => {
   expect(component.getByText(children)).toBeInTheDocument();
+  expect(component.getByRole('menuitem').localName).toBe('button');
+});
+
+test('should render children and no button when primitive', () => {
+  component = render(
+    <Dropdown.Root open>
+      <Dropdown.Content>
+        <DropdownItem primitive onClick={onClick}>
+          <div>{children}</div>
+        </DropdownItem>
+      </Dropdown.Content>
+    </Dropdown.Root>,
+  );
+
+  expect(component.getByText(children)).toBeInTheDocument();
+  expect(component.getByRole('menuitem').localName).not.toBe('button');
 });
 
 test('should call onClick', () => {

@@ -41,7 +41,8 @@ beforeEach(() => {
 });
 
 test('should set location to /logout', async () => {
-  await userEvent.click(component.getByRole('button', { name: 'Sign Out' }));
+  await userEvent.click(component.getByTestId('navbar-menu'));
+  await userEvent.click(component.getByRole('menuitem', { name: 'Sign Out' }));
 
   expect(assign).toHaveBeenCalledOnce();
   expect(assign).toHaveBeenCalledWith(expect.stringContaining('/logout'));
@@ -60,7 +61,8 @@ test('should set location to /login', async () => {
     </MockQueryClientProvider>,
   );
 
-  await userEvent.click(component.getByRole('button', { name: 'Sign In' }));
+  await userEvent.click(component.getByTestId('navbar-menu'));
+  await userEvent.click(component.getByRole('menuitem', { name: 'Sign In' }));
 
   expect(assign).toHaveBeenCalledOnce();
   expect(assign).toHaveBeenCalledWith(expect.stringContaining('/login'));

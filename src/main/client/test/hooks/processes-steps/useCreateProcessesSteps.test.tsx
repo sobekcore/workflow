@@ -40,7 +40,7 @@ vi.mock('@/api/processes-steps/create-processes-steps.ts', () => ({
 let hook: RenderHookResult<ReturnType<typeof useCreateProcessesSteps>, void>;
 
 beforeEach(() => {
-  hook = renderHook(() => useCreateProcessesSteps(process.id), {
+  hook = renderHook(() => useCreateProcessesSteps({ processId: process.id }), {
     wrapper: ({ children }) => <MockQueryClientProvider>{children}</MockQueryClientProvider>,
   });
 });
