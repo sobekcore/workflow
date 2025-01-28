@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 test('should add id attribute to select', () => {
-  expect(component.getByLabelText(label).id).toBe(name);
+  expect(component.getByLabelText(label)).toHaveAttribute('id', name);
 });
 
 test('should call register', () => {

@@ -51,7 +51,7 @@ describe('condition type visit', () => {
   });
 
   test('should add href attribute to link', () => {
-    expect(component.getByRole('link').getAttribute('href')).toBe(link);
+    expect(component.getByRole('link')).toHaveAttribute('href', link);
   });
 
   test('should call onComplete', () => {
@@ -101,7 +101,7 @@ describe('condition type radio', () => {
   });
 
   test('should add name attribute to radio', () => {
-    expect(component.getByRole('radio').getAttribute('name')).toBe(id);
+    expect(component.getByRole('radio')).toHaveAttribute('name', id);
   });
 
   test('should call onComplete', () => {
@@ -152,7 +152,7 @@ describe('condition type checkbox', () => {
   });
 
   test('should add name attribute to checkbox', () => {
-    expect(component.getByRole('checkbox').getAttribute('name')).toBe(id);
+    expect(component.getByRole('checkbox')).toHaveAttribute('name', id);
   });
 
   test('should call onComplete when selected', () => {

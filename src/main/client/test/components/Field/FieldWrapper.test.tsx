@@ -19,7 +19,7 @@ beforeEach(() => {
 });
 
 test('should add for attribute to label', () => {
-  expect(component.getByText(label).getAttribute('for')).toBe(name);
+  expect(component.getByText(label)).toHaveAttribute('for', name);
 });
 
 test('should render children', () => {

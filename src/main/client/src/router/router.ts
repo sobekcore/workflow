@@ -2,8 +2,10 @@ import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter } from '@tanstack/react-router';
 import { authQuery } from '@/hooks/auth/useAuth.ts';
 import DefaultLayout from '@/layouts/DefaultLayout.tsx';
+import ErrorRoute from '@/routes/Error.tsx';
 import ExecutionsRoute from '@/routes/Exectuions.tsx';
 import HomeRoute from '@/routes/Home.tsx';
+import LoginRoute from '@/routes/Login.tsx';
 import ProcessesRoute from '@/routes/Processes.tsx';
 import ProfileRoute from '@/routes/Profile.tsx';
 import { handleAuth } from '@/router/auth.ts';
@@ -13,60 +15,77 @@ export interface RouterContext {
 }
 
 const rootRoute = createRootRouteWithContext<RouterContext>()({
-  component: DefaultLayout,
+  errorComponent: ErrorRoute,
+  notFoundComponent: ErrorRoute,
   async beforeLoad({ context }) {
     await context.queryClient?.ensureQueryData(authQuery());
   },
 });
 
+const defaultRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  id: 'default',
+  component: DefaultLayout,
+});
+
 const routeTree = rootRoute.addChildren([
   createRoute({
     getParentRoute: () => rootRoute,
-    path: '/',
-    component: HomeRoute,
-  }),
-  createRoute({
-    getParentRoute: () => rootRoute,
-    path: '/processes',
-    component: ProcessesRoute,
+    path: '/login',
+    component: LoginRoute,
     beforeLoad({ context }): void {
-      handleAuth(context);
+      handleAuth(context, true);
     },
-  }).addChildren([
+  }),
+  defaultRoute.addChildren([
     createRoute({
-      getParentRoute: () => rootRoute,
-      path: '/processes/$processId',
+      getParentRoute: () => defaultRoute,
+      path: '/',
+      component: HomeRoute,
+    }),
+    createRoute({
+      getParentRoute: () => defaultRoute,
+      path: '/processes',
       component: ProcessesRoute,
       beforeLoad({ context }): void {
         handleAuth(context);
       },
-    }),
-  ]),
-  createRoute({
-    getParentRoute: () => rootRoute,
-    path: '/executions',
-    component: ExecutionsRoute,
-    beforeLoad({ context }): void {
-      handleAuth(context);
-    },
-  }).addChildren([
+    }).addChildren([
+      createRoute({
+        getParentRoute: () => defaultRoute,
+        path: '/processes/$processId',
+        component: ProcessesRoute,
+        beforeLoad({ context }): void {
+          handleAuth(context);
+        },
+      }),
+    ]),
     createRoute({
-      getParentRoute: () => rootRoute,
-      path: '/executions/$executionId',
+      getParentRoute: () => defaultRoute,
+      path: '/executions',
       component: ExecutionsRoute,
+      beforeLoad({ context }): void {
+        handleAuth(context);
+      },
+    }).addChildren([
+      createRoute({
+        getParentRoute: () => defaultRoute,
+        path: '/executions/$executionId',
+        component: ExecutionsRoute,
+        beforeLoad({ context }): void {
+          handleAuth(context);
+        },
+      }),
+    ]),
+    createRoute({
+      getParentRoute: () => defaultRoute,
+      path: '/profile',
+      component: ProfileRoute,
       beforeLoad({ context }): void {
         handleAuth(context);
       },
     }),
   ]),
-  createRoute({
-    getParentRoute: () => rootRoute,
-    path: '/profile',
-    component: ProfileRoute,
-    beforeLoad({ context }): void {
-      handleAuth(context);
-    },
-  }),
 ]);
 
 export const router = createRouter({

@@ -35,6 +35,7 @@ class SecurityConfig {
             )
             .csrf(AbstractHttpConfigurer::disable)
             .oauth2Login(oauth2 -> oauth2
+                .loginPage(String.format("%s/login", workflowClientUrl))
                 .successHandler(new AuthSuccessHandler(workflowClientUrl, userRepository))
             )
             .logout(logout -> logout

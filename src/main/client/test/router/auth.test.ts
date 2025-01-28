@@ -26,3 +26,19 @@ test('should call redirect when unauthorized', () => {
   expect(redirect).toHaveBeenCalledOnce();
   expect(redirect).toHaveBeenCalledWith({ to: '/' });
 });
+
+test('should not call redirect when unauthorized and allowUnauthorized', () => {
+  handleAuth({ queryClient: new QueryClient() }, true);
+
+  expect(redirect).not.toHaveBeenCalledOnce();
+});
+
+test('should call redirect when authorized and allowUnauthorized', () => {
+  const queryClient: QueryClient = new QueryClient();
+  queryClient.setQueryData([QueryKey.AUTH], mockUser());
+
+  expect(() => handleAuth({ queryClient }, true)).toThrow();
+
+  expect(redirect).toHaveBeenCalledOnce();
+  expect(redirect).toHaveBeenCalledWith({ to: '/' });
+});

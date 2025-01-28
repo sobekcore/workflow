@@ -20,7 +20,7 @@ test('should render trigger', () => {
 test('should add data-align attribute to dropdown', async () => {
   await userEvent.click(component.getByTestId('trigger'));
 
-  expect(component.getByTestId('dropdown-content').getAttribute('data-align')).toBe('start');
+  expect(component.getByTestId('dropdown-content')).toHaveAttribute('data-align', 'start');
 });
 
 test('should add data-align attribute to dropdown when dropdown side right', async () => {
@@ -32,5 +32,5 @@ test('should add data-align attribute to dropdown when dropdown side right', asy
 
   await userEvent.click(component.getByTestId('trigger'));
 
-  expect(component.getByTestId('dropdown-content').getAttribute('data-align')).toBe('end');
+  expect(component.getByTestId('dropdown-content')).toHaveAttribute('data-align', 'end');
 });

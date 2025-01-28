@@ -20,7 +20,7 @@ beforeEach(() => {
 
 test('should render children and button', () => {
   expect(component.getByText(children)).toBeInTheDocument();
-  expect(component.getByRole('menuitem').localName).toBe('button');
+  expect(component.getByRole('menuitem')).toHaveProperty('localName', 'button');
 });
 
 test('should render children and no button when primitive', () => {
@@ -35,7 +35,7 @@ test('should render children and no button when primitive', () => {
   );
 
   expect(component.getByText(children)).toBeInTheDocument();
-  expect(component.getByRole('menuitem').localName).not.toBe('button');
+  expect(component.getByRole('menuitem')).not.toHaveProperty('localName', 'button');
 });
 
 test('should call onClick', () => {
