@@ -10,3 +10,8 @@ export interface Process {
 export interface ProcessToCreate {
   name: string;
 }
+
+export interface ProcessToUpdate {
+  id: string;
+  name: string;
+}

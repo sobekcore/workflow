@@ -16,7 +16,7 @@ export function useAssignProcessesSteps({ processId, onSuccess, onError }: UseAs
     mutationFn(processes: ProcessStepToAssign[]): Promise<void> {
       return assignProcessesSteps(processes);
     },
-    onMutate(processesToAssign: ProcessStepToAssign[]): void {
+    onMutate(processesStepsToAssign: ProcessStepToAssign[]): void {
       queryClient.setQueryData<Process[]>([QueryKey.READ_PROCESSES], (processes?: Process[]): Process[] => {
         if (!processes) {
           return [];
@@ -27,7 +27,7 @@ export function useAssignProcessesSteps({ processId, onSuccess, onError }: UseAs
           return processes;
         }
 
-        const processStepToAssign: ProcessStepToAssign | undefined = processesToAssign.find(
+        const processStepToAssign: ProcessStepToAssign | undefined = processesStepsToAssign.find(
           (process: ProcessStepToAssign): boolean =>
             processes[index].steps.some(
               (processStep: ProcessStep): boolean => processStep.id === process.processStepId,

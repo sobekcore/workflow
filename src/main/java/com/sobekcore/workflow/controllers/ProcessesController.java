@@ -33,13 +33,18 @@ class ProcessesController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<Process> create(@Valid @RequestBody List<ProcessDto> processDtoList) {
-        return processService.create(authContext.getUser(), processDtoList);
+    public List<Process> create(@Valid @RequestBody List<ProcessCreateDto> processCreateDtoList) {
+        return processService.create(authContext.getUser(), processCreateDtoList);
     }
 
     @GetMapping
     public List<Process> read() {
         return processService.read(authContext.getUser());
+    }
+
+    @PutMapping
+    public List<Process> update(@Valid @RequestBody List<ProcessUpdateDto> processUpdateDtoList) {
+        return processService.update(authContext.getUser(), processUpdateDtoList);
     }
 
     @PostMapping("/steps")

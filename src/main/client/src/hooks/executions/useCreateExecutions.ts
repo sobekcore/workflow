@@ -11,13 +11,13 @@ export function useCreateExecutions({ onSuccess, onError }: UseMutationParams = 
     mutationFn(executions: ExecutionToCreate[]): Promise<Execution[]> {
       return createExecutions(executions);
     },
-    onSuccess(createdExecutions: Execution[]): void {
+    onSuccess(executionsToCreate: Execution[]): void {
       queryClient.setQueryData<Execution[]>([QueryKey.READ_EXECUTIONS], (executions?: Execution[]): Execution[] => {
         if (!executions) {
-          return createdExecutions;
+          return executionsToCreate;
         }
 
-        return [...executions, ...createdExecutions];
+        return [...executions, ...executionsToCreate];
       });
       onSuccess?.();
     },

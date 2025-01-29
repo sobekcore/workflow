@@ -17,7 +17,7 @@ export default function ProcessItem({ process }: ProcessItemProps) {
   );
 
   return (
-    <WorkflowItem title={<ProcessTitle process={process} />} actions={<ProcessDropdown processId={process.id} />}>
+    <WorkflowItem title={<ProcessTitle process={process} />} actions={<ProcessDropdown process={process} />}>
       {!processStepTree.length && (
         <div>
           <CreateProcessStep processId={process.id} />

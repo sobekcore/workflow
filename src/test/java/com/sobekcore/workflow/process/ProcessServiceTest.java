@@ -34,15 +34,15 @@ class ProcessServiceTest {
 
     @Test
     void shouldReturnCreatedProcesses() {
-        ProcessDto processDto = new ProcessDto("Process");
+        ProcessCreateDto processCreateDto = new ProcessCreateDto("Process");
 
         when(processRepository.saveAll(anyList()))
             .then(returnsFirstArg());
 
-        Process process = processService.create(user, List.of(processDto)).get(0);
+        Process process = processService.create(user, List.of(processCreateDto)).get(0);
 
         assertEquals(user, process.getUser());
-        assertEquals(processDto.name(), process.getName());
+        assertEquals(processCreateDto.name(), process.getName());
     }
 
     @Test
@@ -53,5 +53,20 @@ class ProcessServiceTest {
         List<Process> processes = processService.read(user);
 
         assertEquals(List.of(process), processes);
+    }
+
+    @Test
+    void shouldReturnUpdatedProcesses() {
+        ProcessUpdateDto processUpdateDto = new ProcessUpdateDto(process.getId(), "Process");
+
+        when(processRepository.findAllByUserAndIdIn(user, List.of(process.getId())))
+            .thenReturn(List.of(process));
+        when(processRepository.saveAll(anyList()))
+            .then(returnsFirstArg());
+
+        Process process = processService.update(user, List.of(processUpdateDto)).get(0);
+
+        assertEquals(user, process.getUser());
+        assertEquals(processUpdateDto.name(), process.getName());
     }
 }

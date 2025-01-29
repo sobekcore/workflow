@@ -59,6 +59,25 @@ class ProcessesControllerTest extends ControllerTest {
     }
 
     @Test
+    void shouldReturnUpdatedProcesses() throws Exception {
+        mockMvc
+            .perform(MockMvcRequestBuilders
+                .put("/api/processes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("""
+                    [
+                        {
+                            "id": "%s",
+                            "name": "Process"
+                        }
+                    ]
+                """, UUID.randomUUID()))
+                .with(oauth2Login)
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     void shouldReturnCreatedSteps() throws Exception {
         mockMvc
             .perform(MockMvcRequestBuilders

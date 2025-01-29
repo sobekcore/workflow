@@ -3,7 +3,7 @@ import { Mock } from 'vitest';
 import { mockProcess } from '@test/mocks/process.ts';
 import { MockQueryClientProvider } from '@test/mocks/query-client.tsx';
 import { render } from '@test/render.ts';
-import { Process } from '@/interfaces/process.ts';
+import { Process, ProcessToCreate } from '@/interfaces/process.ts';
 import CreateProcess from '@/components/Process/CreateProcess.tsx';
 import { ProcessFormProps } from '@/components/Process/ProcessForm.tsx';
 
@@ -16,7 +16,7 @@ vi.mock('@/hooks/processes/useCreateProcesses.ts', () => ({
 
 const process: Process = mockProcess();
 vi.mock('@/components/Process/ProcessForm.tsx', () => ({
-  default: ({ onSubmit }: ProcessFormProps) => (
+  default: ({ onSubmit }: ProcessFormProps<ProcessToCreate>) => (
     <div data-testid="submit" onClick={() => onSubmit({ name: process.name })} />
   ),
 }));

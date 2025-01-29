@@ -68,4 +68,10 @@ public class Process {
     public List<ProcessStep> getSteps() {
         return steps;
     }
+
+    public Process setName(String name) {
+        this.name = name;
+
+        return this;
+    }
 }
