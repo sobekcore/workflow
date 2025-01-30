@@ -1,35 +1,52 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { MdAdd, MdRemove } from 'react-icons/md';
+import { MdAdd, MdEdit, MdRemove } from 'react-icons/md';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ButtonVariant } from '@/enums/button.ts';
 import { ConditionType } from '@/enums/process-step/condition.ts';
-import { ProcessStepToCreate } from '@/interfaces/process-step/process-step.ts';
-import { processStepToCreateSchema } from '@/schemas/process-step/process-step.ts';
+import { ProcessStep, ProcessStepToCreate, ProcessStepToUpdate } from '@/interfaces/process-step/process-step.ts';
+import { processStepToCreateSchema, processStepToUpdateSchema } from '@/schemas/process-step/process-step.ts';
 import Button from '@/components/Common/Button.tsx';
 import Input from '@/components/Field/Input.tsx';
 import Select from '@/components/Field/Select.tsx';
 
-export interface ProcessStepFormProps {
+export type ProcessStepFormType = ProcessStepToCreate | ProcessStepToUpdate;
+
+export interface ProcessStepFormProps<T extends ProcessStepFormType> {
+  processStep?: ProcessStep;
   processId: string;
   prevProcessStepId?: string;
-  onSubmit: SubmitHandler<ProcessStepToCreate>;
+  onSubmit: SubmitHandler<T>;
   onCancel(): void;
 }
 
-export default function ProcessStepForm({ processId, prevProcessStepId, onSubmit, onCancel }: ProcessStepFormProps) {
+export default function ProcessStepForm<T extends ProcessStepFormType>({
+  processStep,
+  processId,
+  prevProcessStepId,
+  onSubmit,
+  onCancel,
+}: ProcessStepFormProps<T>) {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
     setValue,
     getValues,
     resetField,
     watch,
-  } = useForm<ProcessStepToCreate>({
-    resolver: zodResolver(processStepToCreateSchema),
+  } = useForm<ProcessStepFormType>({
+    resolver: zodResolver(processStep ? processStepToUpdateSchema : processStepToCreateSchema),
   });
   const [options, setOptions] = useState<number>(1);
+
+  useEffect((): void => {
+    if (processStep) {
+      reset(processStep, { keepDefaultValues: true });
+      setOptions(processStep.condition.data?.options?.length ?? 1);
+    }
+  }, [reset, processStep]);
 
   useEffect((): void => {
     if (prevProcessStepId) {
@@ -60,7 +77,7 @@ export default function ProcessStepForm({ processId, prevProcessStepId, onSubmit
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit as SubmitHandler<ProcessStepFormType>)}>
       <Input name="name" label="Name" register={register} errors={errors} />
       <Input name="description" label="Description" register={register} errors={errors} />
       <Select
@@ -108,8 +125,8 @@ export default function ProcessStepForm({ processId, prevProcessStepId, onSubmit
           Cancel
         </Button>
         <Button type="submit">
-          <MdAdd className="text-xl" />
-          Create
+          {processStep ? <MdEdit className="text-xl" /> : <MdAdd className="text-xl" />}
+          {processStep ? 'Edit' : 'Create'}
         </Button>
       </div>
     </form>

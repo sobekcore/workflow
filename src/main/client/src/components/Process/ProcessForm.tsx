@@ -21,17 +21,16 @@ export default function ProcessForm<T extends ProcessFormType>({ process, onSubm
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
+    reset,
   } = useForm<ProcessFormType>({
     resolver: zodResolver(process ? processToUpdateSchema : processToCreateSchema),
   });
 
   useEffect((): void => {
     if (process) {
-      setValue('id', process.id);
-      setValue('name', process.name);
+      reset(process, { keepDefaultValues: true });
     }
-  }, [setValue, process]);
+  }, [reset, process]);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit as SubmitHandler<ProcessFormType>)}>

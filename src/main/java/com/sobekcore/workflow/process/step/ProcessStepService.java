@@ -19,23 +19,23 @@ public class ProcessStepService {
         this.processStepRepository = processStepRepository;
     }
 
-    public List<ProcessStep> create(User user, List<ProcessStepDto> processStepDtoList) {
+    public List<ProcessStep> create(User user, List<ProcessStepCreateDto> processStepCreateDtoList) {
         try {
             return processStepRepository.saveAll(
-                processStepDtoList
+                processStepCreateDtoList
                     .stream()
-                    .map(processStepDto -> new ProcessStep(
+                    .map(processStepCreateDto -> new ProcessStep(
                         user,
-                        processStepDto.name(),
-                        processStepDto.description(),
-                        processStepDto.condition(),
-                        processStepDto.prevProcessStepId() != null
-                            ? processStepRepository.findByUserAndId(user, processStepDto.prevProcessStepId()).orElse(null)
+                        processStepCreateDto.name(),
+                        processStepCreateDto.description(),
+                        processStepCreateDto.condition(),
+                        processStepCreateDto.prevProcessStepId() != null
+                            ? processStepRepository.findByUserAndId(user, processStepCreateDto.prevProcessStepId()).orElse(null)
                             : null,
-                        processStepDto.fromProcessStepsIds() != null
-                            ? processStepRepository.findAllByUserAndIdIn(user, processStepDto.fromProcessStepsIds())
+                        processStepCreateDto.fromProcessStepsIds() != null
+                            ? processStepRepository.findAllByUserAndIdIn(user, processStepCreateDto.fromProcessStepsIds())
                             : null,
-                        processRepository.findByUserAndId(user, processStepDto.processId()).orElseThrow()
+                        processRepository.findByUserAndId(user, processStepCreateDto.processId()).orElseThrow()
                     ))
                     .toList()
             );
@@ -61,5 +61,29 @@ public class ProcessStepService {
 
             processStepRepository.save(processStep);
         });
+    }
+
+    public List<ProcessStep> update(User user, List<ProcessStepUpdateDto> processStepUpdateDtoList) {
+        List<ProcessStep> processStepList = processStepRepository.findAllByUserAndIdIn(
+            user,
+            processStepUpdateDtoList.stream().map(ProcessStepUpdateDto::id).toList()
+        );
+
+        return processStepRepository.saveAll(
+            processStepList
+                .stream()
+                .map(processStep -> processStepUpdateDtoList
+                    .stream()
+                    .filter(processStepUpdateDto -> processStepUpdateDto.id().equals(processStep.getId()))
+                    .findFirst()
+                    .map(processStepUpdateDto -> processStep
+                        .setName(processStepUpdateDto.name())
+                        .setDescription(processStepUpdateDto.description())
+                        .setCondition(processStepUpdateDto.condition())
+                    )
+                    .orElseThrow()
+                )
+                .toList()
+        );
     }
 }

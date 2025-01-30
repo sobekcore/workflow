@@ -3,10 +3,7 @@ package com.sobekcore.workflow.controllers;
 import com.sobekcore.workflow.auth.AuthContext;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.*;
-import com.sobekcore.workflow.process.step.ProcessStep;
-import com.sobekcore.workflow.process.step.ProcessStepAssignDto;
-import com.sobekcore.workflow.process.step.ProcessStepDto;
-import com.sobekcore.workflow.process.step.ProcessStepService;
+import com.sobekcore.workflow.process.step.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,9 +46,9 @@ class ProcessesController {
 
     @PostMapping("/steps")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public List<ProcessStep> createSteps(@Valid @RequestBody List<ProcessStepDto> processStepDtoList) {
+    public List<ProcessStep> createSteps(@Valid @RequestBody List<ProcessStepCreateDto> processStepCreateDtoList) {
         try {
-            return processStepService.create(authContext.getUser(), processStepDtoList);
+            return processStepService.create(authContext.getUser(), processStepCreateDtoList);
         } catch (ProcessNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -60,6 +57,11 @@ class ProcessesController {
     @GetMapping("/steps")
     public List<ProcessStep> readSteps() {
         return processStepService.read(authContext.getUser());
+    }
+
+    @PutMapping("/steps")
+    public List<ProcessStep> updateSteps(@Valid @RequestBody List<ProcessStepUpdateDto> processStepUpdateDtoList) {
+        return processStepService.update(authContext.getUser(), processStepUpdateDtoList);
     }
 
     @PatchMapping("/steps/assign")

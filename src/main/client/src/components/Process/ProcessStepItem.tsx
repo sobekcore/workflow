@@ -15,6 +15,7 @@ export default function ProcessStepItem({ processStep, processId }: ProcessStepI
       processStep={processStep}
       actions={
         <ProcessStepDropdown
+          processStep={processStep}
           processId={processId}
           prevProcessStepId={processStep.id}
           assignProcessStepId={processStep.id}

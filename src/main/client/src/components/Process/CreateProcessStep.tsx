@@ -17,7 +17,7 @@ export default function CreateProcessStep({ processId }: CreateProcessStepProps)
   const { mutate: createProcessesSteps } = useCreateProcessesSteps({
     processId,
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been created'),
-    onError: () => createToast(ToastType.SUCCESS, 'Process Step cannot be created'),
+    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be created'),
   });
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 

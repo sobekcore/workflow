@@ -65,6 +65,22 @@ test('should call onSubmit when condition type checkbox', async () => {
   expect(onSubmit).toHaveBeenCalledOnce();
 });
 
+test('should call onSubmit when update', async () => {
+  component = render(
+    <ProcessStepForm
+      processStep={mockProcessStep()}
+      processId={process.id}
+      prevProcessStepId={prevProcessStep.id}
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+    />,
+  );
+
+  await userEvent.click(component.getByRole('button', { name: 'Edit' }));
+
+  expect(onSubmit).toHaveBeenCalledOnce();
+});
+
 test('should add option when clicked', async () => {
   await userEvent.selectOptions(component.getByLabelText('Condition Type'), ConditionType.CHECKBOX);
   await userEvent.click(component.getByRole('button', { name: 'Add Option' }));

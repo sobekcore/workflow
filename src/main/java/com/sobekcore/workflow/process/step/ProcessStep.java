@@ -127,4 +127,22 @@ public class ProcessStep {
     public Process getProcess() {
         return process;
     }
+
+    public ProcessStep setName(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    public ProcessStep setDescription(String description) {
+        this.description = description;
+
+        return this;
+    }
+
+    public ProcessStep setCondition(Condition condition) {
+        this.condition = condition;
+
+        return this;
+    }
 }

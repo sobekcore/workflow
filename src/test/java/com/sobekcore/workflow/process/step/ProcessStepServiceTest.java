@@ -40,7 +40,7 @@ class ProcessStepServiceTest {
 
     ProcessStep processStep;
 
-    ProcessStepDto processStepDto;
+    ProcessStepCreateDto processStepCreateDto;
 
     @BeforeEach
     void setup() {
@@ -56,7 +56,7 @@ class ProcessStepServiceTest {
             new ArrayList<>(),
             process
         );
-        processStepDto = new ProcessStepDto(
+        processStepCreateDto = new ProcessStepCreateDto(
             "Process Step",
             "Description",
             new Condition(ConditionType.NONE, null),
@@ -77,19 +77,19 @@ class ProcessStepServiceTest {
         when(processStepRepository.saveAll(anyList()))
             .then(returnsFirstArg());
 
-        ProcessStep processStep = processStepService.create(user, List.of(processStepDto)).get(0);
+        ProcessStep processStep = processStepService.create(user, List.of(processStepCreateDto)).get(0);
 
-        assertEquals(processStepDto.name(), processStep.getName());
-        assertEquals(processStepDto.description(), processStep.getDescription());
-        assertEquals(processStepDto.condition(), processStep.getCondition());
-        assertEquals(processStepDto.prevProcessStepId(), processStep.getPrevProcessStep().getId());
-        assertEquals(processStepDto.fromProcessStepsIds(), processStep
+        assertEquals(processStepCreateDto.name(), processStep.getName());
+        assertEquals(processStepCreateDto.description(), processStep.getDescription());
+        assertEquals(processStepCreateDto.condition(), processStep.getCondition());
+        assertEquals(processStepCreateDto.prevProcessStepId(), processStep.getPrevProcessStep().getId());
+        assertEquals(processStepCreateDto.fromProcessStepsIds(), processStep
             .getAvailableFrom()
             .stream()
             .map(ProcessStep::getId)
             .toList()
         );
-        assertEquals(processStepDto.processId(), processStep.getProcess().getId());
+        assertEquals(processStepCreateDto.processId(), processStep.getProcess().getId());
     }
 
     @Test
@@ -99,7 +99,7 @@ class ProcessStepServiceTest {
 
         assertThrows(
             ProcessNotFoundException.class,
-            () -> processStepService.create(user, List.of(processStepDto))
+            () -> processStepService.create(user, List.of(processStepCreateDto))
         );
     }
 
@@ -112,6 +112,27 @@ class ProcessStepServiceTest {
         List<ProcessStep> processesSteps = processStepService.read(user);
 
         assertEquals(List.of(processStep), processesSteps);
+    }
+
+    @Test
+    void shouldReturnUpdatedProcessesSteps() {
+        ProcessStepUpdateDto processStepUpdateDto = new ProcessStepUpdateDto(
+            processStep.getId(),
+            "Process Step 2",
+            "Description 2",
+            new Condition(ConditionType.VISIT, null)
+        );
+
+        when(processStepRepository.findAllByUserAndIdIn(user, List.of(processStep.getId())))
+            .thenReturn(List.of(processStep));
+        when(processStepRepository.saveAll(anyList()))
+            .then(returnsFirstArg());
+
+        ProcessStep processStep = processStepService.update(user, List.of(processStepUpdateDto)).get(0);
+
+        assertEquals(processStepUpdateDto.name(), processStep.getName());
+        assertEquals(processStepUpdateDto.description(), processStep.getDescription());
+        assertEquals(processStepUpdateDto.condition().type(), processStep.getCondition().type());
     }
 
     @Test
