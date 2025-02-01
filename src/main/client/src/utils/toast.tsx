@@ -7,6 +7,9 @@ const titles: Record<ToastType, string> = {
   [ToastType.ERROR]: 'Error',
 };
 
-export function createToast(type: ToastType, content: string): void {
-  toast(<Toast title={titles[type]}>{content}</Toast>, { type });
+export function createToast(type: ToastType, content: string, timeout?: number): void {
+  toast(<Toast title={titles[type]}>{content}</Toast>, {
+    type,
+    autoClose: timeout,
+  });
 }

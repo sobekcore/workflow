@@ -1,6 +1,9 @@
 package com.sobekcore.workflow.process.step;
 
 import com.sobekcore.workflow.auth.user.User;
+import com.sobekcore.workflow.execution.ExecutionExistsException;
+import com.sobekcore.workflow.execution.ExecutionProcessService;
+import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.ProcessNotFoundException;
 import com.sobekcore.workflow.process.ProcessRepository;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -14,12 +17,28 @@ public class ProcessStepService {
 
     private final ProcessStepRepository processStepRepository;
 
-    public ProcessStepService(ProcessRepository processRepository, ProcessStepRepository processStepRepository) {
+    private final ExecutionProcessService executionProcessService;
+
+    public ProcessStepService(
+        ProcessRepository processRepository,
+        ProcessStepRepository processStepRepository,
+        ExecutionProcessService executionProcessService
+    ) {
         this.processRepository = processRepository;
         this.processStepRepository = processStepRepository;
+        this.executionProcessService = executionProcessService;
     }
 
     public List<ProcessStep> create(User user, List<ProcessStepCreateDto> processStepCreateDtoList) {
+        List<Process> processList = processStepCreateDtoList
+            .stream()
+            .map(processStepCreateDto -> processRepository.getReferenceById(processStepCreateDto.processId()))
+            .toList();
+
+        if (executionProcessService.isExecutionExists(user, processList)) {
+            throw new ExecutionExistsException();
+        }
+
         try {
             return processStepRepository.saveAll(
                 processStepCreateDtoList
@@ -48,26 +67,15 @@ public class ProcessStepService {
         return processStepRepository.findAllByUser(user);
     }
 
-    public void assign(User user, List<ProcessStepAssignDto> processStepAssignDtoList) {
-        processStepAssignDtoList.forEach(processStepAssignDto -> {
-            ProcessStep processStep = processStepRepository
-                .findByUserAndId(user, processStepAssignDto.processStepId())
-                .orElseThrow();
-
-            processStep.getAvailableFrom().add(processStepRepository
-                .findByUserAndId(user, processStepAssignDto.assignProcessStepId())
-                .orElseThrow()
-            );
-
-            processStepRepository.save(processStep);
-        });
-    }
-
     public List<ProcessStep> update(User user, List<ProcessStepUpdateDto> processStepUpdateDtoList) {
         List<ProcessStep> processStepList = processStepRepository.findAllByUserAndIdIn(
             user,
             processStepUpdateDtoList.stream().map(ProcessStepUpdateDto::id).toList()
         );
+
+        if (executionProcessService.isExecutionExistsForSteps(user, processStepList)) {
+            throw new ExecutionExistsException();
+        }
 
         return processStepRepository.saveAll(
             processStepList
@@ -85,5 +93,29 @@ public class ProcessStepService {
                 )
                 .toList()
         );
+    }
+
+    public void assign(User user, List<ProcessStepAssignDto> processStepAssignDtoList) {
+        List<ProcessStep> processStepList = processStepRepository.findAllByUserAndIdIn(
+            user,
+            processStepAssignDtoList.stream().map(ProcessStepAssignDto::processStepId).toList()
+        );
+
+        if (executionProcessService.isExecutionExistsForSteps(user, processStepList)) {
+            throw new ExecutionExistsException();
+        }
+
+        processStepAssignDtoList.forEach(processStepAssignDto -> {
+            ProcessStep processStep = processStepRepository
+                .findByUserAndId(user, processStepAssignDto.processStepId())
+                .orElseThrow();
+
+            processStep.getAvailableFrom().add(processStepRepository
+                .findByUserAndId(user, processStepAssignDto.assignProcessStepId())
+                .orElseThrow()
+            );
+
+            processStepRepository.save(processStep);
+        });
     }
 }

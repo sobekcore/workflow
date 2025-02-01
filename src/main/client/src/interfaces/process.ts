@@ -5,6 +5,7 @@ export interface Process {
   createdAt: Date;
   name: string;
   steps: ProcessStep[];
+  editable: boolean;
 }
 
 export interface ProcessToCreate {

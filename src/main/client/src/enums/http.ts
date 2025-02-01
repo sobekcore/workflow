@@ -7,4 +7,5 @@ export enum HttpMethod {
 
 export enum HttpStatus {
   UNAUTHORIZED = 401,
+  CONFLICT = 409,
 }

@@ -1,6 +1,7 @@
 package com.sobekcore.workflow.controllers;
 
 import com.sobekcore.workflow.auth.AuthContext;
+import com.sobekcore.workflow.execution.ExecutionExistsException;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.*;
 import com.sobekcore.workflow.process.step.*;
@@ -41,7 +42,11 @@ class ProcessesController {
 
     @PutMapping
     public List<Process> update(@Valid @RequestBody List<ProcessUpdateDto> processUpdateDtoList) {
-        return processService.update(authContext.getUser(), processUpdateDtoList);
+        try {
+            return processService.update(authContext.getUser(), processUpdateDtoList);
+        } catch (ExecutionExistsException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("/steps")
@@ -49,6 +54,8 @@ class ProcessesController {
     public List<ProcessStep> createSteps(@Valid @RequestBody List<ProcessStepCreateDto> processStepCreateDtoList) {
         try {
             return processStepService.create(authContext.getUser(), processStepCreateDtoList);
+        } catch (ExecutionExistsException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         } catch (ProcessNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -61,12 +68,20 @@ class ProcessesController {
 
     @PutMapping("/steps")
     public List<ProcessStep> updateSteps(@Valid @RequestBody List<ProcessStepUpdateDto> processStepUpdateDtoList) {
-        return processStepService.update(authContext.getUser(), processStepUpdateDtoList);
+        try {
+            return processStepService.update(authContext.getUser(), processStepUpdateDtoList);
+        } catch (ExecutionExistsException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     @PatchMapping("/steps/assign")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void assignSteps(@Valid @RequestBody List<ProcessStepAssignDto> processStepAssignDtoList) {
-        processStepService.assign(authContext.getUser(), processStepAssignDtoList);
+        try {
+            processStepService.assign(authContext.getUser(), processStepAssignDtoList);
+        } catch (ExecutionExistsException exception) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 }

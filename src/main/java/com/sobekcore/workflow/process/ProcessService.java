@@ -1,6 +1,8 @@
 package com.sobekcore.workflow.process;
 
 import com.sobekcore.workflow.auth.user.User;
+import com.sobekcore.workflow.execution.ExecutionExistsException;
+import com.sobekcore.workflow.execution.ExecutionProcessService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,8 +11,11 @@ import java.util.List;
 public class ProcessService {
     private final ProcessRepository processRepository;
 
-    public ProcessService(ProcessRepository processRepository) {
+    private final ExecutionProcessService executionProcessService;
+
+    public ProcessService(ProcessRepository processRepository, ExecutionProcessService executionProcessService) {
         this.processRepository = processRepository;
+        this.executionProcessService = executionProcessService;
     }
 
     public List<Process> create(User user, List<ProcessCreateDto> processCreateDtoList) {
@@ -31,6 +36,10 @@ public class ProcessService {
             user,
             processUpdateDtoList.stream().map(ProcessUpdateDto::id).toList()
         );
+
+        if (executionProcessService.isExecutionExists(user, processList)) {
+            throw new ExecutionExistsException();
+        }
 
         return processRepository.saveAll(
             processList

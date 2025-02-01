@@ -1,4 +1,4 @@
 export interface UseMutationParams {
   onSuccess?(): void;
-  onError?(): void;
+  onError?(error: Error): void;
 }

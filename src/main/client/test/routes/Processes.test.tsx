@@ -88,3 +88,23 @@ test('should select process using localStorage item', async () => {
 
   expect(await component.findAllByText(anotherProcess.name)).toHaveLength(2);
 });
+
+test('should render alert when process is not editable', async () => {
+  const process: Process = {
+    ...mockProcess(),
+    editable: false,
+  };
+  useReadProcesses.mockImplementation(() => ({
+    data: [process],
+  }));
+
+  component = render(
+    <MockQueryClientProvider>
+      <MockRouterProvider>
+        <ProcessesRoute />
+      </MockRouterProvider>
+    </MockQueryClientProvider>,
+  );
+
+  expect(await component.findByRole('alert')).toBeInTheDocument();
+});

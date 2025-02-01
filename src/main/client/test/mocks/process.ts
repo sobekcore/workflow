@@ -7,5 +7,6 @@ export function mockProcess(): Process {
     createdAt: new Date(0),
     name: 'Process',
     steps: [mockProcessStep()],
+    editable: true,
   };
 }

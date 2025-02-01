@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { MdAdd, MdEdit, MdMoreVert, MdPolyline } from 'react-icons/md';
 import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 import { DropdownSide } from '@/enums/dropdown.ts';
+import { HttpStatus } from '@/enums/http.ts';
 import { ToastType } from '@/enums/toast.ts';
+import { HttpException } from '@/exceptions/http.ts';
 import {
   ProcessStep,
   ProcessStepToAssign,
@@ -36,17 +38,26 @@ export default function ProcessStepDropdown({
   const { mutate: createProcessesSteps } = useCreateProcessesSteps({
     processId,
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been created'),
-    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be created'),
+    onError: (exception: HttpException) =>
+      exception.response.status === HttpStatus.CONFLICT
+        ? createToast(ToastType.ERROR, 'Executions related to this Process has not been completed', 6000)
+        : createToast(ToastType.ERROR, 'Process Step cannot be created'),
   });
   const { mutate: assignProcessesSteps } = useAssignProcessesSteps({
     processId,
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been assigned'),
-    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be assigned'),
+    onError: (exception: HttpException) =>
+      exception.response.status === HttpStatus.CONFLICT
+        ? createToast(ToastType.ERROR, 'Executions related to this Process has not been completed', 6000)
+        : createToast(ToastType.ERROR, 'Process Step cannot be assigned'),
   });
   const { mutate: updateProcessesSteps } = useUpdateProcessesSteps({
     processId,
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been edited'),
-    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be edited'),
+    onError: (exception: HttpException) =>
+      exception.response.status === HttpStatus.CONFLICT
+        ? createToast(ToastType.ERROR, 'Executions related to this Process has not been completed', 6000)
+        : createToast(ToastType.ERROR, 'Process Step cannot be edited'),
   });
 
   const [isCreateProcessStepDialogOpen, setIsCreateProcessStepDialogOpen] = useState<boolean>(false);

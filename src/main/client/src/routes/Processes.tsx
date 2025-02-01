@@ -1,6 +1,8 @@
+import { MdErrorOutline } from 'react-icons/md';
 import { Process } from '@/interfaces/process.ts';
 import { useReadProcesses } from '@/hooks/processes/useReadProcesses.ts';
 import { useChildRoute } from '@/hooks/useChildRoute.ts';
+import Alert from '@/components/Common/Alert.tsx';
 import WorkflowList from '@/components/Common/Workflow/WorkflowList.tsx';
 import CreateProcess from '@/components/Process/CreateProcess.tsx';
 import ProcessItem from '@/components/Process/ProcessItem.tsx';
@@ -15,7 +17,14 @@ export default function ProcessesRoute() {
       <CreateProcess />
       {!!processes?.length && (
         <WorkflowList list={<Processes processes={processes} />}>
-          {process && <ProcessItem process={process} />}
+          {process && (
+            <>
+              {!process.editable && (
+                <Alert icon={MdErrorOutline} label="Executions related to this Process has not been completed" />
+              )}
+              <ProcessItem process={process} />
+            </>
+          )}
         </WorkflowList>
       )}
     </div>

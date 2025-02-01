@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { MdAdd, MdEdit, MdMoreVert } from 'react-icons/md';
 import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 import { DropdownSide } from '@/enums/dropdown.ts';
+import { HttpStatus } from '@/enums/http.ts';
 import { ToastType } from '@/enums/toast.ts';
+import { HttpException } from '@/exceptions/http.ts';
 import { ProcessStepToCreate } from '@/interfaces/process-step/process-step.ts';
 import { Process, ProcessToUpdate } from '@/interfaces/process.ts';
 import { useCreateProcessesSteps } from '@/hooks/processes-steps/useCreateProcessesSteps.ts';
@@ -23,11 +25,17 @@ export default function ProcessDropdown({ process }: ProcessDropdownProps) {
   const { mutate: createProcessesSteps } = useCreateProcessesSteps({
     processId: process.id,
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process Step has been created'),
-    onError: () => createToast(ToastType.ERROR, 'Process Step cannot be created'),
+    onError: (exception: HttpException) =>
+      exception.response.status === HttpStatus.CONFLICT
+        ? createToast(ToastType.ERROR, 'Executions related to this Process has not been completed', 6000)
+        : createToast(ToastType.ERROR, 'Process Step cannot be created'),
   });
   const { mutate: updateProcesses } = useUpdateProcesses({
     onSuccess: () => createToast(ToastType.SUCCESS, 'Process has been edited'),
-    onError: () => createToast(ToastType.ERROR, 'Process cannot be edited'),
+    onError: (exception: HttpException) =>
+      exception.response.status === HttpStatus.CONFLICT
+        ? createToast(ToastType.ERROR, 'Executions related to this Process has not been completed', 6000)
+        : createToast(ToastType.ERROR, 'Process cannot be edited'),
   });
 
   const [isCreateProcessStepDialogOpen, setIsCreateProcessStepDialogOpen] = useState<boolean>(false);

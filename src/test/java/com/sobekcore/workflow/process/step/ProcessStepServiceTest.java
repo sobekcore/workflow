@@ -1,6 +1,9 @@
 package com.sobekcore.workflow.process.step;
 
 import com.sobekcore.workflow.auth.user.User;
+import com.sobekcore.workflow.execution.Execution;
+import com.sobekcore.workflow.execution.ExecutionExistsException;
+import com.sobekcore.workflow.execution.ExecutionProcessService;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.ProcessNotFoundException;
 import com.sobekcore.workflow.process.ProcessRepository;
@@ -32,6 +35,9 @@ class ProcessStepServiceTest {
     @Mock
     ProcessStepRepository processStepRepository;
 
+    @Mock
+    ExecutionProcessService executionProcessService;
+
     ProcessStepService processStepService;
 
     User user;
@@ -40,11 +46,19 @@ class ProcessStepServiceTest {
 
     ProcessStep processStep;
 
+    ProcessStep assignProcessStep;
+
+    Execution execution;
+
     ProcessStepCreateDto processStepCreateDto;
+
+    ProcessStepUpdateDto processStepUpdateDto;
+
+    ProcessStepAssignDto processStepAssignDto;
 
     @BeforeEach
     void setup() {
-        processStepService = new ProcessStepService(processRepository, processStepRepository);
+        processStepService = new ProcessStepService(processRepository, processStepRepository, executionProcessService);
         user = new User("user@test.com", "User");
         process = new Process(user, "Process");
         processStep = new ProcessStep(
@@ -56,6 +70,16 @@ class ProcessStepServiceTest {
             new ArrayList<>(),
             process
         );
+        assignProcessStep = new ProcessStep(
+            user,
+            "Assign Process Step",
+            "Description",
+            new Condition(ConditionType.NONE, null),
+            processStep,
+            List.of(processStep),
+            process
+        );
+        execution = new Execution(user, process, processStep);
         processStepCreateDto = new ProcessStepCreateDto(
             "Process Step",
             "Description",
@@ -63,6 +87,16 @@ class ProcessStepServiceTest {
             processStep.getId(),
             List.of(processStep.getId()),
             process.getId()
+        );
+        processStepUpdateDto = new ProcessStepUpdateDto(
+            processStep.getId(),
+            "Process Step 2",
+            "Description 2",
+            new Condition(ConditionType.VISIT, null)
+        );
+        processStepAssignDto = new ProcessStepAssignDto(
+            processStep.getId(),
+            assignProcessStep.getId()
         );
     }
 
@@ -93,6 +127,19 @@ class ProcessStepServiceTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenExecutionExistsForCreatedProcessesSteps() {
+        when(processRepository.getReferenceById(process.getId()))
+            .thenReturn(process);
+        when(executionProcessService.isExecutionExists(user, List.of(process)))
+            .thenReturn(true);
+
+        assertThrows(
+            ExecutionExistsException.class,
+            () -> processStepService.create(user, List.of(processStepCreateDto))
+        );
+    }
+
+    @Test
     void shouldThrowExceptionWhenProcessNotFound() {
         when(processRepository.findByUserAndId(user, process.getId()))
             .thenThrow(new JpaObjectRetrievalFailureException(new EntityNotFoundException()));
@@ -108,7 +155,7 @@ class ProcessStepServiceTest {
         when(processStepRepository.findAllByUser(user))
             .thenReturn(List.of(processStep));
 
-        ProcessStepService processStepService = new ProcessStepService(processRepository, processStepRepository);
+        ProcessStepService processStepService = new ProcessStepService(processRepository, processStepRepository, executionProcessService);
         List<ProcessStep> processesSteps = processStepService.read(user);
 
         assertEquals(List.of(processStep), processesSteps);
@@ -116,13 +163,6 @@ class ProcessStepServiceTest {
 
     @Test
     void shouldReturnUpdatedProcessesSteps() {
-        ProcessStepUpdateDto processStepUpdateDto = new ProcessStepUpdateDto(
-            processStep.getId(),
-            "Process Step 2",
-            "Description 2",
-            new Condition(ConditionType.VISIT, null)
-        );
-
         when(processStepRepository.findAllByUserAndIdIn(user, List.of(processStep.getId())))
             .thenReturn(List.of(processStep));
         when(processStepRepository.saveAll(anyList()))
@@ -136,21 +176,20 @@ class ProcessStepServiceTest {
     }
 
     @Test
-    void shouldAssignProcessesSteps() {
-        ProcessStep assignProcessStep = new ProcessStep(
-            user,
-            "Assign Process Step",
-            "Description",
-            new Condition(ConditionType.NONE, null),
-            processStep,
-            List.of(processStep),
-            process
-        );
-        ProcessStepAssignDto processStepAssignDto = new ProcessStepAssignDto(
-            processStep.getId(),
-            assignProcessStep.getId()
-        );
+    void shouldThrowExceptionWhenExecutionExistsForUpdatedProcessesSteps() {
+        when(processStepRepository.findAllByUserAndIdIn(user, List.of(processStep.getId())))
+            .thenReturn(List.of(processStep));
+        when(executionProcessService.isExecutionExistsForSteps(user, List.of(processStep)))
+            .thenReturn(true);
 
+        assertThrows(
+            ExecutionExistsException.class,
+            () -> processStepService.update(user, List.of(processStepUpdateDto))
+        );
+    }
+
+    @Test
+    void shouldAssignProcessesSteps() {
         when(processStepRepository.findByUserAndId(user, processStep.getId()))
             .thenReturn(Optional.of(processStep));
         when(processStepRepository.findByUserAndId(user, assignProcessStep.getId()))
@@ -159,5 +198,18 @@ class ProcessStepServiceTest {
         processStepService.assign(user, List.of(processStepAssignDto));
 
         assertEquals(List.of(assignProcessStep), processStep.getAvailableFrom());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenExecutionExistsForAssignedProcessesSteps() {
+        when(processStepRepository.findAllByUserAndIdIn(user, List.of(processStep.getId())))
+            .thenReturn(List.of(processStep));
+        when(executionProcessService.isExecutionExistsForSteps(user, List.of(processStep)))
+            .thenReturn(true);
+
+        assertThrows(
+            ExecutionExistsException.class,
+            () -> processStepService.assign(user, List.of(processStepAssignDto))
+        );
     }
 }

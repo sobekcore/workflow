@@ -44,5 +44,5 @@ export async function httpClient<T extends ZodSchema>(
     return null;
   }
 
-  throw new HttpException('Something went wrong during request');
+  throw new HttpException(response);
 }

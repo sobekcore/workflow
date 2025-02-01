@@ -7,6 +7,7 @@ export const processSchema = z.object({
   createdAt: z.coerce.date(),
   name: z.string(),
   steps: z.array(processStepSchema),
+  editable: z.boolean(),
 }) satisfies ZodType<Process>;
 
 export const processToCreateSchema = z.object({

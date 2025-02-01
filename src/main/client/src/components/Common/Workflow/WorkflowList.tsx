@@ -10,7 +10,7 @@ export default function WorkflowList({ list, children }: WorkflowListProps) {
       <div>
         <div className="rounded-2xl border border-indigo-100 bg-white p-2">{list}</div>
       </div>
-      <div className="min-w-0">{children}</div>
+      <div className="flex min-w-0 flex-col gap-4">{children}</div>
     </div>
   );
 }

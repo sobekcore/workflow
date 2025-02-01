@@ -1,6 +1,6 @@
 export class ExecutionCantDetermineNextProcessStepException extends Error {
-  constructor(message?: string) {
-    super(message);
+  constructor() {
+    super();
     this.name = this.constructor.name;
   }
 }
