@@ -22,7 +22,7 @@ export default function Profile({ user, className }: ProfileProps) {
   };
 
   return (
-    <div className={clsx('flex flex-col gap-4 rounded-2xl border border-indigo-100 bg-white p-6', className)}>
+    <div className={clsx('flex flex-col gap-4 rounded-2xl border border-brand-100 bg-background p-6', className)}>
       <h1 className="mb-2 text-xl font-bold">Profile</h1>
       <ProfileItem title="Email">{user.email}</ProfileItem>
       <ProfileItem title="Registration Date">{user.createdAt.toUTCString()}</ProfileItem>

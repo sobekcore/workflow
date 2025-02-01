@@ -31,11 +31,11 @@ export default function ProcessStepItem({ processStep, processId }: ProcessStepI
       <style>{`
         body:has([data-process-step-id="${processStep.id}"]:is(:hover, :focus))
         [data-process-step-available-from*="${processStep.id}"] {
-          border-color: ${tailwindConfig.colors.indigo['300']};
-          background: ${tailwindConfig.colors.indigo['100']};
+          border-color: ${tailwindConfig.colors.brand['300']};
+          background: ${tailwindConfig.colors.brand['100']};
         }
       `}</style>
-      <div className="w-full cursor-not-allowed rounded-xl border-2 border-dashed border-slate-400 bg-slate-200 p-2">
+      <div className="w-full cursor-not-allowed rounded-xl border-2 border-dashed border-default-400 bg-default-200 p-2">
         <div className="pointer-events-none brightness-75 contrast-50">
           <ProcessStepCondition processStep={processStep} />
         </div>

@@ -9,7 +9,7 @@ export default function Select({ name, label, register, errors, children, onChan
     <FieldWrapper name={name} label={label} errors={errors}>
       <select
         id={name}
-        className="rounded-xl bg-white px-2 py-2.5 outline-none ring-1 ring-inset ring-slate-300 transition-[box-shadow] focus:ring-2 focus:ring-indigo-500"
+        className="rounded-xl bg-background px-2 py-2.5 outline-none ring-1 ring-inset ring-default-300 transition-[box-shadow] focus:ring-2 focus:ring-brand-500"
         {...(register ? register(name, { onChange }) : null)}
       >
         {children}

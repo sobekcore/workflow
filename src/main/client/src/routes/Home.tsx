@@ -17,7 +17,7 @@ export default function HomeRoute() {
           <span className="max-w-sm">
             The application is currently in trial-only mode. Access duration is permanent, but is subject to change.
           </span>
-          <span className="max-w-xs text-xs text-slate-500">
+          <span className="max-w-xs text-xs text-default-500">
             Data persistence and system stability are not guaranteed, until the full version is released.
           </span>
           <Button onClick={navigateToLogin}>

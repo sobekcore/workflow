@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import { StatusVariant } from '@/enums/status.ts';
 
 const variants: Record<StatusVariant, string> = {
-  [StatusVariant.DEFAULT]: 'border-indigo-500 text-indigo-500',
-  [StatusVariant.SUCCESS]: 'border-emerald-500 text-emerald-500',
+  [StatusVariant.DEFAULT]: 'border-brand-500 text-brand-500',
+  [StatusVariant.SUCCESS]: 'border-success-500 text-success-500',
 };
 
 interface StatusProps {

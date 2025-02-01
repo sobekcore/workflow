@@ -22,7 +22,7 @@ const conditionConfig: Record<ConditionType, ConditionConfig> = {
       return true;
     },
     render(): ReactNode {
-      return <span className="text-slate-500">To complete this step, no conditions are required...</span>;
+      return <span className="text-default-500">To complete this step, no conditions are required...</span>;
     },
   },
   [ConditionType.VISIT]: {

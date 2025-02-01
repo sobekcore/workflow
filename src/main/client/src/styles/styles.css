@@ -1,4 +1,6 @@
 @import '@/styles/tailwind';
+@import '@/styles/themes';
 @import '@/styles/globals';
-@import '@/styles/toastify';
-@import '@/styles/process-step';
+
+@import '@/styles/modules/toastify.css';
+@import '@/styles/modules/process-step.css';

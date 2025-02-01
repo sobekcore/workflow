@@ -1,0 +1,53 @@
+@layer base {
+  :root {
+    --colors-background: theme('colors.white');
+
+    --colors-default-50: theme('colors.slate.50');
+    --colors-default-100: theme('colors.slate.100');
+    --colors-default-200: theme('colors.slate.200');
+    --colors-default-300: theme('colors.slate.300');
+    --colors-default-400: theme('colors.slate.400');
+    --colors-default-500: theme('colors.slate.500');
+    --colors-default-600: theme('colors.slate.600');
+    --colors-default-700: theme('colors.slate.700');
+    --colors-default-800: theme('colors.slate.800');
+    --colors-default-900: theme('colors.slate.900');
+    --colors-default-950: theme('colors.slate.950');
+
+    --colors-brand-50: theme('colors.indigo.50');
+    --colors-brand-100: theme('colors.indigo.100');
+    --colors-brand-200: theme('colors.indigo.200');
+    --colors-brand-300: theme('colors.indigo.300');
+    --colors-brand-400: theme('colors.indigo.400');
+    --colors-brand-500: theme('colors.indigo.500');
+    --colors-brand-600: theme('colors.indigo.600');
+    --colors-brand-700: theme('colors.indigo.700');
+    --colors-brand-800: theme('colors.indigo.800');
+    --colors-brand-900: theme('colors.indigo.900');
+    --colors-brand-950: theme('colors.indigo.950');
+
+    --colors-success-50: theme('colors.emerald.50');
+    --colors-success-100: theme('colors.emerald.100');
+    --colors-success-200: theme('colors.emerald.200');
+    --colors-success-300: theme('colors.emerald.300');
+    --colors-success-400: theme('colors.emerald.400');
+    --colors-success-500: theme('colors.emerald.500');
+    --colors-success-600: theme('colors.emerald.600');
+    --colors-success-700: theme('colors.emerald.700');
+    --colors-success-800: theme('colors.emerald.800');
+    --colors-success-900: theme('colors.emerald.900');
+    --colors-success-950: theme('colors.emerald.950');
+
+    --colors-error-50: theme('colors.rose.50');
+    --colors-error-100: theme('colors.rose.100');
+    --colors-error-200: theme('colors.rose.200');
+    --colors-error-300: theme('colors.rose.300');
+    --colors-error-400: theme('colors.rose.400');
+    --colors-error-500: theme('colors.rose.500');
+    --colors-error-600: theme('colors.rose.600');
+    --colors-error-700: theme('colors.rose.700');
+    --colors-error-800: theme('colors.rose.800');
+    --colors-error-900: theme('colors.rose.900');
+    --colors-error-950: theme('colors.rose.950');
+  }
+}

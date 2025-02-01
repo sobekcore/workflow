@@ -11,7 +11,7 @@ export default function LoginOAuth2Item({ src, onClick, children }: LoginOAuth2I
   return (
     <Button
       variant={ButtonVariant.TEXT}
-      className="justify-center text-slate-900 ring-1 ring-inset ring-indigo-100"
+      className="justify-center text-default-900 ring-1 ring-inset ring-brand-100"
       onClick={onClick}
     >
       <img src={src} alt="Logo" className="h-5" />

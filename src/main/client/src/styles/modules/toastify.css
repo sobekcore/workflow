@@ -1,0 +1,45 @@
+.Toastify__toast {
+  @apply border border-brand-100 gap-4 font-[inherit] p-4 pb-5 shadow-lg;
+
+  .Toastify__toast-icon {
+    @apply rounded-full p-1 text-2xl text-background w-auto m-0;
+  }
+
+  .Toastify__progress-bar {
+    @apply opacity-100;
+  }
+
+  .Toastify__progress-bar--wrp {
+    @apply h-1;
+
+    .Toastify__progress-bar--bg {
+      @apply opacity-0;
+    }
+  }
+
+  &.Toastify__toast--success {
+    @apply bg-success-50 border-success-200;
+
+    .Toastify__title {
+      @apply text-success-500;
+    }
+
+    .Toastify__toast-icon,
+    .Toastify__progress-bar {
+      @apply bg-success-500;
+    }
+  }
+
+  &.Toastify__toast--error {
+    @apply bg-error-50 border-error-200;
+
+    .Toastify__title {
+      @apply text-error-500;
+    }
+
+    .Toastify__toast-icon,
+    .Toastify__progress-bar {
+      @apply bg-error-500;
+    }
+  }
+}

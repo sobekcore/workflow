@@ -21,7 +21,7 @@ export default function WorkflowStepItem({
       data-testid="workflow-step-item"
       className={clsx(
         'flex min-w-[360px] flex-col gap-1 rounded-xl border p-2 outline-none',
-        completed ? 'border-emerald-100 bg-emerald-100' : 'border-indigo-50 bg-indigo-50',
+        completed ? 'border-success-100 bg-success-100' : 'border-brand-50 bg-brand-50',
         className,
       )}
       {...props}

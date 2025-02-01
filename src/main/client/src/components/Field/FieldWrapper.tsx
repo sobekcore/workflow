@@ -20,7 +20,7 @@ export default function FieldWrapper({ name, label, errors, children }: FieldWra
       <ErrorMessage
         name={name}
         errors={errors}
-        render={({ message }) => <span className="text-sm text-rose-500">{message}</span>}
+        render={({ message }) => <span className="text-sm text-error-500">{message}</span>}
       />
     </div>
   );

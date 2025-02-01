@@ -13,7 +13,7 @@ export default function WorkflowItem({ title, actions, completed, children }: Wo
       data-testid="workflow-item"
       className={clsx(
         'flex flex-col gap-2 overflow-x-auto rounded-2xl border p-2',
-        completed ? 'border-emerald-200 bg-green-50' : 'border-indigo-100 bg-white',
+        completed ? 'border-success-200 bg-success-50' : 'border-brand-100 bg-background',
       )}
     >
       <div className="sticky left-0 flex min-h-7 items-center justify-between gap-2">

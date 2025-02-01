@@ -35,7 +35,7 @@ export default forwardRef<HTMLButtonElement, NavbarItemProps>(function NavbarIte
       ref={ref}
       variant={success ? ButtonVariant.SUCCESS : ButtonVariant.TEXT}
       size={ButtonSize.SMALL}
-      className={clsx(active && (success ? 'bg-emerald-100' : 'bg-indigo-100'), className)}
+      className={clsx(active && (success ? 'bg-success-100' : 'bg-brand-100'), className)}
       onClick={handleButtonClick}
       {...props}
     >

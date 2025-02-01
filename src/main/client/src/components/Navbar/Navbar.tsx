@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <div className="sticky top-0 z-10 mb-4 px-4 pt-4 backdrop-blur">
-      <nav className="rounded-full border border-indigo-100 bg-white p-2">
+      <nav className="rounded-full border border-brand-100 bg-background p-2">
         <Dropdown
           trigger={
             <Button data-testid="navbar-menu" variant={ButtonVariant.TEXT} size={ButtonSize.ICON} className="sm:hidden">

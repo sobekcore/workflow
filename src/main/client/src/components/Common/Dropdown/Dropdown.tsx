@@ -15,7 +15,7 @@ export default function Dropdown({ trigger, side = DropdownSide.LEFT, children }
         <Primitive.Content
           data-testid="dropdown-content"
           align={side === DropdownSide.LEFT ? 'start' : 'end'}
-          className="z-40 flex flex-col rounded-2xl border border-indigo-200 bg-white p-2 text-sm shadow-lg"
+          className="z-40 flex flex-col rounded-2xl border border-brand-200 bg-background p-2 text-sm shadow-lg"
         >
           {children}
         </Primitive.Content>

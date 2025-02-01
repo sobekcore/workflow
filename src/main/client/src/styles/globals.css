@@ -1,10 +1,10 @@
 body {
-  background: theme('colors.slate.50');
-  color: theme('colors.slate.900');
+  background: theme('colors.default.50');
+  color: theme('colors.default.900');
 }
 
 a {
-  color: theme('colors.indigo.500');
+  color: theme('colors.brand.500');
 }
 
 img {

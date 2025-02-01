@@ -3,10 +3,10 @@ import clsx from 'clsx';
 import { ButtonSize, ButtonVariant } from '@/enums/button.ts';
 
 const variants: Record<ButtonVariant, string> = {
-  [ButtonVariant.DEFAULT]: 'bg-indigo-500 text-white hocus:bg-indigo-600',
-  [ButtonVariant.TEXT]: 'text-indigo-500 hocus:bg-indigo-100',
-  [ButtonVariant.SUCCESS]: 'text-emerald-500 hocus:bg-emerald-100',
-  [ButtonVariant.DISABLED]: 'bg-slate-200 text-slate-400 cursor-not-allowed',
+  [ButtonVariant.DEFAULT]: 'bg-brand-500 text-background hocus:bg-brand-600',
+  [ButtonVariant.TEXT]: 'text-brand-500 hocus:bg-brand-100',
+  [ButtonVariant.SUCCESS]: 'text-success-500 hocus:bg-success-100',
+  [ButtonVariant.DISABLED]: 'bg-default-200 text-default-400 cursor-not-allowed',
 };
 
 const sizes: Record<ButtonSize, string> = {

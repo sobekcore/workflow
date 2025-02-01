@@ -10,7 +10,7 @@ export default function Login({ className }: LoginProps) {
   return (
     <div
       className={clsx(
-        'flex flex-col items-center gap-6 rounded-2xl border border-indigo-100 bg-white p-12 shadow-lg',
+        'flex flex-col items-center gap-6 rounded-2xl border border-brand-100 bg-background p-12 shadow-lg',
         className,
       )}
     >
