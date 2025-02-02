@@ -28,7 +28,7 @@ export default function NavbarContent({ user, dropdown }: NavbarContentProps) {
   return (
     <>
       <Item {...props}>
-        <NavbarItem icon={() => <ApplicationIcon className="h-4" />} pathname="/">
+        <NavbarItem icon={() => <ApplicationIcon className="h-4 w-5" />} pathname="/">
           Home
         </NavbarItem>
       </Item>

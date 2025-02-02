@@ -3,12 +3,16 @@ package com.sobekcore.workflow.process;
 import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.execution.ExecutionExistsException;
 import com.sobekcore.workflow.execution.ExecutionProcessService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProcessService {
+    private static final Logger log = LoggerFactory.getLogger(ProcessService.class);
+
     private final ProcessRepository processRepository;
 
     private final ExecutionProcessService executionProcessService;
@@ -19,6 +23,8 @@ public class ProcessService {
     }
 
     public List<Process> create(User user, List<ProcessCreateDto> processCreateDtoList) {
+        log.info("User {} is creating processes {}", user.getEmail(), processCreateDtoList);
+
         return processRepository.saveAll(
             processCreateDtoList
                 .stream()
@@ -28,10 +34,14 @@ public class ProcessService {
     }
 
     public List<Process> read(User user) {
+        log.info("User {} is reading processes", user.getEmail());
+
         return processRepository.findAllByUser(user);
     }
 
     public List<Process> update(User user, List<ProcessUpdateDto> processUpdateDtoList) {
+        log.info("User {} is updating processes {}", user.getEmail(), processUpdateDtoList);
+
         List<Process> processList = processRepository.findAllByUserAndIdIn(
             user,
             processUpdateDtoList.stream().map(ProcessUpdateDto::id).toList()

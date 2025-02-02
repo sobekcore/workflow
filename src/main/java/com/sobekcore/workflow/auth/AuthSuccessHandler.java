@@ -4,6 +4,8 @@ import com.sobekcore.workflow.auth.user.User;
 import com.sobekcore.workflow.auth.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.Cookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
+    private static final Logger log = LoggerFactory.getLogger(AuthSuccessHandler.class);
+
     private final String successUrl;
 
     private final UserRepository userRepository;
@@ -43,7 +47,10 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
         if (existingUser.isEmpty()) {
             userRepository.save(new User(email, name));
+            log.info("User {} has been created", email);
         }
+
+        log.info("User {} has logged in", email);
 
         response.setHeader(HttpHeaders.SET_COOKIE, createSessionCookie(request).toString());
         response.sendRedirect(successUrl);

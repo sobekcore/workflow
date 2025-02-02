@@ -6,6 +6,8 @@ import com.sobekcore.workflow.execution.ExecutionProcessService;
 import com.sobekcore.workflow.process.Process;
 import com.sobekcore.workflow.process.ProcessNotFoundException;
 import com.sobekcore.workflow.process.ProcessRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class ProcessStepService {
+    private static final Logger log = LoggerFactory.getLogger(ProcessStepService.class);
+
     private final ProcessRepository processRepository;
 
     private final ProcessStepRepository processStepRepository;
@@ -30,6 +34,8 @@ public class ProcessStepService {
     }
 
     public List<ProcessStep> create(User user, List<ProcessStepCreateDto> processStepCreateDtoList) {
+        log.info("User {} is creating processes steps {}", user.getEmail(), processStepCreateDtoList);
+
         List<Process> processList = processStepCreateDtoList
             .stream()
             .map(processStepCreateDto -> processRepository.getReferenceById(processStepCreateDto.processId()))
@@ -64,10 +70,14 @@ public class ProcessStepService {
     }
 
     public List<ProcessStep> read(User user) {
+        log.info("User {} is reading processes steps", user.getEmail());
+
         return processStepRepository.findAllByUser(user);
     }
 
     public List<ProcessStep> update(User user, List<ProcessStepUpdateDto> processStepUpdateDtoList) {
+        log.info("User {} is updating processes steps {}", user.getEmail(), processStepUpdateDtoList);
+
         List<ProcessStep> processStepList = processStepRepository.findAllByUserAndIdIn(
             user,
             processStepUpdateDtoList.stream().map(ProcessStepUpdateDto::id).toList()
@@ -96,6 +106,8 @@ public class ProcessStepService {
     }
 
     public void assign(User user, List<ProcessStepAssignDto> processStepAssignDtoList) {
+        log.info("User {} is assigning processes steps {}", user.getEmail(), processStepAssignDtoList);
+
         List<ProcessStep> processStepList = processStepRepository.findAllByUserAndIdIn(
             user,
             processStepAssignDtoList.stream().map(ProcessStepAssignDto::processStepId).toList()
