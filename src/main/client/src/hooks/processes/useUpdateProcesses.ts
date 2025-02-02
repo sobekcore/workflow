@@ -11,17 +11,19 @@ export function useUpdateProcesses({ onSuccess, onError }: UseMutationParams = {
     mutationFn(processes: ProcessToUpdate[]): Promise<Process[]> {
       return updateProcesses(processes);
     },
-    onSuccess(processesToUpdate: Process[]): void {
+    onSuccess(updatedProcesses: Process[]): void {
       queryClient.setQueryData<Process[]>([QueryKey.READ_PROCESSES], (processes?: Process[]): Process[] => {
         if (!processes) {
           return [];
         }
 
-        const processesIds: string[] = processesToUpdate.map((processToUpdate: Process): string => processToUpdate.id);
+        const updatedProcessesIds: string[] = updatedProcesses.map(
+          (updatedProcess: Process): string => updatedProcess.id,
+        );
 
         return [
-          ...processes.filter((process: Process): boolean => !processesIds.includes(process.id)),
-          ...processesToUpdate,
+          ...processes.filter((process: Process): boolean => !updatedProcessesIds.includes(process.id)),
+          ...updatedProcesses,
         ];
       });
       onSuccess?.();

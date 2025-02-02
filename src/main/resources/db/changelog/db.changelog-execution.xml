@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+    <changeSet id="table_execution" author="sobekcore">
+        <createTable tableName="execution">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_execution" />
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false" />
+            </column>
+            <column name="condition_status" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="condition_state" type="text" />
+            <column name="process_id" type="uuid">
+                <constraints nullable="false" />
+            </column>
+            <column name="process_step_id" type="uuid" />
+        </createTable>
+    </changeSet>
+    <changeSet id="fk_execution" author="sobekcore">
+        <addForeignKeyConstraint
+            baseTableName="execution"
+            baseColumnNames="user_id"
+            referencedTableName="user"
+            referencedColumnNames="id"
+            constraintName="fk_execution_on_user"
+        />
+        <addForeignKeyConstraint
+            baseTableName="execution"
+            baseColumnNames="process_id"
+            referencedTableName="process"
+            referencedColumnNames="id"
+            constraintName="fk_execution_on_process"
+        />
+        <addForeignKeyConstraint
+            baseTableName="execution"
+            baseColumnNames="process_step_id"
+            referencedTableName="process_step"
+            referencedColumnNames="id"
+            constraintName="fk_execution_on_process_step"
+        />
+    </changeSet>
+</databaseChangeLog>

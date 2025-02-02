@@ -16,7 +16,7 @@ export function useCreateProcessesSteps({ processId, onSuccess, onError }: UseCr
     mutationFn(processesSteps: ProcessStepToCreate[]): Promise<ProcessStep[]> {
       return createProcessesSteps(processesSteps);
     },
-    onSuccess(processesStepsToCreate: ProcessStep[]): void {
+    onSuccess(createdProcessesSteps: ProcessStep[]): void {
       queryClient.setQueryData<Process[]>([QueryKey.READ_PROCESSES], (processes?: Process[]): Process[] => {
         if (!processes) {
           return [];
@@ -29,7 +29,7 @@ export function useCreateProcessesSteps({ processId, onSuccess, onError }: UseCr
 
         return [
           ...processes.slice(0, index),
-          { ...processes[index], steps: [...processes[index].steps, ...processesStepsToCreate] },
+          { ...processes[index], steps: [...processes[index].steps, ...createdProcessesSteps] },
           ...processes.slice(index + 1),
         ];
       });

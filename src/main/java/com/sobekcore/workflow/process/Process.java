@@ -85,6 +85,8 @@ public class Process {
     }
 
     public boolean isEditable() {
-        return executions.stream().noneMatch(execution -> execution.getProcessStep() != null);
+        return executions == null || executions
+            .stream()
+            .noneMatch(execution -> execution.getProcessStep() != null);
     }
 }

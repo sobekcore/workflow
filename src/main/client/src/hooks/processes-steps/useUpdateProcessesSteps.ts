@@ -16,7 +16,7 @@ export function useUpdateProcessesSteps({ processId, onSuccess, onError }: UseUp
     mutationFn(processesSteps: ProcessStepToUpdate[]): Promise<ProcessStep[]> {
       return updateProcessesSteps(processesSteps);
     },
-    onSuccess(processesStepsToUpdate: ProcessStep[]): void {
+    onSuccess(updatedProcessesSteps: ProcessStep[]): void {
       queryClient.setQueryData<Process[]>([QueryKey.READ_PROCESSES], (processes?: Process[]): Process[] => {
         if (!processes) {
           return [];
@@ -27,8 +27,8 @@ export function useUpdateProcessesSteps({ processId, onSuccess, onError }: UseUp
           return processes;
         }
 
-        const processesStepsIds: string[] = processesStepsToUpdate.map(
-          (processStepToUpdate: ProcessStep): string => processStepToUpdate.id,
+        const updatedProcessesStepsIds: string[] = updatedProcessesSteps.map(
+          (updatedProcessStep: ProcessStep): string => updatedProcessStep.id,
         );
 
         return [
@@ -37,9 +37,9 @@ export function useUpdateProcessesSteps({ processId, onSuccess, onError }: UseUp
             ...processes[index],
             steps: [
               ...processes[index].steps.filter(
-                (processStep: ProcessStep): boolean => !processesStepsIds.includes(processStep.id),
+                (processStep: ProcessStep): boolean => !updatedProcessesStepsIds.includes(processStep.id),
               ),
-              ...processesStepsToUpdate,
+              ...updatedProcessesSteps,
             ],
           },
           ...processes.slice(index + 1),
